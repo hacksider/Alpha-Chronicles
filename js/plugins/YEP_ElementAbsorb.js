@@ -10,7 +10,7 @@ var Yanfly = Yanfly || {};
 Yanfly.EleAbs = Yanfly.EleAbs || {};
 
 //=============================================================================
- /*:
+/*:
  * @plugindesc v1.00 Adds the ability to absorb elemental damage!
  * @author Yanfly Engine Plugins
  *
@@ -41,6 +41,37 @@ Yanfly.EleAbs = Yanfly.EleAbs || {};
  *   <Element Absorb: x to y>
  *   Causes elements x through y to be absorbed and heal the battler.
  */
+ /*:ja
+ * @plugindesc 属性ダメージを吸収するアビリティを付与します
+ * @author Yanfly Engine Plugins
+ *
+ * @param Multiple Priority
+ * @desc 複数の属性を持つ場合は、吸収属性が優先されます。
+ *  NO - false     YES - true
+ * @default true
+ *
+ * @help
+ * ============================================================================
+ * Introduction
+ * ============================================================================
+ *
+ * このプラグインは、属性吸収のシステムをゲームに提供します。
+ * 
+ * 注＊このプラグインは今後もアップデートを予定しています
+ *
+ * ============================================================================
+ * Notetags
+ * ============================================================================
+ *
+ * アクター、クラス、敵、武器、防具、ステータスのNotetag:
+ *   <Element Absorb: x>
+ *   <Element Absorb: x, x, x>
+ *   x の属性を吸収させ、バトラーを回復します
+ *
+ *   <Element Absorb: x to y>
+ *   x から y の属性を吸収させ、バトラーを回復します
+ */
+
 //=============================================================================
 
 //=============================================================================

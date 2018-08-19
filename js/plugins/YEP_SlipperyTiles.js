@@ -8,33 +8,20 @@ Imported.YEP_SlipperyTiles = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Slip = Yanfly.Slip || {};
-Yanfly.Slip.version = 1.05
 
 //=============================================================================
  /*:
- * @plugindesc v1.05 You can create slippery tiles by marking them with
+ * @plugindesc v1.01 You can create slippery tiles by marking them with
  * either a terrain tag or a region number.
  * @author Yanfly Engine Plugins
  *
  * @param Slippery Frame
- * @type number
- * @min 0
  * @desc This is the frame used while characters are sliding.
  * @default 2
  *
  * @param Slippery Region
- * @type number
- * @min 0
- * @max 255
  * @desc Any tile marked with this region is a slippery tile
  * regardless of terrain tag. Use 0 to ignore.
- * @default 0
- *
- * @param Slippery Speed
- * @type number
- * @min 0
- * @desc Change the speed of the player while on a slippery tile to
- * this speed instead. Leave at 0 to keep current speed.
  * @default 0
  *
  * @help
@@ -61,18 +48,48 @@ Yanfly.Slip.version = 1.05
  * Changelog
  * ============================================================================
  *
- * Version 1.05:
- * - Updated for RPG Maker MV version 1.5.0.
+ * Version 1.01:
+ * - Added failsafe for people who aren't using tilesets 
  *
- * Version 1.04:
- * - Added 'Slippery Speed' plugin parameter to let you change the speed of
- * a character when its on a slippery tile.
+ * Version 1.00:
+ * - Finished Plugin!
+ */
+ /*:ja
+ * @plugindesc v1.01 タイルに地形タグをマークしたりリージョンナンバーを振ることで、滑るタイルを作成することができます。
+ * @author Yanfly Engine Plugins
  *
- * Version 1.03:
- * - Added anti-crash for switch checks from battle tests.
+ * @param Slippery Frame
+ * @desc キャラクターが滑る際に使われるフレームです。
+ * @default 2
  *
- * Version 1.02:
- * - Updated for RPG Maker MV version 1.1.0.
+ * @param Slippery Region
+ * @desc このリージョンを振られたタイルは、地形タグに関わらず、滑るタイルとなり
+ * ます。0を入れることで無効になります。
+ * @default 0
+ *
+ * @help
+ * ============================================================================
+ * Introduction
+ * ============================================================================
+ *
+ * このプラグインを使えば、リージョンやノートタグによって、滑るタイルを設定する
+ * ことができるようになります。リージョンを使う場合は、パラメーターセッティング
+ * から、どのリージョンIDを紐づけたいか指定してください。
+ *
+ * ============================================================================
+ * Notetags
+ * ============================================================================
+ *
+ * 下記のノートタグを使って、タイルセットに滑るタイルを加えてください。
+ *
+ * タイルセットのノートタグ:
+ *   <Slippery Tile: x>
+ *   <Slippery Tile: x, x, x>
+ *   これで地形ID x を持ったタイルが、滑るタイルとして指定されます。
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
  *
  * Version 1.01:
  * - Added failsafe for people who aren't using tilesets 
@@ -91,7 +108,6 @@ Yanfly.Param = Yanfly.Param || {};
 
 Yanfly.Param.SlipRegion = Number(Yanfly.Parameters['Slippery Region']);
 Yanfly.Param.SlipFrame = Number(Yanfly.Parameters['Slippery Frame']);
-Yanfly.Param.SlipSpeed = Number(Yanfly.Parameters['Slippery Speed']);
 
 //=============================================================================
 // DataManager
@@ -99,12 +115,9 @@ Yanfly.Param.SlipSpeed = Number(Yanfly.Parameters['Slippery Speed']);
 
 Yanfly.Slip.DataManager_isDatabaseLoaded = DataManager.isDatabaseLoaded;
 DataManager.isDatabaseLoaded = function() {
-  if (!Yanfly.Slip.DataManager_isDatabaseLoaded.call(this)) return false;
-  if (!Yanfly._loaded_YEP_SlipperyTiles) {
-	  this.processSlipNotetags($dataTilesets);
-    Yanfly._loaded_YEP_SlipperyTiles = true;
-  }
-	return true;
+    if (!Yanfly.Slip.DataManager_isDatabaseLoaded.call(this)) return false;
+		this.processSlipNotetags($dataTilesets);
+		return true;
 };
 
 DataManager.processSlipNotetags = function(group) {
@@ -130,7 +143,6 @@ DataManager.processSlipNotetags = function(group) {
 //=============================================================================
 
 Game_Map.prototype.isSlippery = function(mx, my) {
-    if ($gameParty.inBattle()) return false;
     if (this.isValid(mx, my) && this.tileset()) {
       if (Yanfly.Param.SlipRegion !== 0 &&
         this.regionId(mx, my) === Yanfly.Param.SlipRegion) return true;
@@ -159,15 +171,6 @@ Yanfly.Slip.Game_CharacterBase_pattern = Game_CharacterBase.prototype.pattern;
 Game_CharacterBase.prototype.pattern = function() {
     if (this.slipperyPose()) return Yanfly.Param.SlipFrame;
     return Yanfly.Slip.Game_CharacterBase_pattern.call(this);
-};
-
-Yanfly.Slip.Game_CharacterBase_realMoveSpeed =
-  Game_CharacterBase.prototype.realMoveSpeed;
-Game_CharacterBase.prototype.realMoveSpeed = function() {
-    if (this.onSlipperyFloor() && Yanfly.Param.SlipSpeed > 0) {
-      return Yanfly.Param.SlipSpeed;
-    }
-    return Yanfly.Slip.Game_CharacterBase_realMoveSpeed.call(this);
 };
 
 //=============================================================================

@@ -8,11 +8,10 @@ Imported.YEP_CoreEngine = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Core = Yanfly.Core || {};
-Yanfly.Core.version = 1.28;
 
 //=============================================================================
 /*:
- * @plugindesc v1.28 Needed for the majority of Yanfly Engine Scripts. Also
+ * @plugindesc v1.13 Needed for the majority of Yanfly Engine Scripts. Also
  * contains bug fixes found inherently in RPG Maker.
  * @author Yanfly Engine Plugins
  *
@@ -20,121 +19,59 @@ Yanfly.Core.version = 1.28;
  * @default
  *
  * @param Screen Width
- * @parent ---Screen---
- * @type number
- * @min 0
  * @desc Adjusts the width of the screen.
  * Default: 816
  * @default 816
  *
  * @param Screen Height
- * @parent ---Screen---
- * @type number
- * @min 0
  * @desc Adjusts the height of the screen.
  * Default: 624
  * @default 624
  *
  * @param Scale Battlebacks
- * @parent ---Screen---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Do you wish to scale battlebacks to resolution?
  * NO - false     YES - true
  * @default true
  *
  * @param Scale Title
- * @parent ---Screen---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Do you wish to scale the title screen to resolution?
  * NO - false     YES - true
  * @default true
  *
  * @param Scale Game Over
- * @parent ---Screen---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Do you wish to scale the game over screen to resolution?
  * NO - false     YES - true
  * @default true
  *
  * @param Open Console
- * @parent ---Screen---
- * @type boolean
- * @on Open
- * @off Don't Open
  * @desc For testing and debug purposes, this opens up the console.
  * Don't Open - false     Open - true
  * @default false
  *
  * @param Reposition Battlers
- * @parent ---Screen---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Allow the plugin to reposition battlers to resolution?
  * NO - false     YES - true
- * @default true
- *
- * @param GameFont Load Timer
- * @parent ---Screen---
- * @type number
- * @min 0
- * @desc This allows you to set the timer for loading the GameFont.
- * Set to 0 for unlimited time. Default: 20000
- * @default 0
- *
- * @param Update Real Scale
- * @parent ---Screen---
- * @type boolean
- * @on YES
- * @off NO
- * @desc For now, best left alone, but it will allow real scaling for
- * screen stretching. NO - false   YES - true
- * @default false
- *
- * @param Collection Clear
- * @parent ---Screen---
- * @type boolean
- * @on YES
- * @off NO
- * @desc Clears stored objects within major scenes upon switching
- * scenes to free up memory. NO - false   YES - true
  * @default true
  *
  * @param ---Gold---
  * @desc
  *
  * @param Gold Max
- * @parent ---Gold---
- * @type number
- * @min 1
  * @desc The maximum amount of gold the player can have.
  * Default: 99999999
  * @default 99999999
  *
  * @param Gold Font Size
- * @parent ---Gold---
- * @type number
- * @min 1
  * @desc The font size used to display gold.
- * Default: 28
+ * Default: 20
  * @default 20
  *
  * @param Gold Icon
- * @parent ---Gold---
- * @type number
- * @min 0
  * @desc This will be the icon used to represent gold in the gold
  * window. If left at 0, no icon will be displayed.
  * @default 313
  *
  * @param Gold Overlap
- * @parent ---Gold---
  * @desc This will be what's displayed when the gold number
  * exceeds the allocated area's content size.
  * @default A lotta
@@ -143,76 +80,49 @@ Yanfly.Core.version = 1.28;
  * @desc
  *
  * @param Default Max
- * @parent ---Items---
- * @type number
- * @min 1
  * @desc This is the maximum number of items a player can hold.
  * Default: 99
  * @default 99
  *
  * @param Quantity Text Size
- * @parent ---Items---
- * @type number
- * @min 1
  * @desc This is the text's font size used for the item quantity.
- * Default: 28
+ * Default: 20
  * @default 20
  *
- * @param ---Parameters---
+ * @param ---Stats---
  * @default
  *
  * @param Max Level
- * @parent ---Parameters---
- * @type number
- * @min 1
  * @desc Adjusts the maximum level limit for actors.
  * Default: 99
  * @default 99
  *
  * @param Actor MaxHP
- * @parent ---Parameters---
- * @type number
- * @min 1
  * @desc Adjusts the maximum HP limit for actors.
  * Default: 9999
  * @default 9999
  *
  * @param Actor MaxMP
- * @parent ---Parameters---
- * @type number
- * @min 0
  * @desc Adjusts the maximum MP limit for actors.
  * Default: 9999
  * @default 9999
  *
  * @param Actor Parameter
- * @parent ---Parameters---
- * @type number
- * @min 1
  * @desc Adjusts the maximum parameter limit for actors.
  * Default: 999
  * @default 999
  *
  * @param Enemy MaxHP
- * @parent ---Parameters---
- * @type number
- * @min 1
  * @desc Adjusts the maximum HP limit for enemies.
  * Default: 999999
  * @default 999999
  *
  * @param Enemy MaxMP
- * @parent ---Parameters---
- * @type number
- * @min 0
  * @desc Adjusts the maximum MP limit for enemies.
  * Default: 9999
  * @default 9999
  *
  * @param Enemy Parameter
- * @parent ---Parameters---
- * @type number
- * @min 1
  * @desc Adjusts the maximum parameter limit for enemies.
  * Default: 999
  * @default 999
@@ -221,105 +131,39 @@ Yanfly.Core.version = 1.28;
  * @desc
  *
  * @param Animation Rate
- * @parent ---Battle---
- * @type number
- * @min 1
  * @desc Adjusts the rate of battle animations. Lower for faster.
  * Default: 4
  * @default 4
  *
  * @param Flash Target
- * @parent ---Battle---
- * @type boolean
- * @on YES
- * @off NO
  * @desc If an enemy is targeted, it flashes or it can whiten.
  * OFF - false     ON - true
- * @default false
- *
- * @param Show Events Transition
- * @parent ---Battle---
- * @type boolean
- * @on Show
- * @off Hide
- * @desc Show events during the battle transition?
- * SHOW - true     HIDE - false     Default: false
- * @default true
- *
- * @param Show Events Snapshot
- * @parent ---Battle---
- * @type boolean
- * @on Show
- * @off Hide
- * @desc Show events for the battle background snapshot?
- * SHOW - true     HIDE - false     Default: false
- * @default true
- *
- * @param ---Map Optimization---
- * @desc
- *
- * @param Refresh Update HP
- * @parent ---Map Optimization---
- * @type boolean
- * @on Show
- * @off Hide
- * @desc Do a full actor refresh when updating HP on map?
- * YES - true     NO - false     Default: true
- * @default true
- *
- * @param Refresh Update MP
- * @parent ---Map Optimization---
- * @type boolean
- * @on Show
- * @off Hide
- * @desc Do a full actor refresh when updating MP on map?
- * YES - true     NO - false     Default: true
- * @default true
- *
- * @param Refresh Update TP
- * @parent ---Map Optimization---
- * @type boolean
- * @on Show
- * @off Hide
- * @desc Do a full actor refresh when updating TP on map?
- * YES - true     NO - false     Default: true
  * @default false
  *
  * @param ---Font---
  * @desc
  *
  * @param Chinese Font
- * @parent ---Font---
  * @desc Default font(s) used for a Chinese RPG.
  * Default: SimHei, Heiti TC, sans-serif
  * @default SimHei, Heiti TC, sans-serif
  *
  * @param Korean Font
- * @parent ---Font---
  * @desc Default font(s) used for a Korean RPG.
  * Default: Dotum, AppleGothic, sans-serif
  * @default Dotum, AppleGothic, sans-serif
  *
  * @param Default Font
- * @parent ---Font---
  * @desc Default font(s) used for everything else.
- * Default: GameFont
+ * Default: GameFont, Verdana, Arial, Courier New
  * @default GameFont, Verdana, Arial, Courier New
  *
  * @param Font Size
- * @parent ---Font---
- * @type number
- * @min 1
  * @desc Default font size used for windows.
  * Default: 28
  * @default 28
  *
  * @param Text Align
- * @parent ---Font---
- * @type combo
- * @option left
- * @option center
- * @option right
  * @desc How to align the text for command windows.
  * left     center     right
  * @default left
@@ -328,100 +172,61 @@ Yanfly.Core.version = 1.28;
  * @default
  *
  * @param Digit Grouping
- * @parent ---Windows---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Groups together digits with a comma.
  * false - OFF     true - ON
  * @default true
  *
  * @param Line Height
- * @parent ---Windows---
- * @type number
- * @min 0
  * @desc Adjusts universal line height used in Windows.
  * Default: 36
  * @default 36
  *
  * @param Icon Width
- * @parent ---Windows---
- * @type number
- * @min 0
  * @desc Adjusts the width of your icons.
  * Default: 32
  * @default 32
  *
  * @param Icon Height
- * @parent ---Windows---
- * @type number
- * @min 0
  * @desc Adjusts the height of your icons.
  * Default: 32
  * @default 32
  *
  * @param Face Width
- * @parent ---Windows---
- * @type number
- * @min 0
  * @desc Adjusts the width of actors' faces.
  * Default: 144
  * @default 144
  *
  * @param Face Height
- * @parent ---Windows---
- * @type number
- * @min 0
  * @desc Adjusts the height of actors' faces.
  * Default: 144
  * @default 144
  *
  * @param Window Padding
- * @parent ---Windows---
- * @type number
- * @min 0
  * @desc Adjusts the padding for all standard windows.
  * Default: 18
  * @default 18
  *
  * @param Text Padding
- * @parent ---Windows---
- * @type number
- * @min 0
  * @desc Adjusts the padding for text inside of windows.
  * Default: 6
  * @default 6
  *
  * @param Window Opacity
- * @parent ---Windows---
- * @type number
- * @min 0
  * @desc Adjusts the background opacity for windows.
  * Default: 192
  * @default 192
  *
  * @param Gauge Outline
- * @parent ---Windows---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Enable outlines for gauges.
  * false - OFF     true - ON
  * @default true
  *
  * @param Gauge Height
- * @parent ---Windows---
- * @type number
- * @min 0
  * @desc Sets the height for gauges.
- * Default: 6
+ * Default: 18
  * @default 18
  *
  * @param Menu TP Bar
- * @parent ---Windows---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Draws a TP bar in the menu status for actors.
  * false - OFF     true - ON
  * @default true
@@ -430,136 +235,76 @@ Yanfly.Core.version = 1.28;
  * @default
  *
  * @param Color: Normal
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 0
  * @default 0
  *
  * @param Color: System
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 16
  * @default 16
  *
  * @param Color: Crisis
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 17
  * @default 17
  *
  * @param Color: Death
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 18
  * @default 18
  *
  * @param Color: Gauge Back
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 19
  * @default 19
  *
  * @param Color: HP Gauge 1
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 20
  * @default 20
  *
  * @param Color: HP Gauge 2
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 21
  * @default 21
  *
  * @param Color: MP Gauge 1
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 22
  * @default 22
  *
  * @param Color: MP Gauge 2
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 23
  * @default 23
  *
  * @param Color: MP Cost
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 23
  * @default 23
  *
  * @param Color: Power Up
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 24
  * @default 24
  *
  * @param Color: Power Down
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 25
  * @default 25
  *
  * @param Color: TP Gauge 1
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 28
  * @default 28
  *
  * @param Color: TP Gauge 2
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 29
  * @default 29
  *
  * @param Color: TP Cost Color
- * @parent ---Window Colors---
- * @type number
- * @min 0
- * @max 31
  * @desc Changes the text color for Windows.
  * Default: 29
  * @default 29
@@ -697,112 +442,8 @@ Yanfly.Core.version = 1.28;
  *   enemy give out more exp than the editor's default 9,999,999 limit.
  *
  * ============================================================================
- * Script Call Fail Safe
- * ============================================================================
- *
- * Irregular code in damage formulas, script calls, conditional branches, and
- * variable events will no longer crash the game. Instead, they will force open
- * the console window to display the error only during test play.
- *
- * If the player is not in test play, the game will continue as normal without
- * the error being shown. If the game is being played in a browser, opening up
- * the console window will still display the error.
- *
- * ============================================================================
  * Changelog
  * ============================================================================
- *
- * Version 1.28:
- * - Upon pressing F5 to reload your game, this will close the DevTools Debug
- * Console if it is opened before reloading. This is because reloading with it
- * closed ends up reloading the game faster.
- * - New plugin parameters added: Refresh Update HP, MP, and TP
- *   - Option to choose to do a full actor refresh upon changing HP, MP, or TP
- *   - This is to reduce overall map lagging.
- *
- * Version 1.27:
- * - Updated for RPG Maker MV version 1.6.0:
- *   - Fixing script call checks made with switches and self switches under
- *   conditional branches due to how ES6 handles === differently.
- *
- * Version 1.26:
- * - Updated for RPG Maker MV version 1.6.0:
- *   - Removal of the destructive code in Scene_Item.update function.
- *   - Open Console parameter now occurs after the map's been loaded or after
- *   the battle has started. This is because after the 1.6.0 changes, loading
- *   the console before anything else will lock up other aspects of RPG Maker
- *   from loading properly.
- *
- * Version 1.25:
- * - Updated for RPG Maker MV version 1.5.0.
- * - Updated Scale Title and Scale GameOver to work with 1.5.0.
- *
- * Version 1.24:
- * - Screen jittering prevention is now prevented for RPG Maker MV 1.3.4 and
- * above since Pixi4 handles that now.
- *
- * Version 1.23:
- * - For RPG Maker MV version 1.3.2 and above, the 'Scale Battlebacks' plugin
- * parameter will now recreate the battleback sprites in a different format.
- * This is because battleback scaling with Tiling Sprites is just too volatile.
- * Battleback sprites are now just regular sprites instead of tiling sprites.
- * This may or may not cause plugin incompatibilities with other plugins that
- * alter battlebacks.
- * - For RPG Maker MV version 1.3.4, Game_Actor.meetsUsableItemConditions is
- * now updated to return a check back to the original Game_BattlerBase version
- * to maintain compatibility with other plugins.
- *
- * Version 1.22:
- * - Added 'Show Events Transition' plugin parameter. Enabling this will make
- * events on the map no longer hide themselves while entering battle during the
- * transition.
- * - Added 'Show Events Snapshot' plugin parameter. Enabling this will keep
- * events shown as a part of the battle snapshot when entering battle.
- * - Irregular code in damage formulas, script calls, conditional branches, and
- * variable events will no longer crash the game. Instead, it will force open
- * the console window to display the error only during Test Play.
- *
- * Version 1.21:
- * - Fixed a bug with scaling battlebacks not working properly for Front View.
- * - Optimization update to keep garbage collection across all scenes.
- *
- * Version 1.20:
- * - Altered increasing resolution function.
- * - Added 'Update Real Scale' plugin parameter. This is best left alone for
- * now and to be used if a later update meshes with rendered scaling.
- * - Added memory clear functionality for versions under 1.3.2 to free up more
- * memory upon leaving the map scene.
- * - Added 'Collection Clear' plugin parameter. This option, if left on, will
- * clear the attached children to Scene_Map and Scene_Battle upon switching to
- * a different scene. This will potentially free up memory from various objects
- * added to those scenes from other plugins (depending on how they're added)
- * and serve as a means of reducing memory bloat.
- *
- * Version 1.19:
- * - Updated for RPG Maker MV version 1.3.2.
- * - Fixed 'LearnSkill' function for actors to not be bypassed if a piece of
- * equipment has temporarily added a skill.
- *
- * Version 1.18:
- * - Fixed a bug with scaling battlebacks not working properly for Front View.
- *
- * Version 1.17:
- * - Updated for RPG Maker MV version 1.3.0.
- *
- * Version 1.16:
- * - Fixed a bug with RPG Maker MV's inherent 'drawTextEx' function. By default
- * it calculates the text height and then resets the font settings before
- * drawing the text, which makes the text height inconsistent if it were to
- * match the calculated height settings.
- *
- * Version 1.15:
- * - Window's are now set to have only widths and heights of whole numbers. No
- * longer is it possible for them to have decimal values. This is to reduce any
- * and all clipping issues caused by non-whole numbers.
- *
- * Version 1.14:
- * - Optimization update for RPG Maker MV itself by replacing more memory
- * intensive loops in commonly used functions with more efficient loops.
  *
  * Version 1.13:
  * - Updated for RPG Maker MV version 1.1.0.
@@ -858,6 +499,503 @@ Yanfly.Core.version = 1.28;
  * Version 1.00:
  * - Finished plugin!
  */
+
+ /*:ja
+ * @plugindesc v1.13 Yanfly Engine Scriptsの大元となる機能です。
+ * RPGツクールMVのバグを修正したり、様々なカスタムを行います。
+ * @author Yanfly Engine Plugins
+ *
+ * @param ---スクリーン---
+ * @default
+ *
+ * @param Screen Width
+ * @desc スクリーンの横幅を調整します
+ * Default: 816
+ * @default 816
+ *
+ * @param Screen Height
+ * @desc スクリーンの縦幅を調整します
+ * Default: 624
+ * @default 624
+ *
+ * @param Scale Battlebacks
+ * @desc 戦闘背景のサイズを解像度に合わせるかどうか設定できます
+ * NO - false     YES - true
+ * @default true
+ *
+ * @param Scale Title
+ * @desc タイトルスクリーンのサイズを解像度に合わせるかどうか設定できます
+ * NO - false     YES - true
+ * @default true
+ *
+ * @param Scale Game Over
+ * @desc ゲームオーバースクリーンのサイズを解像度に合わせるかどうか設定できます
+ * NO - false     YES - true
+ * @default true
+ *
+ * @param Open Console
+ * @desc テスト/デバッグ用に、コンソール画面を開きます
+ * 開かない - false     開く - true
+ * @default false
+ *
+ * @param Reposition Battlers
+ * @desc 解像度に合わせてバトラーの位置を変更させるかどうか設定できます
+ * NO - false     YES - true
+ * @default true
+ *
+ * @param ---ゴールド---
+ * @desc
+ *
+ * @param Gold Max
+ * @desc プレイヤーが持てるゴールドの最大値を設定します
+ * Default: 99999999
+ * @default 99999999
+ *
+ * @param Gold Font Size
+ * @desc ゴールドを表示する際のフォントサイズを指定します
+ * Default: 20
+ * @default 20
+ *
+ * @param Gold Icon
+ * @desc ゴールドを意味するアイコンを指定します
+ * 0に設定するとアイコンは何も表示されません
+ * @default 313
+ *
+ * @param Gold Overlap
+ * @desc ゴールドが割り当てられた範囲のサイズを超えた際に表示されます
+ * @default a lotta
+ *
+ * @param ---アイテム---
+ * @desc
+ *
+ * @param Default Max
+ * @desc プレイヤーが所持できるアイテム数の上限を設定します
+ * Default: 99
+ * @default 99
+ *
+ * @param Quantity Text Size
+ * @desc アイテム数を表示する際のフォントサイズを指定します
+ * Default: 20
+ * @default 20
+ *
+ * @param ---ステータス---
+ * @default
+ *
+ * @param Max Level
+ * @desc アクターのレベルの上限値を設定します
+ * Default: 99
+ * @default 99
+ *
+ * @param Actor MaxHP
+ * @desc アクターのHPの上限値を設定します
+ * Default: 9999
+ * @default 9999
+ *
+ * @param Actor MaxMP
+ * @desc アクターのMPの上限値を設定します
+ * Default: 9999
+ * @default 9999
+ *
+ * @param Actor Parameter
+ * @desc アクターのパラメータの上限値を設定します
+ * Default: 999
+ * @default 999
+ *
+ * @param Enemy MaxHP
+ * @desc 敵のHPの上限値を設定します
+ * Default: 999999
+ * @default 999999
+ *
+ * @param Enemy MaxMP
+ * @desc 敵のMPの上限値を設定します
+ * Default: 9999
+ * @default 9999
+ *
+ * @param Enemy Parameter
+ * @desc 敵のパラメータの上限値を設定します
+ * Default: 999
+ * @default 999
+ *
+ * @param ---バトル---
+ * @desc
+ *
+ * @param Animation Rate
+ * @desc 戦闘アニメーションのレートを調整します
+ * Default: 4
+ * @default 4
+ *
+ * @param Flash Target
+ * @desc 敵をターゲットに選んだ際、光らせるもしくは白く表示させます
+ * OFF - false     ON - true
+ * @default false
+ *
+ * @param ---フォント---
+ * @desc
+ *
+ * @param Chinese Font
+ * @desc 中国語のRPGに使われるデフォルトフォントを設定します
+ * Default: SimHei, Heiti TC, sans-serif
+ * @default SimHei, Heiti TC, sans-serif
+ *
+ * @param Korean Font
+ * @desc 韓国語のRPGに使われるデフォルトフォントを設定します
+ * Default: Dotum, AppleGothic, sans-serif
+ * @default Dotum, AppleGothic, sans-serif
+ *
+ * @param Default Font
+ * @desc それ以外のRPGに使われるデフォルトフォントを設定します
+ * Default: GameFont, Verdana, Arial, Courier New
+ * @default GameFont, Verdana, Arial, Courier New
+ *
+ * @param Font Size
+ * @desc ウィンドウに使われるデフォルトフォントのサイズを指定します
+ * Default: 28
+ * @default 28
+ *
+ * @param Text Align
+ * @desc コマンドウィンドウ内でのテキスト配置方法を指定します
+ * left(左)     center(中央)     right(右)
+ * @default left
+ *
+ * @param ---ウィンドウ---
+ * @default
+ *
+ * @param Digit Grouping
+ * @desc 数字の桁区切りを行います
+ * false - OFF     true - ON
+ * @default true
+ *
+ * @param Line Height
+ * @desc ウィンドウ内で使われている行の高さを調整します
+ * Default: 36
+ * @default 36
+ *
+ * @param Icon Width
+ * @desc アイコンの幅を調整します
+ * Default: 32
+ * @default 32
+ *
+ * @param Icon Height
+ * @desc アイコンの高さを調整します
+ * Default: 32
+ * @default 32
+ *
+ * @param Face Width
+ * @desc アクターの顔グラフィックの幅を調整します
+ * Default: 144
+ * @default 144
+ *
+ * @param Face Height
+ * @desc アクターの顔グラフィックの高さを調整します
+ * Default: 144
+ * @default 144
+ *
+ * @param Window Padding
+ * @desc 全てのスタンダードウィンドウのパディングを調整します
+ * Default: 18
+ * @default 18
+ *
+ * @param Text Padding
+ * @desc ウィンドウ内のテキストにパディングを適用します
+ * Default: 6
+ * @default 6
+ *
+ * @param Window Opacity
+ * @desc 背景の不透明度を調整します
+ * Default: 192
+ * @default 192
+ *
+ * @param Gauge Outline
+ * @desc ゲージにアウトラインを付けます
+ * false - OFF     true - ON
+ * @default true
+ *
+ * @param Gauge Height
+ * @desc ゲージの高さを調整します
+ * Default: 18
+ * @default 18
+ *
+ * @param Menu TP Bar
+ * @desc アクターのメニューステータスにTPバーを表示します
+ * false - OFF     true - ON
+ * @default true
+ *
+ * @param ---ウィンドウカラー---
+ * @default
+ *
+ * @param Color: Normal
+ * @desc テキストカラーを変更します
+ * Default: 0
+ * @default 0
+ *
+ * @param Color: System
+ * @desc テキストカラーを変更します
+ * Default: 16
+ * @default 16
+ *
+ * @param Color: Crisis
+ * @desc テキストカラーを変更します
+ * Default: 17
+ * @default 17
+ *
+ * @param Color: Death
+ * @desc テキストカラーを変更します
+ * Default: 18
+ * @default 18
+ *
+ * @param Color: Gauge Back
+ * @desc テキストカラーを変更します
+ * Default: 19
+ * @default 19
+ *
+ * @param Color: HP Gauge 1
+ * @desc テキストカラーを変更します
+ * Default: 20
+ * @default 20
+ *
+ * @param Color: HP Gauge 2
+ * @desc テキストカラーを変更します
+ * Default: 21
+ * @default 21
+ *
+ * @param Color: MP Gauge 1
+ * @desc テキストカラーを変更します
+ * Default: 22
+ * @default 22
+ *
+ * @param Color: MP Gauge 2
+ * @desc テキストカラーを変更します
+ * Default: 23
+ * @default 23
+ *
+ * @param Color: MP Cost
+ * @desc テキストカラーを変更します
+ * Default: 23
+ * @default 23
+ *
+ * @param Color: Power Up
+ * @desc テキストカラーを変更します
+ * Default: 24
+ * @default 24
+ *
+ * @param Color: Power Down
+ * @desc テキストカラーを変更します
+ * Default: 25
+ * @default 25
+ *
+ * @param Color: TP Gauge 1
+ * @desc テキストカラーを変更します
+ * Default: 28
+ * @default 28
+ *
+ * @param Color: TP Gauge 2
+ * @desc テキストカラーを変更します
+ * Default: 29
+ * @default 29
+ *
+ * @param Color: TP Cost Color
+ * @desc テキストカラーを変更します
+ * Default: 29
+ * @default 29
+ *
+ * @help
+ * ============================================================================
+ * Introduction and Instructions
+ * ============================================================================
+ *
+ * このプラグインはRPGツクールMV用のプラグインです。
+ * このプラグインはバグを修正したり、
+ * 画面の解像度・フォント・ウィンドウ色などの設定を可能にします。
+ *
+ * このプラグインは、他の全てのYanfly Engine Pluginsの
+ * 一番上に置くようにしてください。
+ *
+ * ============================================================================
+ * Bug Fixes
+ * ============================================================================
+ *
+ * このプラグインは、昨今発見されているRPGツクールMVのバグを修正します。
+ * 詳細は下記を参照してください。
+ *
+ * 
+ * ・アニメーションオーバーレイ
+ * 一度に複数の敵を対象としたスキル・アイテムで
+ * フルスクリーンアニメーションが発動した場合、
+ *  複数回のオーバーレイが起こり、画像にゆがみが生じてしまいます。
+ * このプラグインでは、アニメーションを1つのみ再生させることにより、
+ * 上記の問題を解決します。
+ *
+ * ・イベントアップデート
+ * デフォルトでは、フリーケンシー5でイベントを実行すると、
+ * フレーム単位での停止が発生してしまいます。
+ * このプラグインは、RPG Maker XP, RPG Maker VX, RPG Maker VX Aceでの
+ * 過去の修正を活かして、停止なくイベントを動かすことができます。
+ * 
+ * ・イベント動作スピード
+ * ソースコードのエラーにより、イベントの動作に遅延が生じていましたが、
+ * このプラグインにより修正を行うことができます。
+ * 
+ * ・イベント動作キュー
+ * イベントがコマンドにより動作する場合、
+ * 別ページに移動するイベントの状態変更を行なうと、
+ * イベント動作が途中で停止することがありました。
+ * このプラグインでは上記の問題に修正を行い、イベントを完了することができます。
+ *
+ * ・イベント衝突
+ * Below Playerの設定では、イベント同士を重ねて動作させることができず、
+ * 特定のパズルやイベントの作成が困難であることが課題でした。
+ * このプラグインでは、「キャラクターと同列」の優先度を持つイベントに対してのみ
+ * コリジョンチェックを行うことで、上記の問題を解決します。
+ * キャラクターの上位もしくは下位に配置されるイベントは、
+ * 他のイベントと衝突することはありません。
+ *
+ * ・スクリーンティアリング
+ * 動作の遅いコンピュータでは、タイルが分裂して表示されてしまいました。
+ * このプラグインは、スクリーンカメラの動きとタイルのペースを同期させて、
+ * この問題を解決します。
+ * 
+ * ・スプライトディストーション
+ * JavaSctiptの計算により、少数値が用いられる際、
+ * スプライトシートに歪みが生じてしまうことがたびたびあります。
+ * このプラグインは少数を取り除き、整数のみを用いることで、
+ * スプライトシートが正しくフレームを取り出せるようにします。
+ *
+ * ============================================================================
+ * Gold
+ * ============================================================================
+ *
+ * このプラグインコマンドを使用することで、9,999,999のリミットを無視して
+ * ゴールドを追加もしくは減らすことができます。
+ * ノートタグを挿入することで、アイテム、武器、アーマーについても
+ * 999,999のコストリミットを解除させることができます。
+ *
+ * プラグインコマンド:
+ *   GainGold 1234567890       # パーティは 1234567890 G 手に入れます
+ *   LoseGold 9876543210       # パーティは 9876543210 G を失います
+ *
+ * アイテム、武器、アーマーのノートタグ
+ *   <Price: x>
+ *   アイテムの値段を x に変更します。
+ *   このノートタグは999,999の制限を無視して使うことができます。
+ *
+ * 敵のノートタグ
+ *   <Gold: x>
+ *   敵の落とすゴールドの値を x に変更します。
+ *   このノートタグは999,999の制限を無視して使うことができます。
+ *
+ * ============================================================================
+ * Items
+ * ============================================================================
+ *
+ * プレイヤーが所持できるアイテム最大数を設定するには、
+ * パラメータの変更を行ないます。アイテムごとに異なる最大値を振り分けるには、
+ * 以下のノートタグを使用してください。
+ *
+ * アイテム、武器、防具のノートタグ
+ *   <Max Item: x>
+ *   アイテムの最大数を x に変更します。
+ *
+ * ============================================================================
+ * Stats
+ * ============================================================================
+ *
+ * パラメータの制限値を上げたとしても、
+ * RPGツクールMVのデフォルト制限値に引っかかってしまいます。
+ * 以下のノートタグを用いて、より高度なパラメーター設定を行うことができます。
+ *
+ * アクターのノートタグ
+ *   <Initial Level: x>
+ *   アクターの初期レベルを x に変更します。
+ *   このノートタグは99レベルの制限を無視して使うことができます。
+ *
+ *   <Max Level: x>
+ *   アクターの最大レベルを x に変更します。
+ *   このノートタグは99レベルの制限を無視して使うことができます。 
+ *
+ * クラススキル習得のノートタグ
+ *   <Learn at Level: x>
+ *   クラスの"Skills to Learn"ノートタグに挿入することで、
+ *   x レベルでスキルを習得させることができます。
+ *
+ * 武器と防具のノートタグ
+ *   <stat: +x>
+ *   <stat: -x>
+ *   武器や防具に、プラス/マイナス x のステータスを付与します。
+ *   "stat"の部分を"hp", "mp", "atk", "def", "mat", "mdf", "agi", "luk"
+ *   に変更することで、その他のステータスにも変更を加えることができます。
+ *   このノートタグはデフォルトの制限を無視して使うことができます。
+ *
+ * エネミーのノートタグ
+ *   <stat: x>
+ *   敵のステータスを x の値だけ変更します。
+ *   "stat"の部分を"hp", "mp", "atk", "def", "mat", "mdf", "agi", "luk"
+ *   に変更することで、その他のステータスにも変更を加えることができます。
+ *   このノートタグはデフォルトの制限を無視して使うことができます。
+ *
+ *   <exp: x>
+ *   敵からもらえる経験値を x の値だけ変更します。
+ *   このノートタグはデフォルトの999,999の制限を無視して使うことができます。
+ *
+* ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.13:
+ * - Updated for RPG Maker MV version 1.1.0.
+ *
+ * Version 1.12:
+ * - Fixed a bug with a notetag: <Learn at Level: x>. Now, the notetag works
+ * with both <Learn at Level: x> and <Learn Level: x>
+ *
+ * Version 1.11:
+ * - Made fixes to the MV Source Code where FaceWidth was using a hard-coded
+ * 144 value regardless of what was changed for the Face Width parameter.
+ * - Fixed a notetag that wasn't working with the enemy EXP values.
+ * - Updated battler repositioning to no longer clash when entering-exiting the
+ * scene with Row Formation.
+ *
+ * Version 1.10:
+ * - Removed an MV bugfix that was applied through MV's newes tupdate.
+ *
+ * Version 1.09:
+ * - Changed minimum display width for status drawing to accomodate Party
+ * Formation defaults.
+ *
+ * Version 1.08:
+ * - Fixed a bug within the MV Source with changing classes and maintaining
+ * levels, even though the feature to maintain the levels has been removed.
+ *
+ * Version 1.07:
+ * - Fixed an issue with the gauges drawing outlines thicker than normal at odd
+ * intervals when windows are scaled irregularly.
+ *
+ * Version 1.06:
+ * - Removed event frequency bug fix since it's now included in the source.
+ *
+ * Version 1.05:
+ * - Added 'Scale Game Over' parameter to plugin settings.
+ *
+ * Version 1.04:
+ * - Reworked math for calculating scaled battleback locations.
+ * - Fixed a bug where if the party failed to escape from battle, states that
+ * would be removed by battle still get removed. *Fixed by Emjenoeg*
+ *
+ * Version 1.03:
+ * - Fixed a strange bug that made scaled battlebacks shift after one battle.
+ *
+ * Version 1.02:
+ * - Fixed a bug that made screen fading on mobile devices work incorrectly.
+ * - Added 'Scale Battlebacks' and 'Scale Title' parameters.
+ *
+ * Version 1.01:
+ * - Fixed a bug that where if button sprites had different anchors, they would
+ * not be properly clickable. *Fixed by Zalerinian*
+ *
+ * Version 1.00:
+ * - Finished plugin!
+ */
+
+ 
 //=============================================================================
 
 //=============================================================================
@@ -868,71 +1006,35 @@ Yanfly.Parameters = PluginManager.parameters('YEP_CoreEngine');
 Yanfly.Param = Yanfly.Param || {};
 Yanfly.Icon = Yanfly.Icon || {};
 
-Yanfly.Param.ScreenWidth  = Number(Yanfly.Parameters['Screen Width'] || 816);
-Yanfly.Param.ScreenHeight = Number(Yanfly.Parameters['Screen Height'] || 624);
 Yanfly.Param.ScaleBattleback = String(Yanfly.Parameters['Scale Battlebacks']);
-Yanfly.Param.ScaleBattleback = eval(Yanfly.Param.ScaleBattleback);
 Yanfly.Param.ScaleTitle = String(Yanfly.Parameters['Scale Title']);
 Yanfly.Param.ScaleGameOver = String(Yanfly.Parameters['Scale Game Over']);
 Yanfly.Param.OpenConsole = String(Yanfly.Parameters['Open Console']);
-Yanfly.Param.OpenConsole = eval(Yanfly.Param.OpenConsole);
-Yanfly.Param.ReposBattlers = String(Yanfly.Parameters['Reposition Battlers']);
-Yanfly.Param.ReposBattlers = eval(Yanfly.Param.ReposBattlers);
-Yanfly.Param.GameFontTimer = Number(Yanfly.Parameters['GameFont Load Timer']);
-Yanfly.Param.UpdateRealScale = String(Yanfly.Parameters['Update Real Scale']);
-Yanfly.Param.UpdateRealScale = eval(Yanfly.Param.UpdateRealScale);
-Yanfly.Param.CollectionClear = String(Yanfly.Parameters['Collection Clear']);
-Yanfly.Param.CollectionClear = eval(Yanfly.Param.CollectionClear);
-
-Yanfly.Param.MaxGold = String(Yanfly.Parameters['Gold Max']);
-Yanfly.Param.GoldFontSize = Number(Yanfly.Parameters['Gold Font Size']);
-Yanfly.Icon.Gold = Number(Yanfly.Parameters['Gold Icon']);
-Yanfly.Param.GoldOverlap = String(Yanfly.Parameters['Gold Overlap']);
-
+Yanfly.Param.DigitGroup = String(Yanfly.Parameters['Digit Grouping']);
 Yanfly.Param.MaxItem = Number(Yanfly.Parameters['Default Max']);
-Yanfly.Param.ItemQuantitySize = Number(Yanfly.Parameters['Quantity Text Size']);
-
 Yanfly.Param.MaxLevel = Number(Yanfly.Parameters['Max Level']);
+Yanfly.Param.AnimationRate = Number(Yanfly.Parameters['Animation Rate']);
+Yanfly.Param.FlashTarget = String(Yanfly.Parameters['Flash Target']);
+Yanfly.Param.ReposBattlers = String(Yanfly.Parameters['Reposition Battlers']);
 Yanfly.Param.EnemyMaxHp = Number(Yanfly.Parameters['Enemy MaxHP']);
 Yanfly.Param.EnemyMaxMp = Number(Yanfly.Parameters['Enemy MaxMP']);
 Yanfly.Param.EnemyParam = Number(Yanfly.Parameters['Enemy Parameter']);
 Yanfly.Param.ActorMaxHp = Number(Yanfly.Parameters['Actor MaxHP']);
 Yanfly.Param.ActorMaxMp = Number(Yanfly.Parameters['Actor MaxMP']);
 Yanfly.Param.ActorParam = Number(Yanfly.Parameters['Actor Parameter']);
-
-Yanfly.Param.AnimationRate = Number(Yanfly.Parameters['Animation Rate']);
-Yanfly.Param.FlashTarget = eval(String(Yanfly.Parameters['Flash Target']));
-Yanfly.Param.ShowEvTrans = String(Yanfly.Parameters['Show Events Transition']);
-Yanfly.Param.ShowEvTrans = eval(Yanfly.Param.ShowEvTrans);
-Yanfly.Param.ShowEvSnap = String(Yanfly.Parameters['Show Events Snapshot']);
-Yanfly.Param.ShowEvSnap = eval(Yanfly.Param.ShowEvSnap);
-
-Yanfly.Param.RefreshUpdateHp = String(Yanfly.Parameters['Refresh Update HP']);
-Yanfly.Param.RefreshUpdateHp = eval(Yanfly.Param.RefreshUpdateHp);
-Yanfly.Param.RefreshUpdateMp = String(Yanfly.Parameters['Refresh Update MP']);
-Yanfly.Param.RefreshUpdateMp = eval(Yanfly.Param.RefreshUpdateMp);
-Yanfly.Param.RefreshUpdateTp = String(Yanfly.Parameters['Refresh Update TP']);
-Yanfly.Param.RefreshUpdateTp = eval(Yanfly.Param.RefreshUpdateTp);
-
+Yanfly.Param.MaxGold = String(Yanfly.Parameters['Gold Max']);
 Yanfly.Param.ChineseFont = String(Yanfly.Parameters['Chinese Font']);
 Yanfly.Param.KoreanFont = String(Yanfly.Parameters['Korean Font']);
 Yanfly.Param.DefaultFont = String(Yanfly.Parameters['Default Font']);
 Yanfly.Param.FontSize = Number(Yanfly.Parameters['Font Size']);
 Yanfly.Param.TextAlign = String(Yanfly.Parameters['Text Align']);
-
-Yanfly.Param.DigitGroup = String(Yanfly.Parameters['Digit Grouping']);
 Yanfly.Param.LineHeight = Number(Yanfly.Parameters['Line Height']);
-Yanfly.Param.IconWidth = Number(Yanfly.Parameters['Icon Width'] || 32);;
-Yanfly.Param.IconHeight = Number(Yanfly.Parameters['Icon Height'] || 32);;
-Yanfly.Param.FaceWidth = Number(Yanfly.Parameters['Face Width'] || 144);
-Yanfly.Param.FaceHeight = Number(Yanfly.Parameters['Face Height'] || 144);
+Yanfly.Param.GaugeOutline = String(Yanfly.Parameters['Gauge Outline']);
+Yanfly.Param.GaugeHeight = Number(Yanfly.Parameters['Gauge Height']);
 Yanfly.Param.WindowPadding = Number(Yanfly.Parameters['Window Padding']);
 Yanfly.Param.TextPadding = Number(Yanfly.Parameters['Text Padding']);
 Yanfly.Param.WindowOpacity = Number(Yanfly.Parameters['Window Opacity']);
-Yanfly.Param.GaugeOutline = String(Yanfly.Parameters['Gauge Outline']);
-Yanfly.Param.GaugeHeight = Number(Yanfly.Parameters['Gauge Height']);
 Yanfly.Param.MenuTpGauge = String(Yanfly.Parameters['Menu TP Bar']);
-
 Yanfly.Param.ColorNormal = Number(Yanfly.Parameters['Color: Normal']);
 Yanfly.Param.ColorSystem = Number(Yanfly.Parameters['Color: System']);
 Yanfly.Param.ColorCrisis = Number(Yanfly.Parameters['Color: Crisis']);
@@ -948,6 +1050,10 @@ Yanfly.Param.ColorPowerDown = Number(Yanfly.Parameters['Color: Power Down']);
 Yanfly.Param.ColorTpGauge1 = Number(Yanfly.Parameters['Color: TP Gauge 1']);
 Yanfly.Param.ColorTpGauge2 = Number(Yanfly.Parameters['Color: TP Gauge 2']);
 Yanfly.Param.ColorTpCost = Number(Yanfly.Parameters['Color: TP Cost Color']);
+Yanfly.Param.GoldFontSize = Number(Yanfly.Parameters['Gold Font Size']);
+Yanfly.Icon.Gold = Number(Yanfly.Parameters['Gold Icon']);
+Yanfly.Param.GoldOverlap = String(Yanfly.Parameters['Gold Overlap']);
+Yanfly.Param.ItemQuantitySize = Number(Yanfly.Parameters['Quantity Text Size']);
 
 //=============================================================================
 // Bitmap
@@ -983,6 +1089,10 @@ Bitmap.prototype.fillRect = function(x, y, w, h, c) {
 
 Yanfly.Core.Bitmap_gradientFillRect = Bitmap.prototype.gradientFillRect;
 Bitmap.prototype.gradientFillRect = function(x, y, w, h, c1, c2, ve) {
+    x = Math.floor(x);
+    y = Math.floor(y);
+    w = Math.floor(w);
+    h = Math.floor(h);
     Yanfly.Core.Bitmap_gradientFillRect.call(this, x, y, w, h, c1, c2, ve);
 };
 
@@ -1003,68 +1113,18 @@ Bitmap.prototype.drawText = function(text, x, y, mW, l, align) {
 };
 
 //=============================================================================
-// Graphics
-//=============================================================================
-
-if (Yanfly.Param.UpdateRealScale) {
-
-Graphics._updateRealScale = function() {
-  if (this._stretchEnabled) {
-    var h = window.innerWidth / this._width;
-    var v = window.innerHeight / this._height;
-    this._realScale = Math.min(h, v);
-    if (this._realScale >= 3) this._realScale = 3;
-    else if (this._realScale >= 2) this._realScale = 2;
-    else if (this._realScale >= 1.5) this._realScale = 1.5;
-    else if (this._realScale >= 1) this._realScale = 1;
-    else this._realScale = 0.5;
-  } else {
-    this._realScale = this._scale;
-  }
-};
-
-}; // Yanfly.Param.UpdateRealScale
-
-//=============================================================================
-// Sprite
-//=============================================================================
-
-Yanfly.Core.Sprite_updateTransform = Sprite.prototype.updateTransform;
-Sprite.prototype.updateTransform = function() {
-  Yanfly.Core.Sprite_updateTransform.call(this);
-  this.worldTransform.tx = Math.floor(this.worldTransform.tx);
-  this.worldTransform.ty = Math.floor(this.worldTransform.ty);
-};
-
-//=============================================================================
 // ScreenSprite
 //=============================================================================
 
 Yanfly.Core.ScreenSprite_initialize = ScreenSprite.prototype.initialize;
 ScreenSprite.prototype.initialize = function() {
-  Yanfly.Core.ScreenSprite_initialize.call(this);
-  if (Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= '1.3.0') return;
-  this.scale.x = Graphics.boxWidth * 10;
-  this.scale.y = Graphics.boxHeight * 10;
-  this.anchor.x = 0.5;
-  this.anchor.y = 0.5;
-  this.x = 0;
-  this.y = 0;
-};
-
-//=============================================================================
-// Window
-//=============================================================================
-
-Yanfly.Core.Window_refreshAllParts = Window.prototype._refreshAllParts;
-Window.prototype._refreshAllParts = function() {
-  this._roundWhUp();
-  Yanfly.Core.Window_refreshAllParts.call(this);
-};
-
-Window.prototype._roundWhUp = function() {
-  this._width = Math.ceil(this._width);
-  this._height = Math.ceil(this._height);
+    Yanfly.Core.ScreenSprite_initialize.call(this);
+    this.scale.x = Graphics.boxWidth * 10;
+    this.scale.y = Graphics.boxHeight * 10;
+    this.anchor.x = 0.5;
+    this.anchor.y = 0.5;
+    this.x = 0;
+    this.y = 0;
 };
 
 //=============================================================================
@@ -1073,17 +1133,17 @@ Window.prototype._roundWhUp = function() {
 
 Yanfly.Core.DataManager_isDatabaseLoaded = DataManager.isDatabaseLoaded;
 DataManager.isDatabaseLoaded = function() {
-  if (!Yanfly.Core.DataManager_isDatabaseLoaded.call(this)) return false;
-  if (!Yanfly._loaded_YEP_CoreEngine) {
-    this.processCORENotetags1($dataItems);
-    this.processCORENotetags1($dataWeapons);
-    this.processCORENotetags1($dataArmors);
-    this.processCORENotetags2($dataEnemies);
-    this.processCORENotetags3($dataActors);
-    this.processCORENotetags4($dataClasses);
-    Yanfly._loaded_YEP_CoreEngine = true;
-  }
-  return true;
+    if (!Yanfly.Core.DataManager_isDatabaseLoaded.call(this)) return false;
+    if (!Yanfly._loaded_YEP_CoreEngine) {
+      this.processCORENotetags1($dataItems);
+      this.processCORENotetags1($dataWeapons);
+      this.processCORENotetags1($dataArmors);
+      this.processCORENotetags2($dataEnemies);
+      this.processCORENotetags3($dataActors);
+      this.processCORENotetags4($dataClasses);
+      Yanfly._loaded_YEP_CoreEngine = true;
+    }
+    return true;
 };
 
 DataManager.processCORENotetags1 = function(group) {
@@ -1242,81 +1302,36 @@ DataManager.processCORENotetags4 = function(group) {
 };
 
 //=============================================================================
-// SceneManager
+// Scene_Manager
 //=============================================================================
 
-SceneManager._screenWidth  = Yanfly.Param.ScreenWidth;
-SceneManager._screenHeight = Yanfly.Param.ScreenHeight;
-SceneManager._boxWidth     = Yanfly.Param.ScreenWidth;
-SceneManager._boxHeight    = Yanfly.Param.ScreenHeight
+SceneManager._screenWidth  = Number(Yanfly.Parameters['Screen Width'] || 816);
+SceneManager._screenHeight = Number(Yanfly.Parameters['Screen Height'] || 624);
+SceneManager._boxWidth     = Number(Yanfly.Parameters['Screen Width'] || 816);
+SceneManager._boxHeight    = Number(Yanfly.Parameters['Screen Height'] || 624);
 
 Yanfly.Core.SceneManager_run = SceneManager.run;
 SceneManager.run = function(sceneClass) {
-  Yanfly.Core.SceneManager_run.call(this, sceneClass);
-  Yanfly.updateResolution();
-  if (!Utils.isNwjs()) return;
-  if (Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= "1.6.0") return;
-  if (Yanfly.Param.OpenConsole) Yanfly.openConsole();
-};
-
-Yanfly.updateResolution = function() {
-  var resizeWidth = Yanfly.Param.ScreenWidth - window.innerWidth;
-  var resizeHeight = Yanfly.Param.ScreenHeight - window.innerHeight;
-  if (!Imported.ScreenResolution) {
-    window.moveBy(-1 * resizeWidth / 2, -1 * resizeHeight / 2);
-    window.resizeBy(resizeWidth, resizeHeight);
-  }
-};
-
-Yanfly.openConsole = function() {
-  Yanfly._openedConsole = true;
-  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
-    var _debugWindow = require('nw.gui').Window.get().showDevTools();
-    if (_debugWindow) _debugWindow.moveTo(0, 0);
-    window.focus();
-  }
-};
-
-Yanfly.Core.SceneManager_onKeyDown = SceneManager.onKeyDown;
-SceneManager.onKeyDown = function(event) {
-  if (!event.ctrlKey && !event.altKey && event.keyCode === 116) {
-    if (Utils.isNwjs() && Utils.isOptionValid('test')) {
-      var win = require('nw.gui').Window.get();
-      win.closeDevTools();
+    Yanfly.Core.SceneManager_run.call(this, sceneClass);
+    if (Utils.isMobileDevice()) return;
+    if (Utils.isMobileSafari()) return;
+    if (Utils.isAndroidChrome()) return;
+    var resizeWidth = Graphics.boxWidth - window.innerWidth;
+    var resizeHeight = Graphics.boxHeight - window.innerHeight;
+    if (eval(Yanfly.Param.OpenConsole)) this.openConsole();
+    if (!Imported.ScreenResolution) {
+      window.moveBy(-1 * resizeWidth / 2, -1 * resizeHeight / 2);
+      window.resizeBy(resizeWidth, resizeHeight);
     }
-  }
-  Yanfly.Core.SceneManager_onKeyDown.call(this, event);
 };
 
-if (Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= "1.6.0") {
-
-Yanfly.openConsole = function() {
-  Yanfly._openedConsole = true;
-  if (!Yanfly.Param.OpenConsole) return;
-  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
-    var win = require('nw.gui').Window.get();
-    win.showDevTools();
-    setTimeout(this.focusWindow.bind(this, win), 500);
-  }
+SceneManager.openConsole = function() {
+    if (Utils.isNwjs() && Utils.isOptionValid('test')) {
+      var _debugWindow = require('nw.gui').Window.get().showDevTools();
+      _debugWindow.moveTo(0, 0);
+      window.focus();
+    }
 };
-
-Yanfly.focusWindow = function(win) {
-  win.focus();
-};
-
-Yanfly.Core.Scene_Map_update = Scene_Map.prototype.update;
-Scene_Map.prototype.update = function() {
-  Yanfly.Core.Scene_Map_update.call(this);
-  if (!Yanfly._openedConsole) Yanfly.openConsole();
-};
-
-Yanfly.Core.Scene_Battle_update = Scene_Battle.prototype.update;
-Scene_Battle.prototype.update = function() {
-  Yanfly.Core.Scene_Battle_update.call(this);
-  if (!Yanfly._openedConsole) Yanfly.openConsole();
-};
-
-}; // 1.6.0
 
 //=============================================================================
 // BattleManager
@@ -1332,22 +1347,206 @@ BattleManager.displayStartMessages = function() {
 };
 
 BattleManager.processEscape = function() {
-  $gameParty.performEscape();
-  SoundManager.playEscape();
-  var success = this._preemptive ? true : (Math.random() < this._escapeRatio);
-  if (success) {
-      $gameParty.removeBattleStates();
-      this.displayEscapeSuccessMessage();
-      this._escaped = true;
-      this.processAbort();
-  } else {
-      this.displayEscapeFailureMessage();
-      this._escapeRatio += 0.1;
-      $gameParty.clearActions();
-      this.startTurn();
-  }
-  return success;
+    $gameParty.performEscape();
+    SoundManager.playEscape();
+    var success = this._preemptive ? true : (Math.random() < this._escapeRatio);
+    if (success) {
+        $gameParty.removeBattleStates();
+        this.displayEscapeSuccessMessage();
+        this._escaped = true;
+        this.processAbort();
+    } else {
+        this.displayEscapeFailureMessage();
+        this._escapeRatio += 0.1;
+        $gameParty.clearActions();
+        this.startTurn();
+    }
+    return success;
 };
+
+//=============================================================================
+// Scene_Title
+//=============================================================================
+
+Yanfly.Core.Scene_Title_start = Scene_Title.prototype.start;
+Scene_Title.prototype.start = function() {
+    Yanfly.Core.Scene_Title_start.call(this);
+    if (eval(Yanfly.Param.ScaleTitle)) this.rescaleTitle();
+};
+
+Scene_Title.prototype.rescaleTitle = function() {
+    this.rescaleTitleSprite(this._backSprite1);
+    this.rescaleTitleSprite(this._backSprite2);
+};
+
+Scene_Title.prototype.rescaleTitleSprite = function(sprite) {
+    if (sprite.bitmap.width <= 0 || sprite.bitmap <= 0) return;
+    var width = Graphics.boxWidth;
+    var height = Graphics.boxHeight;
+    var ratioX = width / sprite.bitmap.width;
+    var ratioY = height / sprite.bitmap.height;
+    if (ratioX > 1.0) sprite.scale.x = ratioX;
+    if (ratioY > 1.0) sprite.scale.y = ratioY;
+    this.centerSprite(sprite);
+};
+
+//=============================================================================
+// Scene_Gameover
+//=============================================================================
+
+Yanfly.Core.Scene_Gameover_start = Scene_Gameover.prototype.start;
+Scene_Gameover.prototype.start = function() {
+    Yanfly.Core.Scene_Gameover_start.call(this);
+    if (eval(Yanfly.Param.ScaleGameOver)) this.rescaleBackground();
+};
+
+Scene_Gameover.prototype.rescaleBackground = function() {
+    this.rescaleImageSprite(this._backSprite);
+};
+
+Scene_Gameover.prototype.rescaleImageSprite = function(sprite) {
+    if (sprite.bitmap.width <= 0 || sprite.bitmap <= 0) return;
+    var width = Graphics.boxWidth;
+    var height = Graphics.boxHeight;
+    var ratioX = width / sprite.bitmap.width;
+    var ratioY = height / sprite.bitmap.height;
+    if (ratioX > 1.0) sprite.scale.x = ratioX;
+    if (ratioY > 1.0) sprite.scale.y = ratioY;
+    this.centerSprite(sprite);
+};
+
+Scene_Gameover.prototype.centerSprite = function(sprite) {
+    sprite.x = Graphics.width / 2;
+    sprite.y = Graphics.height / 2;
+    sprite.anchor.x = 0.5;
+    sprite.anchor.y = 0.5;
+};
+
+//=============================================================================
+// Sprite_Animation
+//=============================================================================
+
+Sprite_Animation.prototype.setupRate = function() {
+  this._rate = Yanfly.Param.AnimationRate;
+};
+
+//=============================================================================
+// Sprite_Battler
+//=============================================================================
+
+if (!eval(Yanfly.Param.FlashTarget)) {
+
+Yanfly.Core.Sprite_Battler_updateSelectionEffect =
+    Sprite_Battler.prototype.updateSelectionEffect;
+Sprite_Battler.prototype.updateSelectionEffect = function() {
+    if (this._battler.isActor()) {
+      Yanfly.Core.Sprite_Battler_updateSelectionEffect.call(this);
+    } else {
+      if (this._battler.isSelected()) this.startEffect('whiten');
+    }
+};
+
+};
+
+//=============================================================================
+// Sprite_Actor
+//=============================================================================
+
+if (eval(Yanfly.Param.ReposBattlers)) {
+  Yanfly.Core.Sprite_Actor_setActorHome = Sprite_Actor.prototype.setActorHome;
+  Sprite_Actor.prototype.setActorHome = function(index) {
+      Yanfly.Core.Sprite_Actor_setActorHome.call(this, index);
+      this._homeX += Graphics.boxWidth - 816;
+      this._homeY += Graphics.boxHeight - 624;
+  };
+};
+
+Sprite_Actor.prototype.retreat = function() {
+    this.startMove(1200, 0, 120);
+};
+
+//=============================================================================
+// Sprite_Enemy
+//=============================================================================
+
+if (eval(Yanfly.Param.ReposBattlers)) {
+  Yanfly.Core.Sprite_Enemy_setBattler = Sprite_Enemy.prototype.setBattler;
+  Sprite_Enemy.prototype.setBattler = function(battler) {
+      Yanfly.Core.Sprite_Enemy_setBattler.call(this, battler);
+      if (!this._enemy._alteredScreenY) {
+        this._homeY += Graphics.boxHeight - 624;
+        this._enemy._screenY = this._homeY;
+        this._enemy._alteredScreenY = true;
+      }
+      if ($gameSystem.isSideView()) return;
+      if (!this._enemy._alteredScreenX) {
+        this._homeX += (Graphics.boxWidth - 816) / 2;
+        this._enemy._screenX = this._homeX;
+        this._enemy._alteredScreenX = true;
+      }
+  };
+};
+
+//=============================================================================
+// Sprite_StateIcon
+//=============================================================================
+
+Sprite_StateIcon._iconWidth  = Number(Yanfly.Parameters['Icon Width'] || 32);;
+Sprite_StateIcon._iconHeight = Number(Yanfly.Parameters['Icon Height'] || 32);;
+
+//=============================================================================
+// Sprite_Button
+//=============================================================================
+
+Sprite_Button.prototype.isButtonTouched = function() {
+    var x = this.canvasToLocalX(TouchInput.x) + (this.anchor.x * this.width);
+    var y = this.canvasToLocalY(TouchInput.y) + (this.anchor.y * this.height);
+    return x >= 0 && y >= 0 && x < this.width && y < this.height;
+};
+
+//=============================================================================
+// Spriteset_Battle
+//=============================================================================
+
+if (eval(Yanfly.Param.ScaleBattleback)) {
+
+Yanfly.Core.Spriteset_Battle_locateBattleback =
+    Spriteset_Battle.prototype.locateBattleback;
+Spriteset_Battle.prototype.locateBattleback = function() {
+    var sprite1 = this._back1Sprite;
+    var sprite2 = this._back2Sprite;
+    if (sprite1.bitmap.width <= 0) return;
+    if (sprite2.bitmap.width <= 0) return;
+    if (this._rescaledBattlebackSprite) return;
+    this._rescaledBattlebackSprite = true;
+    Yanfly.Core.Spriteset_Battle_locateBattleback.call(this);
+    this.rescaleBattlebacks();
+};
+
+Spriteset_Battle.prototype.rescaleBattlebacks = function() {
+    this.rescaleBattlebackSprite(this._back1Sprite);
+    this.rescaleBattlebackSprite(this._back2Sprite);
+};
+
+Spriteset_Battle.prototype.rescaleBattlebackSprite = function(sprite) {
+  if (sprite.bitmap.width <= 0 || sprite.bitmap <= 0) return;
+  var width = Graphics.boxWidth;
+  var height = Graphics.boxHeight;
+  var ratioX = width / sprite.bitmap.width;
+  var ratioY = height / sprite.bitmap.height;
+  if (ratioX > 1.0) {
+    sprite.scale.x = ratioX;
+    sprite.anchor.x = 0.5;
+    sprite.x = width / 2;
+  }
+  if (ratioY > 1.0) {
+    sprite.scale.y = ratioY;
+    sprite.origin.y = 0;
+    sprite.y = 0;
+  }
+};
+
+}; // Yanfly.Param.ScaleBattleback
 
 //=============================================================================
 // Game_BattlerBase
@@ -1361,61 +1560,6 @@ Game_BattlerBase.prototype.paramMax = function(paramId) {
     } else {
         return Yanfly.Param.EnemyParam;
     }
-};
-
-Yanfly.Core.Game_BattlerBase_refresh = Game_BattlerBase.prototype.refresh;
-
-Game_BattlerBase.prototype.mapRegenUpdateCheck = function(type) {
-  if ($gameParty.inBattle()) return true;
-  if (type === 'hp') {
-    return Yanfly.Param.RefreshUpdateHp;
-  } else if (type === 'mp') {
-    return Yanfly.Param.RefreshUpdateMp;
-  } else if (type === 'tp') {
-    return Yanfly.Param.RefreshUpdateTp;
-  }
-};
-
-Game_BattlerBase.prototype.setHp = function(hp) {
-  if (this._hp === hp) return;
-  this._hp = hp;
-  if (this.mapRegenUpdateCheck('hp')) {
-    this.refresh();
-  } else {
-    Yanfly.Core.Game_BattlerBase_refresh.call(this);
-  }
-};
-
-Game_BattlerBase.prototype.setMp = function(mp) {
-  if (this._mp === mp) return;
-  this._mp = mp;
-  if (this.mapRegenUpdateCheck('mp')) {
-    this.refresh();
-  } else {
-    Yanfly.Core.Game_BattlerBase_refresh.call(this);
-  }
-};
-
-Game_BattlerBase.prototype.setTp = function(tp) {
-  if (this._tp === tp) return;
-  this._tp = tp;
-  if (this.mapRegenUpdateCheck('tp')) {
-    this.refresh();
-  } else {
-    Yanfly.Core.Game_BattlerBase_refresh.call(this);
-  }
-};
-
-//=============================================================================
-// Game_Battler
-//=============================================================================
-
-Game_Battler.prototype.onTurnEnd = function() {
-  this.clearResult();
-  this.regenerateAll();
-  this.updateStateTurns();
-  this.updateBuffTurns();
-  this.removeStatesAuto(2);
 };
 
 //=============================================================================
@@ -1458,27 +1602,6 @@ Game_Actor.prototype.changeClass = function(classId, keepExp) {
     this.refresh();
 };
 
-Game_Actor.prototype.learnSkill = function(skillId) {
-    if (!this._skills.contains(skillId)) {
-        this._skills.push(skillId);
-        this._skills.sort(function(a, b) {
-            return a - b;
-        });
-    }
-};
-
-if (Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= '1.3.4') {
-
-Game_Actor.prototype.meetsUsableItemConditions = function(item) {
-  if($gameParty.inBattle() && !BattleManager.canEscape() &&
-  this.testEscape(item)){
-    return false;
-  }
-  return Game_BattlerBase.prototype.meetsUsableItemConditions.call(this, item);
-};
-
-}; // Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= '1.3.4'
-
 //=============================================================================
 // Game_Party
 //=============================================================================
@@ -1492,25 +1615,9 @@ Game_Party.prototype.maxItems = function(item) {
     return item.maxItem;
 };
 
-Game_Party.prototype.onPlayerWalk = function() {
-    var group = this.members();
-    var length = group.length;
-    for (var i = 0; i < length; ++i) {
-      var actor = group[i];
-      if (actor) actor.onPlayerWalk();
-    }
-};
-
 //=============================================================================
 // Game_Map
 //=============================================================================
-
-Yanfly.isPreventScreenJittering = function() {
-  if (Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= '1.3.4') return false;
-  return true;
-};
-
-if (Yanfly.isPreventScreenJittering()) {
 
 Game_Map.prototype.displayX = function() {
     return parseFloat(Math.floor(this._displayX *
@@ -1521,8 +1628,6 @@ Game_Map.prototype.displayY = function() {
     return parseFloat(Math.floor(this._displayY *
       this.tileHeight())) / this.tileHeight();
 };
-
-}; // Yanfly.isPreventScreenJittering
 
 Game_Map.prototype.adjustX = function(x) {
     if (this.isLoopHorizontal() && x < this.displayX() -
@@ -1539,30 +1644,6 @@ Game_Map.prototype.adjustY = function(y) {
         return y - this.displayY() + $dataMap.height;
     } else {
         return y - this.displayY();
-    }
-};
-
-Game_Map.prototype.updateEvents = function() {
-    var group = this.events();
-    var length = group.length;
-    for (var i = 0; i < length; ++i) {
-      var ev = group[i];
-      if (ev) ev.update();
-    }
-    var group = this._commonEvents;
-    var length = group.length;
-    for (var i = 0; i < length; ++i) {
-      var ev = group[i];
-      if (ev) ev.update();
-    }
-};
-
-Game_Map.prototype.updateVehicles = function() {
-    var group = this._vehicles;
-    var length = group.length;
-    for (var i = 0; i < length; ++i) {
-      var vehicle = group[i];
-      if (vehicle) vehicle.update();
     }
 };
 
@@ -1585,24 +1666,6 @@ Game_Character.prototype.setMoveRoute = function(moveRoute) {
     }
 };
 
-Yanfly.Core.Game_Character_processMoveCommand =
-  Game_Character.prototype.processMoveCommand;
-Game_Character.prototype.processMoveCommand = function(command) {
-  var gc = Game_Character;
-  var params = command.parameters;
-  switch (command.code) {
-  case gc.ROUTE_SCRIPT:
-    try {
-      eval(params[0]);
-    } catch (e) {
-      Yanfly.Util.displayError(e, params[0], 'MOVE ROUTE SCRIPT ERROR');
-    }
-    return;
-    break;
-  }
-  return Yanfly.Core.Game_Character_processMoveCommand.call(this, command);
-};
-
 //=============================================================================
 // Game_Event
 //=============================================================================
@@ -1616,133 +1679,8 @@ Game_Event.prototype.isCollidedWithEvents = function(x, y) {
 };
 
 //=============================================================================
-// Game_Screen
-//=============================================================================
-
-Game_Screen.prototype.updatePictures = function() {
-    var group = this._pictures;
-    var length = group.length;
-    for (var i = 0; i < length; ++i) {
-      var picture = group[i];
-      if (picture) picture.update();
-    }
-};
-
-//=============================================================================
-// Game_Action
-//=============================================================================
-
-Yanfly.Core.Game_Action_testItemEffect = Game_Action.prototype.testItemEffect;
-Game_Action.prototype.testItemEffect = function(target, effect) {
-    switch (effect.code) {
-    case Game_Action.EFFECT_LEARN_SKILL:
-      return target.isActor() && !target._skills.contains(effect.dataId);
-    default:
-      return Yanfly.Core.Game_Action_testItemEffect.call(this, target, effect);
-    }
-};
-
-Game_Action.prototype.evalDamageFormula = function(target) {
-  var item = this.item();
-  var a = this.subject();
-  var b = target;
-  var v = $gameVariables._data;
-  var sign = ([3, 4].contains(item.damage.type) ? -1 : 1);
-  try {
-    var value = Math.max(eval(item.damage.formula), 0) * sign;
-    if (isNaN(value)) value = 0;
-    return value;
-  } catch (e) {
-    Yanfly.Util.displayError(e, item.damage.formula, 'DAMAGE FORMULA ERROR');
-    return 0;
-  }
-};
-
-//=============================================================================
 // Game_Interpreter
 //=============================================================================
-
-// Conditional Branch
-Yanfly.Core.Game_Interpreter_command111 =
-  Game_Interpreter.prototype.command111;
-Game_Interpreter.prototype.command111 = function() {
-  var result = false;
-  switch (this._params[0]) {
-  case 0: // Switch
-    if (this._params[2] === 0) {
-      result = $gameSwitches.value(this._params[1]);
-    } else {
-      result = !$gameSwitches.value(this._params[1]);
-    }
-    this._branch[this._indent] = result;
-    if (this._branch[this._indent] === false) this.skipBranch();
-    return true
-    break;
-  case 2: // Self Switch
-    if (this._eventId > 0) {
-      var key = [this._mapId, this._eventId, this._params[1]];
-      if (this._params[2] === 0) {
-        result = $gameSelfSwitches.value(key);
-      } else {
-        result = !$gameSelfSwitches.value(key);
-      }
-    }
-    this._branch[this._indent] = result;
-    if (this._branch[this._indent] === false) this.skipBranch();
-    return true
-    break;
-  case 12:  // Script
-    var code = this._params[1];
-    try {
-      result = !!eval(code);
-    } catch (e) {
-      result = false;
-      Yanfly.Util.displayError(e, code, 'CONDITIONAL BRANCH SCRIPT ERROR');
-    }
-    this._branch[this._indent] = result;
-    if (this._branch[this._indent] === false) this.skipBranch();
-    return true
-    break;
-  }
-  return Yanfly.Core.Game_Interpreter_command111.call(this);
-};
-
-// Control Variables
-Yanfly.Core.Game_Interpreter_command122 =
-  Game_Interpreter.prototype.command122;
-Game_Interpreter.prototype.command122 = function() {
-  switch (this._params[3]) {
-  case 4:  // Script
-    var value = 0;
-    var code = this._params[4];
-    try {
-      value = eval(code);
-    } catch (e) {
-      Yanfly.Util.displayError(e, code, 'CONTROL VARIABLE SCRIPT ERROR');
-    }
-    for (var i = this._params[0]; i <= this._params[1]; i++) {
-      this.operateVariable(i, this._params[2], value);
-    }
-    return true;
-    break;
-  }
-  return Yanfly.Core.Game_Interpreter_command122.call(this);
-};
-
-// Script
-Game_Interpreter.prototype.command355 = function() {
-  var script = this.currentCommand().parameters[0] + '\n';
-  while (this.nextEventCode() === 655) {
-    this._index++;
-    script += this.currentCommand().parameters[0] + '\n';
-  }
-  try {
-    eval(script);
-  } catch (e) {
-    Yanfly.Util.displayError(e, script, 'SCRIPT CALL ERROR');
-  }
-  return true;
-};
 
 Yanfly.Core.Game_Interpreter_pluginCommand =
     Game_Interpreter.prototype.pluginCommand;
@@ -1757,430 +1695,20 @@ Game_Interpreter.prototype.pluginCommand = function(command, args) {
 };
 
 //=============================================================================
-// Scene_Base
-//=============================================================================
-
-Scene_Base.prototype.clearChildren = function() {
-  while (this.children.length > 0) {
-    this.removeChild(this.children[0]);
-  }
-};
-
-if (Yanfly.Param.CollectionClear) {
-
-Yanfly.Core.Scene_Base_terminate = Scene_Base.prototype.terminate;
-Scene_Base.prototype.terminate = function() {
-  Yanfly.Core.Scene_Base_terminate.call(this);
-  if (this._bypassFirstClear) return;
-  this.clearChildren();
-};
-
-Yanfly.Core.Scene_Title_terminate = Scene_Title.prototype.terminate;
-Scene_Title.prototype.terminate = function() {
-  this._bypassFirstClear = true;
-  Yanfly.Core.Scene_Title_terminate.call(this);
-  this.clearChildren();
-};
-
-Yanfly.Core.Scene_Map_terminate = Scene_Map.prototype.terminate;
-Scene_Map.prototype.terminate = function() {
-  this._bypassFirstClear = true;
-  Yanfly.Core.Scene_Map_terminate.call(this);
-  this.clearChildren();
-};
-
-Yanfly.Core.Scene_Battle_terminate = Scene_Battle.prototype.terminate;
-Scene_Battle.prototype.terminate = function() {
-  this._bypassFirstClear = true;
-  Yanfly.Core.Scene_Battle_terminate.call(this);
-  this.clearChildren();
-};
-
-Yanfly.Core.Scene_Options_terminate = Scene_Options.prototype.terminate;
-Scene_Options.prototype.terminate = function() {
-  this._bypassFirstClear = true;
-  Yanfly.Core.Scene_Options_terminate.call(this);
-  this.clearChildren();
-};
-
-Yanfly.Core.Scene_Load_terminate = Scene_Load.prototype.terminate;
-Scene_Load.prototype.terminate = function() {
-  this._bypassFirstClear = true;
-  Yanfly.Core.Scene_Load_terminate.call(this);
-  this.clearChildren();
-};
-
-Yanfly.Core.Scene_Gameover_terminate = Scene_Gameover.prototype.terminate;
-Scene_Gameover.prototype.terminate = function() {
-  this._bypassFirstClear = true;
-  Yanfly.Core.Scene_Gameover_terminate.call(this);
-  this.clearChildren();
-};
-
-}; // Yanfly.Param.CollectionClear
-
-//=============================================================================
-// Scene_Boot
-//=============================================================================
-
-Scene_Boot.prototype.isGameFontLoaded = function() {
-  if (Graphics.isFontLoaded('GameFont')) {
-    return true;
-  } else if (Yanfly.Param.GameFontTimer <= 0) {
-    return false;
-  } else {
-    var elapsed = Date.now() - this._startDate;
-    if (elapsed >= Yanfly.Param.GameFontTimer) {
-      throw new Error('Failed to load GameFont');
-    } else {
-      return false;
-    }
-  }
-};
-
-//=============================================================================
-// Scene_Item
-//=============================================================================
-
-if (Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= "1.6.0") {
-
-Scene_Item.prototype.update = function() {
-  Scene_ItemBase.prototype.update.call(this);
-};
-
-}; // Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= "1.6.0"
-
-//=============================================================================
-// Scene_Title
-//=============================================================================
-
-Yanfly.Core.Scene_Title_start = Scene_Title.prototype.start;
-Scene_Title.prototype.start = function() {
-  Yanfly.Core.Scene_Title_start.call(this);
-  if (eval(Yanfly.Param.ScaleTitle)) this.rescaleTitle();
-};
-
-Scene_Title.prototype.rescaleTitle = function() {
-  this.rescaleTitleSprite(this._backSprite1);
-  this.rescaleTitleSprite(this._backSprite2);
-};
-
-Scene_Title.prototype.rescaleTitleSprite = function(sprite) {
-  if (sprite.bitmap.width <= 0 || sprite.bitmap <= 0) {
-    return setTimeout(this.rescaleTitleSprite.bind(this, sprite), 5);
-  }
-  var width = Graphics.boxWidth;
-  var height = Graphics.boxHeight;
-  var ratioX = width / sprite.bitmap.width;
-  var ratioY = height / sprite.bitmap.height;
-  if (ratioX > 1.0) sprite.scale.x = ratioX;
-  if (ratioY > 1.0) sprite.scale.y = ratioY;
-  this.centerSprite(sprite);
-};
-
-//=============================================================================
-// Scene_Map
-//=============================================================================
-
-if (Yanfly.Param.ShowEvTrans) {
-
-Scene_Map.prototype.startEncounterEffect = function() {
-  this._encounterEffectDuration = this.encounterEffectSpeed();
-};
-
-}; // Yanfly.Param.ShowEvTrans
-
-Yanfly.Core.Scene_Map_snapForBattleBackground =
-  Scene_Map.prototype.snapForBattleBackground;
-Scene_Map.prototype.snapForBattleBackground = function() {
-  if (!Yanfly.Param.ShowEvSnap) this._spriteset.hideCharacters();
-  Yanfly.Core.Scene_Map_snapForBattleBackground.call(this);
-  if (Yanfly.Param.ShowEvTrans) this._spriteset.showCharacters();
-};
-
-//=============================================================================
-// Scene_Gameover
-//=============================================================================
-
-Yanfly.Core.Scene_Gameover_start = Scene_Gameover.prototype.start;
-Scene_Gameover.prototype.start = function() {
-    Yanfly.Core.Scene_Gameover_start.call(this);
-    if (eval(Yanfly.Param.ScaleGameOver)) this.rescaleBackground();
-};
-
-Scene_Gameover.prototype.rescaleBackground = function() {
-    this.rescaleImageSprite(this._backSprite);
-};
-
-Scene_Gameover.prototype.rescaleImageSprite = function(sprite) {
-    if (sprite.bitmap.width <= 0 || sprite.bitmap <= 0) {
-      return setTimeout(this.rescaleImageSprite.bind(this, sprite), 5);
-    }
-    var width = Graphics.boxWidth;
-    var height = Graphics.boxHeight;
-    var ratioX = width / sprite.bitmap.width;
-    var ratioY = height / sprite.bitmap.height;
-    if (ratioX > 1.0) sprite.scale.x = ratioX;
-    if (ratioY > 1.0) sprite.scale.y = ratioY;
-    this.centerSprite(sprite);
-};
-
-Scene_Gameover.prototype.centerSprite = function(sprite) {
-    sprite.x = Graphics.width / 2;
-    sprite.y = Graphics.height / 2;
-    sprite.anchor.x = 0.5;
-    sprite.anchor.y = 0.5;
-};
-
-//=============================================================================
-// Sprite_Animation
-//=============================================================================
-
-Sprite_Animation.prototype.setupRate = function() {
-  this._rate = Yanfly.Param.AnimationRate;
-};
-
-//=============================================================================
-// Sprite_Battler
-//=============================================================================
-
-if (!Yanfly.Param.FlashTarget) {
-
-Yanfly.Core.Sprite_Battler_updateSelectionEffect =
-    Sprite_Battler.prototype.updateSelectionEffect;
-Sprite_Battler.prototype.updateSelectionEffect = function() {
-    if (this._battler.isActor()) {
-      Yanfly.Core.Sprite_Battler_updateSelectionEffect.call(this);
-    } else {
-      if (this._battler.isSelected()) this.startEffect('whiten');
-    }
-};
-
-}; // Yanfly.Param.FlashTarget
-
-//=============================================================================
-// Sprite_Actor
-//=============================================================================
-
-if (Yanfly.Param.ReposBattlers) {
-  Yanfly.Core.Sprite_Actor_setActorHome = Sprite_Actor.prototype.setActorHome;
-  Sprite_Actor.prototype.setActorHome = function(index) {
-      Yanfly.Core.Sprite_Actor_setActorHome.call(this, index);
-      this._homeX += Graphics.boxWidth - 816;
-      this._homeY += Graphics.boxHeight - 624;
-  };
-};
-
-Sprite_Actor.prototype.retreat = function() {
-    this.startMove(1200, 0, 120);
-};
-
-//=============================================================================
-// Sprite_Enemy
-//=============================================================================
-
-if (Yanfly.Param.ReposBattlers) {
-
-Yanfly.Core.Sprite_Enemy_setBattler = Sprite_Enemy.prototype.setBattler;
-Sprite_Enemy.prototype.setBattler = function(battler) {
-    Yanfly.Core.Sprite_Enemy_setBattler.call(this, battler);
-    if (!this._enemy._alteredScreenY) {
-      this._homeY += Graphics.boxHeight - 624;
-      this._enemy._screenY = this._homeY;
-      this._enemy._alteredScreenY = true;
-    }
-    if ($gameSystem.isSideView()) return;
-    if (!this._enemy._alteredScreenX) {
-      this._homeX += (Graphics.boxWidth - 816) / 2;
-      this._enemy._screenX = this._homeX;
-      this._enemy._alteredScreenX = true;
-    }
-};
-
-}; // Yanfly.Param.ReposBattlers
-
-//=============================================================================
-// Sprite_StateIcon
-//=============================================================================
-
-Sprite_StateIcon._iconWidth  = Yanfly.Param.IconWidth;
-Sprite_StateIcon._iconHeight = Yanfly.Param.IconHeight;
-
-//=============================================================================
-// Sprite_Button
-//=============================================================================
-
-Sprite_Button.prototype.isButtonTouched = function() {
-    var x = this.canvasToLocalX(TouchInput.x) + (this.anchor.x * this.width);
-    var y = this.canvasToLocalY(TouchInput.y) + (this.anchor.y * this.height);
-    return x >= 0 && y >= 0 && x < this.width && y < this.height;
-};
-
-//=============================================================================
-// Sprite_Battleback
-//=============================================================================
-
-function Sprite_Battleback() {
-    this.initialize.apply(this, arguments);
-}
-
-Sprite_Battleback.prototype = Object.create(Sprite.prototype);
-Sprite_Battleback.prototype.constructor = Sprite_Battleback;
-
-Sprite_Battleback.prototype.initialize = function(bitmapName, type) {
-  Sprite.prototype.initialize.call(this);
-  this._bitmapName = bitmapName;
-  this._battlebackType = type;
-  this.createBitmap();
-};
-
-Sprite_Battleback.prototype.createBitmap = function() {
-  if (this._bitmapName === '') {
-    this.bitmap = new Bitmap(Graphics.boxWidth, Graphics.boxHeight);
-  } else {
-    if (this._battlebackType === 1) {
-      this.bitmap = ImageManager.loadBattleback1(this._bitmapName);
-    } else {
-      this.bitmap = ImageManager.loadBattleback2(this._bitmapName);
-    }
-    this.scaleSprite();
-  }
-};
-
-Sprite_Battleback.prototype.scaleSprite = function() {
-  if (this.bitmap.width <= 0) return setTimeout(this.scaleSprite.bind(this), 5);
-  var width = Graphics.boxWidth;
-  var height = Graphics.boxHeight;
-  if (this.bitmap.width < width) {
-    this.scale.x = width / this.bitmap.width;
-  }
-  if (this.bitmap.height < height) {
-    this.scale.y = height / this.bitmap.height;
-  }
-  this.anchor.x = 0.5;
-  this.x = Graphics.boxWidth / 2;
-  if ($gameSystem.isSideView()) {
-    this.anchor.y = 1;
-    this.y = Graphics.boxHeight;
-  } else {
-    this.anchor.y = 0.5;
-    this.y = Graphics.boxHeight / 2;
-  }
-};
-
-//=============================================================================
-// Spriteset_Map
-//=============================================================================
-
-Spriteset_Map.prototype.hideCharacters = function() {
-  for (var i = 0; i < this._characterSprites.length; i++) {
-    var sprite = this._characterSprites[i];
-    if (!sprite.isTile()) sprite.hide();
-  }
-};
-
-Spriteset_Map.prototype.showCharacters = function() {
-  for (var i = 0; i < this._characterSprites.length; i++) {
-    var sprite = this._characterSprites[i];
-    if (!sprite.isTile()) sprite.show();
-  }
-};
-
-//=============================================================================
-// Spriteset_Battle
-//=============================================================================
-
-if (Yanfly.Param.ScaleBattleback) {
-
-if (Utils.RPGMAKER_VERSION && Utils.RPGMAKER_VERSION >= '1.3.2') {
-
-// Rewriting the battlebacks
-Spriteset_Battle.prototype.createBattleback = function() {
-  this._back1Sprite = new Sprite_Battleback(this.battleback1Name(), 1);
-  this._back2Sprite = new Sprite_Battleback(this.battleback2Name(), 2);
-  this._battleField.addChild(this._back1Sprite);
-  this._battleField.addChild(this._back2Sprite);
-};
-
-// No more updateBattleback
-Spriteset_Battle.prototype.updateBattleback = function() {
-};
-
-} else { // Version 1.3.0 and below
-  
-Yanfly.Core.Spriteset_Battle_locateBattleback =
-    Spriteset_Battle.prototype.locateBattleback;
-Spriteset_Battle.prototype.locateBattleback = function() {
-  var sprite1 = this._back1Sprite;
-  var sprite2 = this._back2Sprite;
-  if (sprite1.bitmap.width <= 0) return;
-  if (sprite2.bitmap.width <= 0) return;
-  if (this._rescaledBattlebackSprite) return;
-  this._rescaledBattlebackSprite = true;
-  Yanfly.Core.Spriteset_Battle_locateBattleback.call(this);
-  var height = this._battleField.height;
-  sprite1.origin.y = sprite1.x + sprite1.bitmap.height - height;
-  sprite2.origin.y = sprite1.y + sprite2.bitmap.height - height;
-  this.rescaleBattlebacks();
-};
-
-Spriteset_Battle.prototype.rescaleBattlebacks = function() {
-  this.rescaleBattlebackSprite(this._back1Sprite, 'fnord');
-  this.rescaleBattlebackSprite(this._back2Sprite, 'blah');
-};
-
-Spriteset_Battle.prototype.rescaleBattlebackSprite = function(sprite) {
-  if (sprite.bitmap.width <= 0 || sprite.bitmap <= 0) return;
-  var width = Graphics.boxWidth;
-  var height = Graphics.boxHeight;
-  var ratioX = width / sprite.bitmap.width;
-  var ratioY = height / sprite.bitmap.height;
-  if (ratioX > 1.0) {
-    sprite.scale.x = ratioX;
-    sprite.anchor.x = 0.5;
-    sprite.x = width / 2;
-  }
-  if (ratioY > 1.0) {
-    sprite.scale.y = ratioY;
-    sprite.origin.y = 0;
-    sprite.y = 0;
-  }
-};
-
-} // Version 1.3.0 and below
-
-} // Yanfly.Param.ScaleBattleback
-
-//=============================================================================
 // Window_Base
 //=============================================================================
 
-Window_Base._iconWidth   = Yanfly.Param.IconWidth;
-Window_Base._iconHeight  = Yanfly.Param.IconHeight;
-Window_Base._faceWidth   = Yanfly.Param.FaceWidth;
-Window_Base._faceHeight  = Yanfly.Param.FaceHeight;
+Window_Base._iconWidth   = Number(Yanfly.Parameters['Icon Width'] || 32);
+Window_Base._iconHeight  = Number(Yanfly.Parameters['Icon Height'] || 32);
+Window_Base._faceWidth   = Number(Yanfly.Parameters['Face Width'] || 144);
+Window_Base._faceHeight  = Number(Yanfly.Parameters['Face Height'] || 144);
 
 Window_Base.prototype.lineHeight = function() {
   return Yanfly.Param.LineHeight;
 };
 
-Window_Base.prototype.drawTextEx = function(text, x, y) {
-  if (text) {
-    this.resetFontSettings();
-    var textState = { index: 0, x: x, y: y, left: x };
-    textState.text = this.convertEscapeCharacters(text);
-    textState.height = this.calcTextHeight(textState, false);
-    while (textState.index < textState.text.length) {
-      this.processCharacter(textState);
-    }
-    return textState.x - x;
-  } else {
-    return 0;
-  }
-};
-
 Window_Base.prototype.textWidthEx = function(text) {
-    return this.drawTextEx(text, 0, this.contents.height + this.lineHeight());
+    return this.drawTextEx(text, 0, this.contents.height);
 };
 
 Window_Base.prototype.standardFontFace = function() {
@@ -2665,17 +2193,6 @@ Yanfly.Util.toGroup = function(inVal) {
   return inVal.replace(/(^|[^\w.])(\d{4,})/g, function($0, $1, $2) {
     return $1 + $2.replace(/\d(?=(?:\d\d\d)+(?!\d))/g, "$&,");
   });
-};
-
-Yanfly.Util.displayError = function(e, code, message) {
-  console.log(message);
-  console.log(code || 'NON-EXISTENT');
-  console.error(e);
-  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
-    if (!require('nw.gui').Window.get().isDevToolsOpen()) {
-      require('nw.gui').Window.get().showDevTools();
-    }
-  }
 };
 
 //=============================================================================

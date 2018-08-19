@@ -29,6 +29,26 @@ Yanfly.ScrRes = Yanfly.ScrRes || {};
  * Adjust the parameters to change the size of how you want your game's
  * screen resolution to appear.
  */
+ /*:ja
+ * @plugindesc ゲームスクリーンの解像度を好きなように変更することができます
+ * @author Yanfly Engine Plugins
+ *
+ * @param Screen Width
+ * @desc スクリーンの横幅を調整します                           .
+ * Default: 816
+ * @default 816
+ *
+ * @param Screen Height
+ * @desc スクリーンの縦幅を調整します                          .
+ * Default: 624
+ * @default 624
+ *
+ * @help
+ * パラメータを調整して、ゲームスクリーンの解像度を変更することができます。
+ * 
+ */
+
+
 //=============================================================================
 
 Yanfly.Parameters = PluginManager.parameters('ScreenResolution');

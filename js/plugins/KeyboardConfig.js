@@ -160,6 +160,155 @@ Yanfly.KeyConfig = Yanfly.KeyboardConfig || {};
  * and arrow keys cannot be changed. Almost every other key is capable of being
  * changed to something of the player's liking.
  */
+
+ /*:ja
+ * @plugindesc キーボード向けにボタンコンフィグを行なうプラグインです。
+ * @author Yanfly Engine Plugins
+ *
+ * @param Command Name
+ * @desc メインメニューに表示されるオプション名を変更できます
+ * @default Keyboard Config
+ *
+ * @param Key Help
+ * @desc キー設定時に表示される補助メッセージです
+ * @default このキーのコンフィグを変更しますか？
+ *
+ * @param Default Layout
+ * @desc デフォルトのレイアウトに変更する際のテキストメッセージです.
+ * @default デフォルトレイアウト
+ *
+ * @param Default Help
+ * @desc デフォルト設定に対するヘルプメッセージを設定できます
+ * @default キーボード設定をデフォルトに戻します
+ *
+ * @param WASD Layout
+ * @desc WASDのレイアウトに切り替える際のテキストを設定します
+ * @default WASDレイアウト
+ *
+ * @param WASD Help
+ * @desc WADSD設定に対するヘルプメッセージを設定できます
+ * @default キーボードをWASDレイアウトに変更します
+ *
+ * @param Finish Config
+ * @desc キーボードコンフィグを完了する際のコマンド名を変更できます
+ * @default Finish Configuration
+ *
+ * @param Finish Help
+ * @desc 完了時のヘルプを設定できます
+ * @default キーボードのコンフィグを完了しますか？
+ *
+ * @param Assigned Color
+ * @desc アサインされたキーの背景色を設定できます
+ * @default 21
+ *
+ * @param Action Color
+ * @desc アサインされたアクションのテキストカラーを設定できます
+ * @default 4
+ *
+ * @param Clear Text
+ * @desc コンフィグテキストに表れるClearの説明文を変更できます
+ * @default Clear
+ *
+ * @param OK Key
+ * @desc キー上に表れるOKアクションの表記を変更できます
+ * @default OK
+ *
+ * @param OK Text
+ * @desc コンフィグテキストに表れるOKの説明文を変更できます
+ * @default OK / 話す
+ *
+ * @param Escape Key
+ * @desc キー上に表れるEscapeアクションの表記を変更できます
+ * @default X
+ *
+ * @param Escape Text
+ * @desc コンフィグテキストに表れるEscapeの説明文を変更できます
+ * @default Cancel / Menu
+ *
+ * @param Cancel Key
+ * @desc キー上に表れるキャンセルアクションの表記を変更できます
+ * @default Cancel
+ *
+ * @param Cancel Text
+ * @desc コンフィグテキストに表れるキャンセルの説明文を変更できます
+ * @default キャンセル
+ *
+ * @param Menu Key
+ * @desc キー上に表れるメニューアクションの表記を変更できます
+ * @default Menu
+ *
+ * @param Menu Text
+ * @desc コンフィグテキストに表れるメニューの説明文を変更できます
+ * @default Menu
+ *
+ * @param Shift Key
+ * @desc キー上に表れるShiftアクションの表記を変更できます
+ * @default Dash
+ *
+ * @param Shift Text
+ * @desc コンフィグテキストに表れるShiftの説明文を変更できます
+ * @default ダッシュする
+ *
+ * @param PageUp Key
+ * @desc キー上に表れるPageUpアクションの表記を変更できます
+ * @default PgUp
+ *
+ * @param PageUp Text
+ * @desc コンフィグテキストに表れるPageUpの説明文を変更できます
+ * @default ページアップ
+ *
+ * @param PageDown Key
+ * @desc キー上に表れるPageDownアクションの表記を変更できます
+ * @default PgDn
+ *
+ * @param PageDown Text
+ * @desc コンフィグテキストに表れるPageDownの説明文を変更できます
+ * @default ページダウン
+ *
+ * @param Left Key
+ * @desc キー上に表れるレフトキーアクションの表記を変更できます
+ * @default ◄
+ *
+ * @param Left Text
+ * @desc コンフィグテキストに表れるレフトキーの説明文を変更できます
+ * @default 左へ ◄
+ *
+ * @param Up Key
+ * @desc キー上に表れるアップキーアクションの表記を変更できます
+ * @default ▲
+ *
+ * @param Up Text
+ * @desc コンフィグテキストに表れるアップキーの説明文を変更できます
+ * @default 上へ ▲
+ *
+ * @param Right Key
+ * @desc キー上に表れるライトキーアクションの表記を変更できます
+ * @default ►
+ *
+ * @param Right Text
+ * @desc コンフィグテキストに表れるライトキーの説明文を変更できます
+ * @default 右へ ►
+ *
+ * @param Down Key
+ * @desc キー上に表れるダウンキーアクションの表記を変更できます
+ * @default ▼
+ *
+ * @param Down Text
+ * @desc コンフィグテキストに表れるダウンキーの説明文を変更できます
+ * @default 下へ ▼
+ *
+ * @help
+ * このプラグインを用いて、ゲーム内オプションから
+ * キーボードコンフィグを変更することができます。（PCのみ有効）
+ * プレイヤーは、ゲームとは別のスクリーンにて
+ * キーボードにアクションをアサインすることができます。
+ * 
+ * プレイヤーがコンフィグスクリーンに閉じ込められてしまうことが無いように、
+ * エンターキーと矢印キーは変更できないようになっています。
+ * それ以外の殆どのキーは、プレイヤーの好きなように変更することができます。
+ * 
+ */
+
 //=============================================================================
 
 //=============================================================================

@@ -8,11 +8,10 @@ Imported.YEP_SkillCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Skill = Yanfly.Skill || {};
-Yanfly.Skill.version = 1.12;
 
 //=============================================================================
 /*:
- * @plugindesc v1.12 Skills are now given more functions and the ability
+ * @plugindesc v1.09 Skills are now given more functions and the ability
  * to require different types of costs.
  * @author Yanfly Engine Plugins
  *
@@ -20,27 +19,16 @@ Yanfly.Skill.version = 1.12;
  * @default
  *
  * @param Cost Padding
- * @parent ---General---
- * @type number
- * @min 0
  * @desc If a skill has multiple costs, this is the amount of pixels
  * used as padding in between the costs.
  * @default 4
  *
  * @param Command Alignment
- * @parent ---General---
- * @type combo
- * @option left
- * @option center
- * @option right
  * @desc Adjusts the text alignment of the skill type window.
  * left     center     right
  * @default center
  *
  * @param Window Columns
- * @parent ---General---
- * @type number
- * @min 1
  * @desc Choose how many columns to use for the skill window.
  * Default: 2
  * @default 2
@@ -49,32 +37,21 @@ Yanfly.Skill.version = 1.12;
  * @default
  *
  * @param HP Format
- * @parent ---HP Costs---
  * @desc Adjusts the way HP cost appears in the skill list window.
  * %1 - Cost     %2 - HP
  * @default %1%2
  *
  * @param HP Font Size
- * @parent ---HP Costs---
- * @type number
- * @min 1
  * @desc Adjusts the font size used to display HP.
- * Default: 28
+ * Default: 20
  * @default 20
  *
  * @param HP Text Color
- * @parent ---HP Costs---
- * @type number
- * @min 0
- * @max 31
  * @desc Adjusts the text color used from the Window skin for HP.
- * Default: 21
+ * Default: 18
  * @default 18
  *
  * @param HP Icon
- * @parent ---HP Costs---
- * @type number
- * @min 0
  * @desc Choose what icon to use to represent HP costs.
  * Use 0 if you wish to not use an icon.
  * @default 162
@@ -83,32 +60,21 @@ Yanfly.Skill.version = 1.12;
  * @default
  *
  * @param MP Format
- * @parent ---MP Costs---
  * @desc Adjusts the way MP cost appears in the skill list window.
  * %1 - Cost     %2 - MP
  * @default %1%2
  *
  * @param MP Font Size
- * @parent ---MP Costs---
- * @type number
- * @min 1
  * @desc Adjusts the font size used to display MP.
- * Default: 28
+ * Default: 20
  * @default 20
  *
  * @param MP Text Color
- * @parent ---MP Costs---
- * @type number
- * @min 0
- * @max 31
  * @desc Adjusts the text color used from the Window skin for MP.
  * Default: 23
  * @default 23
  *
  * @param MP Icon
- * @parent ---MP Costs---
- * @type number
- * @min 0
  * @desc Choose what icon to use to represent MP costs.
  * Use 0 if you wish to not use an icon.
  * @default 165
@@ -117,32 +83,21 @@ Yanfly.Skill.version = 1.12;
  * @default
  *
  * @param TP Format
- * @parent ---TP Costs---
  * @desc Adjusts the way TP cost appears in the skill list window.
  * %1 - Cost     %2 - TP
  * @default %1%2
  *
  * @param TP Font Size
- * @parent ---TP Costs---
- * @type number
- * @min 1
  * @desc Adjusts the font size used to display TP.
- * Default: 28
+ * Default: 20
  * @default 20
  *
  * @param TP Text Color
- * @parent ---TP Costs---
- * @type number
- * @min 0
- * @max 31
  * @desc Adjusts the text color used from the Window skin for TP.
  * Default: 29
  * @default 29
  *
  * @param TP Icon
- * @parent ---TP Costs---
- * @type number
- * @min 0
  * @desc Choose what icon to use to represent TP costs.
  * Use 0 if you wish to not use an icon.
  * @default 164
@@ -203,8 +158,7 @@ Yanfly.Skill.version = 1.12;
  *   <Hide if Learned Skill: x to y>
  *   Will hide and disable this skill if skill x has been learned. If multiple
  *   skills are listed, the skill will be hidden and disabled if any one of the
- *   listed skills have been learned. This will ONLY apply to skills that have
- *   been learned and not skills added through traits.
+ *   listed skills have been learned.
  *
  * ============================================================================
  * Gauge Swapping
@@ -355,25 +309,10 @@ Yanfly.Skill.version = 1.12;
  * if the skill does land.
  *
  * Skill and Item Notetags:
- *   <Before Eval>
- *    code
- *    code
- *   </Before Eval>
- *
- *   <Pre-Damage Eval>
- *    code
- *    code
- *   </Pre-Damage Eval>
- *
- *   <Post-Damage Eval>
- *    code
- *    code
- *   </Post-Damage Eval>
- *
- *   <After Eval>
- *    code
- *    code
- *   </After Eval>
+ *   <Before Eval>    <Pre-Damage Eval>    <Post-Damage Eval>    <After Eval>
+ *    code             code                 code                  code
+ *    code             code                 code                  code
+ *   </Before Eval>   </Pre-Damage Eval>   </Post-Damage Eval>   </After Eval>
  *   If you wish to use custom effects for your skill, you can insert the
  *   respective notetags into the skill (or item) noteboxes and it will run the
  *   code that appears in between the tags. However, using any form of comments
@@ -383,24 +322,312 @@ Yanfly.Skill.version = 1.12;
  *   use of the damage to be dealt and the damage that has been dealt through
  *   the 'value' variable. The <Pre-Damage Eval> notetag is capable of altering
  *   the 'value' variable and return it to have damage affected by its code.
+ */
+ /*:ja
+ * @plugindesc v1.09 スキルシステムにより多くの機能を実装し、
+ * コストの設定などができるようになります。
+ * @author Yanfly Engine Plugins
+ *
+ * @param ---一般---
+ * @default
+ *
+ * @param Cost Padding
+ * @desc 1つのスキルが複数のコスト表示を持っている場合、
+ * コスト間のパディングに用いられるピクセル数を指定します。
+ * @default 4
+ *
+ * @param Command Alignment
+ * @desc スキルタイプウィンドウでの、テキストの揃え方を指定します。
+ * left(左)     center(中央)     right(右)
+ * @default center
+ *
+ * @param Window Columns    
+ * @desc スキルウィンドウにいくつの列を使うかを設定します。
+ * Default: 2   
+ * @default 2   
+ *
+ * @param ---HP消費---
+ * @default
+ *
+ * @param HP Format
+ * @desc スキルリストウィンドウでHPコストがどのように表示されるか調整します。
+ * %1 - コスト     %2 - HP
+ * @default %1%2
+ *
+ * @param HP Font Size
+ * @desc HPを表示する際のフォントサイズを指定します。
+ * Default: 20
+ * @default 20
+ *
+ * @param HP Text Color
+ * @desc HPのウィンドウスキンに使われるテキストカラーを指定します。
+ * Default: 18
+ * @default 18
+ *
+ * @param HP Icon
+ * @desc HPコストを表すアイコンを指定します。
+ * アイコン不要な場合は0を入力してください。
+ * @default 162
+ *
+ * @param ---MP消費---
+ * @default
+ *
+ * @param MP Format
+ * @desc スキルリストウィンドウでMPコストがどのように表示されるか調整します。
+ * %1 - コスト     %2 - MP
+ * @default %1%2
+ *
+ * @param MP Font Size
+ * @desc MPを表示する際のフォントサイズを指定します。
+ * Default: 20
+ * @default 20
+ *
+ * @param MP Text Color
+ * @desc MPのウィンドウスキンに使われるテキストカラーを指定します。
+ * Default: 23
+ * @default 23
+ *
+ * @param MP Icon
+ * @desc HPコストを表すアイコンを指定します。
+ * アイコン不要な場合は0を入力してください。
+ * @default 165
+ *
+ * @param ---TP Costs---
+ * @default
+ *
+ * @param TP Format
+ * @desc スキルリストウィンドウでTPコストがどのように表示されるか調整します。
+ * %1 - コスト     %2 - TP
+ * @default %1%2
+ *
+ * @param TP Font Size
+ * @desc TPを表示する際のフォントサイズを指定します。
+ * Default: 20
+ * @default 20
+ *
+ * @param TP Text Color
+ * @desc TPのウィンドウスキンに使われるテキストカラーを指定します。
+ * Default: 29
+ * @default 29
+ *
+ * @param TP Icon
+ * @desc TPコストを表すアイコンを指定します。
+ * アイコン不要な場合は0を入力してください。
+ * @default 164
+ *
+ * @help
+ * ============================================================================
+ * Introduction
+ * ============================================================================
+ *
+ * RPGにおいてスキルは、コスト・ダメージ・エフェクトの3つで構成されています。
+ * 全てが必須というわけではありませんが、
+ * これらの要素はスキルを構成する上で、大きな役割を占めています。
+ * このプラグインでは上記3つのうち、コストとエフェクトのハンドリングを行います。
+ *
+ * またこのプラグインでは、HPやMP, TPゲージの表示を入れ替えて、
+ * バトラーそれぞれの特徴により適した表示を行うことができます。
+ * (MPやTPゲージを元々持たないクラスが居るため)
+ *
+ * ============================================================================
+ * Notetags
+ * ============================================================================
+ *
+ * 下記のNotetagはスキルコスト・特殊スキルエフェクトどちらにも適用できます。
+ *
+ * Skill Notetags:
+ *   <HP Cost: x>
+ *   スキル使用時に x だけHPを消費させます。
+ *
+ *   <HP Cost: x%>
+ *   スキル使用時に、キャラクターの最大HPに対して x % を消費させます。
+ *
+ *   <MP Cost: x>
+ *   スキル使用時に x だけMPを消費させます。
+ *   この際、データベースの制限値である9999を無視することができます。
+ *
+ *   <MP Cost: x%>
+ *   スキル使用時に、キャラクターの最大MPに対して x % を消費させます。
+ *
+ *   <TP Cost: x>
+ *   スキル使用時に x だけTPを消費させます。
+ *   この際、データベースの制限値である99を無視することができます。
+ *
+ *   <TP Cost: x%>
+ *   スキル使用時に、キャラクターの最大TPに対して x % を消費させます。
+ *   デフォルトの最大TPは100ですが、この最大値を変更させる
+ *   プラグインに対してもこのタグは有効です。
+ *    
+ *   <Hide in Battle>   
+ *   スキルを無効にし、バトル時に隠すようにします。
+ *    
+ *   <Hide in Field>    
+ *   スキルを無効にし、バトルをしていない時に隠すようにします。    
+ *    
+ *   <Hide if Learned Skill: x>   
+ *   <Hide if Learned Skill: x, x, x>   
+ *   <Hide if Learned Skill: x to y>    
+ *   x スキルを覚えたらそのスキルを隠し、無効にします。複数のスキルが書かれた
+ *   場合、書かれたスキルのうち、一つでも覚えたらスキルを隠し、無効にします。
+ *
+ * ============================================================================
+ * Gauge Swapping
+ * ============================================================================
+ *
+ * 全てのプラグインがHP/MP/TPを同様の法則で持っており、かつ
+ * デフォルトのゲージ描画処理を上書きしないという前提のもとであれば、
+ * HP/MP/TPゲージを好きな順番に入れ替えることができます。
+ * 拡張プラグインを使っている場合でも、同様に入れ替えを行うことができます。
+ *
+ * 注＊データベースのシステムタブで「バトル画面で TP を表示」を
+ * 有効にしていない場合、3つ目のスロットには何も表示されません。
+ *
+ * クラスのNotetag:
+ *   <Swap Gauge x: y>
+ *   ゲージ x (1,2,3)を y に変更します。 y の部分を'HP' 'MP' 'TP'
+ *   に変更することで、ゲージスロットにゲージの種類を表示できます。
+ *   スロットに何も表示させたくない場合は、y の部分に
+ *   'Nothing' か 'Null' と入力してください。
+ *
+ * 武器、防具、ステートのNotetags:
+ *   <Swap Gauge x: y>
+ *   これらのNotetagを含む装備やステートを持っているアクターや敵については、
+ *   デフォルトセッティングや、クラス/敵のNotetagで設定されたゲージの代わりに、
+ *   カスタムされたゲージを表示できます。
+ *
+ *   下記の順序で優先順位付けが行われます:
+ *     武器＞防具＞ステート＞クラス＞敵
+ *
+ * ============================================================================
+ * Lunatic Mode - Skill Costs
+ * ============================================================================
+ *
+ * スキルコストとエフェクトについて、より高度な操作を行いたいユーザー向けに、
+ * それらに適用できるNotetagを以下に記します。
+ * エフェクトについては、アイテムコントロール向けに拡張することもできます。
+ *
+ *   <Custom HP Cost>           例: <Custom HP Cost>
+ *    code                            cost += $gameVariables.value(1);
+ *    code                           </Custom HP Cost>
+ *   </Custom HP Cost>
+ *   スキルに、コードに基づいたカスタムHPコストを持たせることができます。
+ *   'cost'はHPコストとHPコスト%によって定義済みの変数です。
+ *
+ *   <Custom MP Cost>           例: <Custom MP Cost>
+ *    code                            cost += $gameVariables.value(1);
+ *    code                           </Custom MP Cost>
+ *   </Custom MP Cost>
+ *   スキルに、コードに基づいたカスタムMPコストを持たせることができます。
+ *   'cost'はMPコストとMPコスト%によって定義済みの変数です。
+ *
+ *   <Custom TP Cost>            例: <Custom TP Cost>
+ *    code                            cost += $gameVariables.value(1);
+ *    code                           </Custom TP Cost>
+ *   </Custom TP Cost>
+ *   スキルに、コードに基づいたカスタムTPコストを持たせることができます。
+ *   'cost'はTPコストとTPコスト%によって定義済みの変数です。
+ *
+ * ============================================================================
+ * Lunatic Mode - Custom Show Requirements
+ * ============================================================================
+ *
+ * ジャバスクリプトを使って特定のスキルを、決められた条件で無効にしたい方は
+ * 以下を使用してください。
+ *
+ * スキルのノートタグ:
+ *   <Custom Show Eval>
+ *   if (user.level > 50) {
+ *     visible = true;
+ *   } else {
+ *     visible = false;
+ *   }
+ *   </Custom Show Eval>
+ *   「visible」を「true」に設定している時、他の条件を満たしていればスキルは
+ *   有効にされ、表示されます。
+ *   「visible」を「false」に設定している時、スキルは無効にされ、
+ *   リストには表示されません。
+ *
+ * ============================================================================
+ * Lunatic Mode - Custom Requirements and Execution
+ * ============================================================================
+ *
+ * ジャバスクリプトが書ける方は以下のノートタグを使ってスキルを制限し、
+ * 発動時にどのようなコードを実行したいかということを、入れる事が出来ます。
+ *
+ * スキルのノートタグ:
+ *
+ *   <Custom Requirement>
+ *    if ($gameParty.gold() > 1000) {
+ *      value = true;
+ *    } else {
+ *      value = false;
+ *    }
+ *   </Custom Requirement>
+ *   「value」を「true」に設定している時、他の条件を満たしてればスキルは
+ *   有効にされます。
+ *   「value」を「false」に設定している時、スキルは無効にされます。
+ *
+ *   <Custom Execution>
+ *    $gameParty.loseGold(1000);
+ *   </Custom Execution>
+ *   スキルを発動した時にノートタグの間に入っているコードを実行します。
+ *
+ * ============================================================================
+ * Lunatic Mode - Custom Cost Display
+ * ============================================================================
+　*
+ * ジャバスクリプトが書ける方は、スキルのコストの表示の仕方を変える事が
+ * できます。実行したいかどうかも、指定する事が出来ます。
+ *
+ * スキルのノートタグ:
+ *
+ *   <Cost Display Eval>
+ *    var variableId = 1;
+ *    var value = 1000;
+ *    $gameVariables.setValue(variableId, value);
+ *   </Cost Display Eval>
+ *   このノートタグはスキルを実行する前にEvalを実行します。これを使うと
+ *   スキルコストに表示するテキストの変数をよりカスタマイズ出来ます。
+ *
+ *   <Custom Cost Display>
+ *    \c[4]\v[1]\c[0] Gold
+ *   </Custom Cost Display>
+ *   ここのテキストはスキルのコストの他の部分より前に表示されます。この
+ *   ノートタグにより、テキストの中にテキストコードを書くことが可能です。
+ *
+ * ============================================================================
+ *
+ * ============================================================================
+ * Lunatic Mode - The Skill Phases
+ * ============================================================================
+ *
+ * スキルに対して、複数のエフェクトがいくつかの段階で適用されます。
+ * 各段階について以下に記します。
+ *
+ *    Before Effect Phase (このプラグインにより作用)
+ *    スキルがヒットした場合:
+ *    - Pre-Damage Effect Phase (このプラグインにより作用)
+ *    - Damage Phase
+ *    - Post-Damage Effect Phase (このプラグインにより作用)
+ *    - Item Trait Effects Phase
+ *    After Effect Phase (このプラグインにより作用)
+ *
+ * 上記のうち4段階がこのプラグインの影響を受けます。
+ * そのうち2つは、スキルがヒットするか否かには左右されません。
+ *
+ * スキルとアイテムのNotetags:
+ *   <Before Eval>    <Pre-Damage Eval>    <Post-Damage Eval>    <After Eval>
+ *    code             code                 code                  code
+ *    code             code                 code                  code
+ *   </Before Eval>   </Pre-Damage Eval>   </Post-Damage Eval>   </After Eval>
+ *   スキルに対してカスタムエフェクトを利用したい場合は、それぞれのNotetagを
+ *   スキル(もしくはアイテム)のNoteboxに挿入し、タグ間のコードを実行できます。
+ *   このタグ内に、どのような形式であれコメントを挿入してしまうと、
+ *   後に続くコードは遮断されてしまいます。
  *
  * ============================================================================
  * Changelog
  * ============================================================================
- *
- * Version 1.12:
- * - Updated for RPG Maker MV version 1.5.0.
- *
- * Version 1.11a:
- * - Lunatic Mode fail safes added.
- * - Documentation fix for the help file. Lunatic Mode tags didn't end right.
- * The help file is now updated to show the correct notetags.
- *
- * Version 1.10b:
- * - Fixed a visual bug when using text code font changing for custom skill
- * cost display.
- * - <Hide if Learned Skill: x> documentation updated.
- * - Compatibility update for future plugins.
  *
  * Version 1.09:
  * - The <Pre-Damage Eval> notetag now has the ability alter damage dealt. The
@@ -756,12 +983,7 @@ Game_BattlerBase.prototype.meetsCustomShowEval = function(skill) {
     var subject = this;
     var s = $gameSwitches._data;
     var v = $gameVariables._data;
-    var code = skill.costShowEval;
-    try {
-      eval(code);
-    } catch (e) {
-      Yanfly.Util.displayError(e, code, 'SKILL CUSTOM SHOW EVAL ERROR');
-    }
+    eval(skill.costShowEval);
     return visible;
 };
 
@@ -774,12 +996,7 @@ Game_BattlerBase.prototype.meetsSkillConditionsEval = function(skill) {
     var subject = this;
     var s = $gameSwitches._data;
     var v = $gameVariables._data;
-    var code = skill.requireEval;
-    try {
-      eval(code);
-    } catch (e) {
-      Yanfly.Util.displayError(e, code, 'SKILL CUSTOM REQUIRE EVAL ERROR');
-    }
+    eval(skill.requireEval);
     return value;
 };
 
@@ -792,12 +1009,7 @@ Game_BattlerBase.prototype.skillHpCost = function(skill) {
   var s = $gameSwitches._data;
   var v = $gameVariables._data;
   cost += this.mhp * skill.hpCostPer;
-  var code = skill.hpCostEval;
-  try {
-    eval(code);
-  } catch (e) {
-    Yanfly.Util.displayError(e, code, 'SKILL CUSTOM HP COST ERROR');
-  }
+  eval(skill.hpCostEval);
   return Math.max(0, Math.floor(cost));
 };
 
@@ -810,12 +1022,7 @@ Game_BattlerBase.prototype.skillMpCost = function(skill) {
   var s = $gameSwitches._data;
   var v = $gameVariables._data;
   cost += this.mmp * skill.mpCostPer;
-  var code = skill.mpCostEval;
-  try {
-    eval(code);
-  } catch (e) {
-    Yanfly.Util.displayError(e, code, 'SKILL CUSTOM MP COST ERROR');
-  }
+  eval(skill.mpCostEval);
   return Math.max(0, Math.floor(cost * this.mcr));
 };
 
@@ -828,12 +1035,7 @@ Game_BattlerBase.prototype.skillTpCost = function(skill) {
   var s = $gameSwitches._data;
   var v = $gameVariables._data;
   cost += this.maxTp() * skill.tpCostPer;
-  var code = skill.tpCostEval;
-  try {
-    eval(code);
-  } catch (e) {
-    Yanfly.Util.displayError(e, code, 'SKILL CUSTOM TP COST ERROR');
-  }
+  eval(skill.tpCostEval);
   return Math.max(0, Math.floor(cost));
 };
 
@@ -870,12 +1072,7 @@ Game_BattlerBase.prototype.paySkillEvalCost = function(skill) {
     var subject = this;
     var s = $gameSwitches._data;
     var v = $gameVariables._data;
-    var code = skill.executeEval;
-    try {
-      eval(code);
-    } catch (e) {
-      Yanfly.Util.displayError(e, code, 'SKILL PAY COST EVAL ERROR');
-    }
+    eval(skill.executeEval);
 };
 
 Game_BattlerBase.prototype.gauge1 = function() {
@@ -1066,17 +1263,6 @@ Game_Enemy.prototype.gaugeIcon3 = function() {
     return this.enemy().gaugeIcon3;
 };
 
-if (!Game_Enemy.prototype.skills) {
-    Game_Enemy.prototype.skills = function() {
-      var skills = []
-      for (var i = 0; i < this.enemy().actions.length; ++i) {
-        var skill = $dataSkills[this.enemy().actions[i].skillId];
-        if (skill) skills.push(skill);
-      }
-      return skills;
-    }
-};
-
 //=============================================================================
 // Game_Action
 //=============================================================================
@@ -1101,12 +1287,7 @@ Game_Action.prototype.applyBeforeEval = function(target) {
     var subject = this.subject();
     var s = $gameSwitches._data;
     var v = $gameVariables._data;
-    var code = item.customBeforeEval;
-    try {
-      eval(code);
-    } catch (e) {
-      Yanfly.Util.displayError(e, code, 'BEFORE EVAL ERROR');
-    }
+    eval(item.customBeforeEval);
 };
 
 Game_Action.prototype.applyAfterEffect = function(target) {
@@ -1120,12 +1301,7 @@ Game_Action.prototype.applyAfterEval = function(target) {
     var subject = this.subject();
     var s = $gameSwitches._data;
     var v = $gameVariables._data;
-    var code = item.customAfterEval;
-    try {
-      eval(code);
-    } catch (e) {
-      Yanfly.Util.displayError(e, code, 'AFTER EVAL ERROR');
-    }
+    eval(item.customAfterEval);
 };
 
 Yanfly.Skill.Game_Action_executeDamage = Game_Action.prototype.executeDamage;
@@ -1148,12 +1324,7 @@ Game_Action.prototype.applyPreDamageEval = function(target, value) {
     var subject = this.subject();
     var s = $gameSwitches._data;
     var v = $gameVariables._data;
-    var code = item.customPreDamageEval;
-    try {
-      eval(code);
-    } catch (e) {
-      Yanfly.Util.displayError(e, code, 'PRE-DAMAGE EVAL ERROR');
-    }
+    eval(item.customPreDamageEval);
     return value;
 };
 
@@ -1168,12 +1339,7 @@ Game_Action.prototype.applyPostDamageEval = function(target, value) {
     var subject = this.subject();
     var s = $gameSwitches._data;
     var v = $gameVariables._data;
-    var code = item.customPostDamageEval;
-    try {
-      eval(code);
-    } catch (e) {
-      Yanfly.Util.displayError(e, code, 'POST-DAMAGE EVAL ERROR');
-    }
+    eval(item.customPostDamageEval);
 };
 
 //=============================================================================
@@ -1310,7 +1476,6 @@ Window_SkillList.prototype.drawCustomDisplayCost = function(skill, wx, wy, dw) {
     this.runDisplayEvalCost(skill);
     if (skill.customCostText === '') return dw;
     var width = this.textWidthEx(skill.customCostText);
-    this.resetFontSettings();
     this.drawTextEx(skill.customCostText, wx - width + dw, wy);
     var returnWidth = dw - width - Yanfly.Param.SCCCostPadding;
     this.resetFontSettings();
@@ -1325,12 +1490,7 @@ Window_SkillList.prototype.runDisplayEvalCost = function(skill) {
     var subject = this._actor;
     var s = $gameSwitches._data;
     var v = $gameVariables._data;
-    var code = skill.costdisplayEval;
-    try {
-      eval(code);
-    } catch (e) {
-      Yanfly.Util.displayError(e, code, 'SKILL COST DISPLAY EVAL ERROR');
-    }
+    eval(skill.costdisplayEval);
 };
 
 Window_SkillList.prototype.drawOtherCost = function(skill, wx, wy, dw) {
@@ -1347,17 +1507,6 @@ if (!Yanfly.Util.toGroup) {
     Yanfly.Util.toGroup = function(inVal) {
         return inVal;
     }
-};
-
-Yanfly.Util.displayError = function(e, code, message) {
-  console.log(message);
-  console.log(code || 'NON-EXISTENT');
-  console.error(e);
-  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
-    if (!require('nw.gui').Window.get().isDevToolsOpen()) {
-      require('nw.gui').Window.get().showDevTools();
-    }
-  }
 };
 
 //=============================================================================

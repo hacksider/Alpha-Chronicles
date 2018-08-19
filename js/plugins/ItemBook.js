@@ -3,8 +3,8 @@
 //=============================================================================
 
 /*:
- * @plugindesc v1.01 Displays detailed statuses of items.
- * @author Yoji Ojima (Compatibility with YEP)
+ * @plugindesc Displays detailed statuses of items.
+ * @author Yoji Ojima
  *
  * @param Unknown Data
  * @desc The index name for an unknown item.
@@ -263,21 +263,21 @@
     Window_ItemBookIndex.prototype.refresh = function() {
         var i, item;
         this._list = [];
-        for (i = 1; i < Math.min(2000, $dataItems.length); i++) {
+        for (i = 1; i < $dataItems.length; i++) {
             item = $dataItems[i];
-            if (item && item.name && item.itypeId === 1 && item.meta.book !== 'no') {
+            if (item.name && item.itypeId === 1 && item.meta.book !== 'no') {
                 this._list.push(item);
             }
         }
-        for (i = 1; i < Math.min(2000, $dataWeapons.length); i++) {
+        for (i = 1; i < $dataWeapons.length; i++) {
             item = $dataWeapons[i];
-            if (item && item.name && item.meta.book !== 'no') {
+            if (item.name && item.meta.book !== 'no') {
                 this._list.push(item);
             }
         }
-        for (i = 1; i < Math.min(2000, $dataArmors.length); i++) {
+        for (i = 1; i < $dataArmors.length; i++) {
             item = $dataArmors[i];
-            if (item && item.name && item.meta.book !== 'no') {
+            if (item.name && item.meta.book !== 'no') {
                 this._list.push(item);
             }
         }

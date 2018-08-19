@@ -8,11 +8,10 @@ Imported.YEP_GabWindow = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Gab = Yanfly.Gab || {};
-Yanfly.Gab.version = 1.06
 
 //=============================================================================
  /*:
- * @plugindesc v1.06 The Gab Window functions as a window for random
+ * @plugindesc v1.03a The Gab Window functions as a window for random
  * jibber jabber that does not require a message window.
  * @author Yanfly Engine Plugins
  *
@@ -20,62 +19,41 @@ Yanfly.Gab.version = 1.06
  * @default
  *
  * @param Gab Font Name
- * @parent ---General---
  * @desc The font name used for the text of the Gab Window.
  * Default: GameFont
  * @default GameFont
  *
  * @param Gab Font Size
- * @parent ---General---
- * @type number
- * @min 1
  * @desc The font size used for the text of the Gab Window.
  * Default: 28
  * @default 28
  *
  * @param Character X Pos
- * @parent ---General---
- * @type number
  * @desc X position of the character.
  * Default: 36
  * @default 36
  *
  * @param Character Y Pos
- * @parent ---General---
- * @type number
  * @desc Y position of the character.
  * Default: 60
  * @default 60
  *
  * @param Base Wait Time
- * @parent ---General---
- * @type number
- * @min 0
  * @desc Minimum frames the Gab Window stays visible.
  * Default: 90
  * @default 90
  *
  * @param Time Per Character
- * @parent ---General---
- * @type number
- * @min 0
  * @desc Frames added per Text Character.
  * Default: 4
  * @default 4
  *
  * @param Fade Rate
- * @parent ---General---
- * @type number
- * @min 1
  * @desc Is is how fast the gab window fades away.
  * Default: 16
  * @default 16
  *
  * @param Anti-Repeat
- * @parent ---General---
- * @type boolean
- * @on Anti-Repeat
- * @off Allow Repeat
  * @desc Stops gabs of the same settings from being queued.
  * NO - false     YES - true
  * @default true
@@ -84,42 +62,34 @@ Yanfly.Gab.version = 1.06
  * @default
  *
  * @param Map Y Location
- * @parent ---Map---
- * @type number
  * @desc This is the Y location of the Gab Window.
  * Default: 72
  * @default 72
  *
  * @param Map Dim Color 1
- * @parent ---Map---
  * @desc This is the dim color 1 used for maps.
  * Default: rgba(0, 0, 0, 0.6)
  * @default rgba(0, 0, 0, 0.6)
  *
  * @param Map Dim Color 2
- * @parent ---Map---
  * @desc This is the dim color 2 used for maps.
- * Default: rgba(0, 0, 0, 0)
+ * Default: rgba(0, 0, 0, 0.3)
  * @default rgba(0, 0, 0, 0.3)
  *
  * @param ---Battle---
  * @default
  *
  * @param Battle Y Location
- * @parent ---Battle---
- * @type number
  * @desc This is the Y location of the Gab Window.
  * Default: 108
  * @default 108
  *
  * @param Battle Dim Color 1
- * @parent ---Battle---
  * @desc This is the dim color 1 used for battles.
  * Default: rgba(0, 0, 0, 0.6)
  * @default rgba(0, 0, 0, 0.6)
  *
  * @param Battle Dim Color 2
- * @parent ---Battle---
  * @desc This is the dim color 2 used for battles.
  * Default: rgba(0, 0, 0, 0)
  * @default rgba(0, 0, 0, 0)
@@ -192,9 +162,6 @@ Yanfly.Gab.version = 1.06
  * GabSwitch x
  * This will enable switch x when this gab finishes playing.
  *
- * WaitForGab
- * Causes the game to wait until all gabs are finished playing.
- *
  * --- Display Commands ---
  *
  * ShowGab
@@ -219,16 +186,197 @@ Yanfly.Gab.version = 1.06
  * Changelog
  * ============================================================================
  *
- * Version 1.06:
- * - Updated for RPG Maker MV version 1.5.0.
+ * Version 1.03a:
+ * - Fixed a bug with GabSound that didn't load the proper sound filenames.
+ * - Fixed the time count for Gabs to not include text codes.
  *
- * Version 1.05:
- * - Added 'WaitForGab' plugin command. This plugin command causes the game to
- * wait until all gabs are finished playing.
+ * Version 1.02a:
+ * - Added functionality for battle gabs to be saved when going into other
+ * scenes and returning to battle.
+ * - Added GabSwitch x to enable switch x when the gab finishes playing.
  *
- * Version 1.04:
- * - Fixed an issue with ForceGab that didn't make it work properly with text
- * coded Gabs.
+ * Version 1.01:
+ * - Added 'GabParty x' and 'GabPartySprite x' plugin commands to help with
+ * those without dynamic party setups.
+ *
+ * Version 1.00:
+ * - Finished Plugin!
+ *
+ */
+ /*:ja
+ * @plugindesc v1.03a "Gab Window"はメッセージウィンドウ無しで画面上におしゃべりを表示できるプラグインです。
+ * @author Yanfly Engine Plugins
+ *
+ * @param ---一般---
+ * @default
+ *
+ * @param Gab Font Name
+ * @desc Gab Windowで使われるフォント名を指定してください
+ * デフォルト: GameFont
+ * @default GameFont
+ *
+ * @param Gab Font Size
+ * @desc Gab Windowで使われるフォントサイズを指定してください
+ * デフォルト: 28
+ * @default 28
+ *
+ * @param Character X Pos
+ * @desc キャラクター表示のX座標を指定してください
+ * デフォルト: 36
+ * @default 36
+ *
+ * @param Character Y Pos
+ * @desc キャラクター表示のY座標を指定してください
+ * デフォルト: 60
+ * @default 60
+ *
+ * @param Base Wait Time
+ * @desc Gab Windowの表示が続く最小フレーム数を指定してください
+ * デフォルト: 90
+ * @default 90
+ *
+ * @param Time Per Character
+ * @desc テキストキャラクターごとに追加されるフレーム数を指定してください
+ * デフォルト: 4
+ * @default 4
+ *
+ * @param Fade Rate
+ * @desc Gab Windowがフェードアウトする速さを指定してください
+ * デフォルト: 16
+ * @default 16
+ *
+ * @param Anti-Repeat
+ * @desc 同じ設定のGab Windowがキュー処理されるのを防ぎますか？
+ * いいえ - false     はい - true
+ * @default true
+ *
+ * @param ---マップ時---
+ * @default
+ *
+ * @param Map Y Location
+ * @desc Gab Window表示のY座標を指定してください。
+ * デフォルト: 72
+ * @default 72
+ *
+ * @param Map Dim Color 1
+ * @desc マップ時に用いられる、背景色1 を指定してください。
+ * デフォルト: rgba(0, 0, 0, 0.6)
+ * @default rgba(0, 0, 0, 0.6)
+ *
+ * @param Map Dim Color 2
+ * @desc マップ時に用いられる、背景色2 を指定してください。
+ * デフォルト: rgba(0, 0, 0, 0.3)
+ * @default rgba(0, 0, 0, 0.3)
+ *
+ * @param ---戦闘---
+ * @default
+ *
+ * @param Battle Y Location
+ * @desc Gab Window表示のY座標を指定してください。
+ * Default: 108
+ * @default 108
+ *
+ * @param Battle Dim Color 1
+ * @desc 戦闘時に用いられる、背景色1 を指定してください。
+ * デフォルト: rgba(0, 0, 0, 0.6)
+ * @default rgba(0, 0, 0, 0.6)
+ *
+ * @param Battle Dim Color 2
+ * @desc 戦闘時に用いられる、背景色2 を指定してください。
+ * デフォルト: rgba(0, 0, 0, 0)
+ * @default rgba(0, 0, 0, 0)
+ *
+ * @help
+ * ============================================================================
+ * Introduction
+ * ============================================================================
+ *
+ * ウィンドウを必要とするまでもないような、おしゃべりを表示させたいですか？
+ * "Gab Window"はメッセージウィンドウ外、画面の隅で、そのようなおしゃべりを表示
+ * させることができます。テキストは一時的に画面上に表示され、その後消えます。
+ * 何か他の要因が介入しない限りは、また表れることもありません。
+ *
+ * MVでの新しい要素としては、あなたのゲーム内のGab Windowに音を付けることが
+ * できます。また、複数のおしゃべりをまとめてキュー処理し、会話のようにつなげる
+ * こともできます。その際、現在表示されているおしゃべりは、次のおしゃべりが
+ * ロードされるタイミングでフェードアウトします。
+ *
+ * ============================================================================
+ * Instructions
+ * ============================================================================
+ *
+ * "Gab Window"の使い方はとってもシンプルです。デフォルト設定では、マップでも
+ * バトルシーンでも使うことができるようになっています。表示の指示・設定をする
+ * には、下記のプラグインコマンドを用いてください。
+ *
+ * プラグインコマンド:
+ *
+ * --- セットアップコマンド ---
+ *
+ * GabText text
+ * Gab Windowに、このテキストを表示させます。Gab Window内では
+ * テキストコードを使うこともできます。
+ *
+ * GabFaceName filename
+ * 顔グラフィックを表示させたい場合は、このコマンドを用いてファイル名を指定
+ * してください。
+ *
+ * GabFaceIndex x
+ * 上記のコマンドと一緒に用いることで、その顔グラフィックがどのインデックスを
+ * 使うかを指定します。
+ *
+ * GabSpriteName filename
+ * 特定のキャラクタースプライトを表示させたい時は、このコマンドを使って
+ * ファイル名を指定してください。
+ *
+ * GabSpriteIndex x
+ * 上記のコマンドと一緒に用いることで、そのスプライトがどのインデックスを
+ * 使うかを指定します。
+ *
+ * GabActor x
+ * GabActorFace x
+ * アクター x の顔グラフィックを表示させます。（xにはIDを入れてください)
+ *
+ * GabActorSprite x
+ * アクター x のスプライトを表示させます。（xにはIDを入れてください)
+ *
+ * GabParty x
+ * GabPartyFace x
+ * パーティメンバー x の顔グラフィックを表示させます。（xにはポジションを
+ * 入れてください)
+ *
+ * GabPartySprite x
+ * パーティメンバー x のスプライトを表示させます。（xにはポジションを
+ * 入れてください)
+ *
+ * GabSound filename
+ * SEフォルダから、filenameで指定したサウンドを再生します。
+ *
+ * GabSwitch x
+ * おしゃべりの再生が終了したときに、スイッチ x を有効にします。
+ *
+ * --- Display Commands ---
+ *
+ * ShowGab
+ * 一旦上記の設定が完了したら、このプラグインコマンドを使ってGab Windowを
+ * 起動し、上記のデータを表示させます。これによりおしゃべりがキューに追加され、
+ * もし他のおしゃべりが再生されている場合は、そのうしろに並ぶようになります。
+ *
+ * *注意：複数の"ShowGabs"が使用されると、それらは一列に並びます。現在再生され
+ * ているおしゃべりは、次のおしゃべりに移る前に終了します。新たに追加しようと
+ * したおしゃべりが、たまたまロード済のおしゃべりと全く同じ設定だった場合、
+ * 会話内の重複を防ぐため、新規追加は行われません。
+ *
+ * ForceGab
+ * 一旦上記の設定が完了したら、このプラグインコマンドを使って他の全ての他の
+ * おしゃべりを消去し、上記のデータを表示させます。
+ *
+ * ClearGab
+ * 現在のおしゃべりのGab Windowと、待機中のおしゃべりを全て消去します。
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
  *
  * Version 1.03a:
  * - Fixed a bug with GabSound that didn't load the proper sound filenames.
@@ -303,7 +451,6 @@ Game_Interpreter.prototype.pluginCommand = function(command, args) {
     if (command === 'ShowGab') this.showGab();
     if (command === 'ForceGab') this.forceGab();
     if (command === 'ClearGab') this.clearGab();
-    if (command === 'WaitForGab') this.waitForGab();
 };
 
 Game_Interpreter.prototype.clearGabInformation = function() {
@@ -444,30 +591,6 @@ Game_Interpreter.prototype.clearGab = function() {
     this.clearGabInformation();
 };
 
-Game_Interpreter.prototype.waitForGab = function() {
-    this.setWaitMode('gab');
-};
-
-Yanfly.Gab.Game_Interpreter_updateWaitMode =
-  Game_Interpreter.prototype.updateWaitMode;
-Game_Interpreter.prototype.updateWaitMode = function() {
-  if (this._waitMode === 'gab') {
-    return this.isGabRunning();
-  } else {
-    return Yanfly.Gab.Game_Interpreter_updateWaitMode.call(this);
-  }
-};
-
-Game_Interpreter.prototype.isGabRunning = function() {
-  var scene = SceneManager._scene;
-  var win = SceneManager._scene._gabWindow;
-  if (win) {
-    return win._gabQueue.length > 0 || win._gabRunning;
-  } else {
-    return false;
-  }
-};
-
 //=============================================================================
 // Window_Gab
 //=============================================================================
@@ -495,7 +618,6 @@ Window_Gab.prototype.initialize = function(battle) {
     this._gabQueue = [];
     this._currentGab = [];
     this._gabSwitchedOn = false;
-    this._gabRunning = false;
     Window_Base.prototype.initialize.call(this, wx, wy, ww, wh);
     this.restoreGabs();
     this.clear();
@@ -536,8 +658,6 @@ Window_Gab.prototype.update = function() {
       this.updateFadeOut();
     } else if (this._gabQueue.length > 0) {
       this.processNewGabData()
-    } else {
-      this._gabRunning = false;
     }
 };
 
@@ -568,7 +688,10 @@ Window_Gab.prototype.addGabData = function(gabData) {
 
 Window_Gab.prototype.forceGabData = function(gabData) {
     if (!gabData) return;
-    this.clearGabData();
+    if (this.checkCurrentGab(gabData)) return;
+    this._gabQueue = [];
+    this._currentGab = [];
+    this._showCount = 0;
     this._gabQueue.push(gabData);
 };
 
@@ -611,7 +734,6 @@ Window_Gab.prototype.checkQueuedGabs = function(gabData) {
 };
 
 Window_Gab.prototype.processNewGabData = function() {
-    this._gabRunning = true;
     var gabData = this._gabQueue.shift();
     this._gabSwitchedOn = false;
     this._currentGab = gabData;

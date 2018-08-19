@@ -8,42 +8,24 @@ Imported.YEP_BattleAICore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.CoreAI = Yanfly.CoreAI || {};
-Yanfly.CoreAI.version = 1.13;
 
 //=============================================================================
  /*:
- * @plugindesc v1.13 This plugin allows you to structure battle A.I.
+ * @plugindesc v1.05 This plugin allows you to structure battle A.I.
  * patterns with more control.
  * @author Yanfly Engine Plugins
  *
  * @param Dynamic Actions
- * @type boolean
- * @on YES
- * @off NO
  * @desc If enabled, enemy actions are decided on the spot instead
  * of at the start of turn.   NO - false     YES - true
  * @default true
  *
- * @param Dynamic Turn Count
- * @type boolean
- * @on YES
- * @off NO
- * @desc Decide if the turn count dynamic is counted for earlier or later.
- * true - Current Turn + 1   false - Current Turn
- * @default false
- *
  * @param Element Testing
- * @type boolean
- * @on YES
- * @off NO
  * @desc If enabled, enemies will test actors on their elements by
  * setting them to match first.   NO - false     YES - true
  * @default true
  *
  * @param Default AI Level
- * @type number
- * @min 0
- * @max 100
  * @desc This is the default AI level of all enemies.
  * Level 0: Very Random     Level 100: Very Strict
  * @default 80
@@ -165,10 +147,10 @@ Yanfly.CoreAI.version = 1.13;
  * This allows you to match the element rate of element X (use either a number
  * or the name of the element in place of 'X') to see whether or not the
  * conditions for the action are fulfilled. Replace 'case' with 'Neutral' for
- * normal element rate (under 110% and above 90%), 'Weakness' for anything
- * above 100% element rate, 'Resistant' for below 100% element rate, 'Null' for
- * 0% element rate, and 'Absorb' for below 0% element rate. Valid targets will
- * be those with the matching element rates.
+ * normal element rate, 'Weakness' for anything above 100% element rate,
+ * 'Resistant' for below 100% element rate, 'Null' for 0% element rate, and
+ * 'Absorb' for below 0% element rate. Valid targets will be those with the
+ * matching element rates.
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Example:   Element Fire Weakness: Fireball, Lowest HP%
  *            Element Water Resistant: Water Cancel, Highest MAT
@@ -222,6 +204,7 @@ Yanfly.CoreAI.version = 1.13;
  * Example:   HP% param <= 50%: Heal, Lowest HP%
  *            MP param > 90: Mana Drain, Highest MP
  *            ATK param > user.atk: Power Break, Highest ATK
+ *            LEVEL param > 10 && target.notState(5): Blind, Random
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
  *
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -296,19 +279,6 @@ Yanfly.CoreAI.version = 1.13;
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
  *
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
- * USER stat PARAM eval
- *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Replace 'stat' with either 'atk', 'def', 'mat', 'mdf', 'agi', 'luk',
- * 'maxhp', 'maxmp', 'hp', 'mp', 'hp%', 'mp%', or 'level' to run it in a
- * condition check again to see if the action gets passed. If the user's param
- * matches the conditions, the check is fulfilled.
- *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Example:   User HP% param <= 50%: Heal, Lowest HP%
- *            User MP param > 90: Mana Drain, Highest MP
- *            User ATK param > user.atk: Power Break, Highest ATK
- * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
- *
- * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
  * VARIABLE X eval
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * This will call forth the value of variable 'x' to partake in an eval
@@ -319,46 +289,6 @@ Yanfly.CoreAI.version = 1.13;
  *            Variable 5 <= 100: Skill 11, Highest HP%
  *            Variable 2 === user.atk: Skill 12
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
- *
- * ============================================================================
- * Multiple Conditions
- * ============================================================================
- *
- * As of the version 1.11 update, the Battle A.I. Core is now able to support
- * multiple conditions. Setting up multiple conditions is relatively simple to
- * do and still follows the 'condition: SKILL x, target' format.
- *
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- *
- * To add multiple conditions, simply insert a +++ between each condition like
- * the following examples:
- *
- *     Switch 1 on +++ Switch 2 on: Fire, Lowest HP%
- *     Turn 3 > 1 +++ Variable 5 <= 100 +++ Switch 3 on: Ice, Lowest HP%
- *     Random 50% +++ Highest Party Level > 50: Thunder, Highest HP%
- *
- * In the above examples, all the conditions must be met in order for the
- * selected skills to be considered for use.
- *
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- *
- * For conditions that have strict targeting groups, the targeting group will
- * end up becoming the combination of all of the strict targeting groups. For
- * example:
- *
- *     STATE === Blind +++ STATE === Fear: Dark, Lowest HP%
- *
- * In this example, the enemy will only use the 'Dark' skill on a target that
- * is both affected by 'Blind' and 'Fear'. If there are multiple targets, then
- * the target with the lowest HP% will become the target the enemy will cast
- * the 'Dark' on.
- *
- *     STATE !== Blind +++ ATK param >= 150: Darkness, Highest ATK
- *
- * In the above example, the enemy will use the 'Darkness' skill against any
- * target that isn't blinded and has an ATK parameter of at least 150. If there
- * are multiple targets, then the enemy will first cast 'Darkness' on the
- * target with the highest ATK before casting it on a target with a lower ATK.
  *
  * ============================================================================
  * Targeting
@@ -381,7 +311,6 @@ Yanfly.CoreAI.version = 1.13;
  * ----------------------------------------------------------------------------
  *      <<nothing>>       Selects a random member of the valid target group.
  *      First             Selects first member of the valid target group.
- *      User              Selects the user itself.
  *      Highest MaxHP     Selects highest MaxHP valid target.
  *      Highest HP        Selects highest HP valid target.
  *      Highest HP%       Selects highest HP% valid target. *Note1
@@ -443,37 +372,6 @@ Yanfly.CoreAI.version = 1.13;
  * Changelog
  * ============================================================================
  *
- * Version 1.13:
- * - Updated for RPG Maker MV version 1.5.0.
- *
- * Version 1.12:
- * - Added 'Dynamic Turn Count' plugin parameter for those who wish to push the
- * turn count further by 1 turn in order to adjust for Dynamic Actions. Code
- * provided by Talonos.
- *
- * Version 1.11:
- * - Adding the ability to support multiple conditions. Please Read the
- * 'Multiple Conditions' section in the help file for more details.
- *
- * Version 1.10:
- * - Lunatic Mode fail safes added.
- *
- * Version 1.09:
- * - Added 'user' to the list of valid skill targets.
- * - Added 'USER stat PARAM eval' to valid conditions.
- *
- * Version 1.08:
- * - Neutral elemental resistance is now considered to be above 90% and under
- * 110% for a better range of activation.
- * - Optimization update.
- *
- * Version 1.07:
- * - Fixed a compatibility bug that caused certain conditions to bypass taunts.
- *
- * Version 1.06:
- * - Fixed a bug that caused 'Highest TP' and 'Lowest TP' target searches to
- * crash the game.
- *
  * Version 1.05:
  * - Updated for RPG Maker MV version 1.1.0.
  *
@@ -495,6 +393,363 @@ Yanfly.CoreAI.version = 1.13;
  * Version 1.00:
  * - Finished Plugin!
  */
+ /*:ja
+ * @plugindesc ver 1.05 バトルAIを、より管理されたものにすることができます。
+ * @author Yanfly Engine Plugins
+ *
+ * @param Dynamic Actions
+ * @desc 有効にすると、ターン開始時ではなく即座に敵の行動が決定されます。
+ *  NO - false     YES - true
+ * @default true
+ *
+ * @param Element Testing
+ * @desc 有効にすると、敵は最初に属性をマッチさせ、アクターにテスト行ないます。
+ *  NO - false     YES - true
+ * @default true
+ *
+ * @param Default AI Level
+ * @desc 全ての敵に対する、デフォルトのAIレベルです。
+ * Level 0: ランダム     Level 100: 厳格
+ * @default 80
+ *
+ * @help
+ * ============================================================================
+ * Introduction
+ * ============================================================================
+ *
+ * RPGツクールMVにおいて敵のデフォルトAIは、レートとスイッチ設定をしたとしても 
+ * 少々退屈な行動をとりがちです。
+ * デフォルト時には、敵がターゲットを選ぶルールは変更できず、
+ * また、単純な条件照合のような行動決定しか行われませんでした。
+ * このプラグインでは、条件やアクション、敵の選ぶターゲットなどについての
+ * 優先度のリストを作成し、敵がどのように戦うかをカスタマイズする
+ * ことができます。
+ *
+ * デフォルトのコンディションに加えて、ターゲットパラメータの決定や、
+ * ターゲットの弱点属性(もしくはその逆)の認識を、
+ * アクションを取る前に行わせることが出来ます。
+ * 更に、敵のAIレベルを指定することで、戦闘スタイルを統一されたものにしたり、
+ * もしくは逆にランダムなものに設定することもできます。
+ *
+ * ============================================================================
+ * Parameters
+ * ============================================================================
+ *
+ * Dynamic Actions
+ * デフォルトでは、敵のアクションはターン初期に決定されますが、
+ * このDynamic Actionsを有効にすると、敵のターンごとに毎回決定がなされます。
+ * これにより敵の行動をより柔軟なものにし、賢く見せることができます。
+ * 同時に、プレイヤーにとっては新たな試練となるでしょう。
+ *
+ * Element Testing
+ * これを無効化すると、敵はターゲットの弱点属性や、
+ * 抵抗力のある属性などを、自動的に認識できるようになります。
+ * 有効にすると、敵は行動決定の前にアクターに対して
+ * スキルのテスト攻撃を行うようになります。
+ * アクターの属性レートを理解するまでは、敵は常にターゲットアクターに対して
+ * スキルを試そうとします。
+ * もしスキル自体が属性を持っていなかった場合は、何の情報も記録されません。
+ * 敵のパーティのデータは、各戦闘の最初に毎回リセットされます。
+ *
+ * Default AI Level
+ * 全ての敵が賢いというわけなく、愚鈍だったりランダムなだけなものも居ます。
+ * 敵のAIレベルを低く設定するとよりランダムに、
+ * 高く設定すると、行動により一貫性を持たせることができます。
+ * まずランダムな番号が0～99の間で決定され、敵のAIレベルがそれよりも高い場合は
+ * そのアクションについて、条件が満たされるかどうか照合されます。
+ * AIレベルの方が低い時には、条件には合致していないものと自動的にみなされ、
+ * 次のアクションに移ります。
+ * この条件照合は、新しいアクションが確認された際には毎回行われます。
+ * また、このランダム要素は <AI Priority>のリストのみに適用され、
+ * デフォルトのアクションには適用されません。 
+ *
+ * ============================================================================
+ * Enemy AI Level
+ * ============================================================================
+ *
+ * 敵のAIレベルは、それを倒す難しさを表すものではなく、
+ * どのくらい厳密に <AI Priority> のリストに従うかを表すものです。
+ * 例えばAIレベルが80の時、その敵は80%の確率で、
+ * <AI Priority> リストに従ったアクションを起こします。
+ * そして再度、80%の確率で次のアクションを起こし、それを繰り返します。
+ * AIレベルが低いということは、その確率も低いということになるため、
+ * その敵の行動は、よりランダムなものとなります。
+ *
+ * 敵のNotetag:
+ *   <AI Level: x>
+ *   敵のAIレベルを x に設定します。 x を低くすると、
+ * 敵の行動がよりランダムになります。
+ *  x を高くするほど、AI Priorityリストに厳密に従って行動するようになります。
+ *
+ * ============================================================================
+ * Enemy AI Priority
+ * ============================================================================
+ *
+ * 敵がAI Priority listを持っているとき、敵はそのリストを上から下の順で参照し
+ * 条件が満たされている行動を探します。(上にあるほど優先順位が高くなります)
+ * もしその行動条件が満たされていれば、敵はその行動を取ります。
+ *
+ * 敵のPriority Listを設定するには、下記のフォーマットでタグを載せてください。
+ *
+ *   <AI Priority>                      <AI Priority>
+ *    condition: SKILL x, target   or    condition: skill name, target
+ *    condition: SKILL x, target         condition: skill name, target
+ *   </AI Priority>                     </AI Priority>
+ *
+ * 条件やスキルをいくつでも<AI Priority>のタグ間に置くことができます。
+ * skill IDかskill name、好きなほうを使用することができます。
+ * ただ、名前を使用する際には、作成したデータベースに同じスキル名がある場合、
+ * 大きい方のスキルIDが参照されることに気を付けてください。
+ *
+ * ============================================================================
+ * Conditions
+ * ============================================================================
+ *
+ * 下記は、状態に応じたスキルを敵に選択させるための方法のリストです。
+ * スキルが使われるか否かの決定に加え、条件でターゲットを決定させます。
+ * 下記のリストでは、どのように条件分岐が行われ、
+ * どのようにターゲットが選ばれるかということについて記載しています。
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * ALWAYS
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 常に満たされている条件分岐です。
+ * スコープ内の全てのターゲットに対し効力があります。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   Always: Skill 10, Lowest HP%
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * ELEMENT X case
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * X について属性のマッチングを可能にし、条件分岐を行います。
+ * ( X には属性名または属性番号を記載)
+ * 'case'の部分に'Neutral'と記載すると、通常の倍率、 
+ * 'Weakness'と記載すると、100%以上の倍率、
+ * 'Resistant'と記載すれば、100%以下の倍率、
+ * 'Null'と記載すれば、0%の倍率、
+ * 'Absorb'と記載すれば、0%以下の倍率を指定することができます。
+ * 属性有効度のマッチしたものが、ターゲットとして選択されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   Element Fire Weakness: Fireball, Lowest HP%
+ *       Element Water Resistant: Water Cancel, Highest MAT
+ *       Element 4 Null: Earthquake, Lowest MDF
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * EVAL eval
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * どのようなコードでも、それを用いて条件を確認し、満たすことが可能になります。
+ * この条件は、スキルのスコープ内の全ての生存メンバーを
+ * 有効なターゲットとして扱います。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   Eval user.name() === 'Bat A': Skill 10, Highest HP%
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * group ALIVE MEMBERS eval
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 'group'をプレイヤーパーティの'party'と、
+ * もしくは敵のパーティの'troop'と置き換えます。
+ * 味方パーティもしくは敵パーティの生存メンバーの数について
+ * 条件を満たすかどうかの照合を行います。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   Party Alive Members > 2: Skill 10, Lowest HP%
+ *       Troop Alive Members <= 4: Skill 11, Highest HP%
+ *       Troop Alive Members === $gameVariables.value(3): Skill 12, Random
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * group DEAD MEMBERS eval
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 'group'をプレイヤーパーティの'party'と、
+ * もしくは敵のパーティの'troop'と置き換えます。
+ * 味方パーティもしくは敵パーティの死亡メンバーの数について
+ * 条件を満たすかどうかの照合を行います。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   Party Dead Members > 2: Undead, Highest ATK
+ *       Troop Dead Members <= 4: Life, Highest ATK
+ *       Troop Dead Members === $gameVariables.value(3): Skill 12, Random
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * stat PARAM eval
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 'stat'を'atk', 'def', 'mat', 'mdf', 'agi', 'luk',
+ * 'maxhp', 'maxmp', 'hp', 'mp', 'hp%', 'mp%', 'level' に置き換えて、
+ * そのアクションが可決されるかの条件照合を行います。
+ * 照合が行われるグループは、スキルスコープに基づいています。
+ * もし敵をスキルの対象にした場合は、全ての敵が、
+ * 条件を満たすか否かのチェックを受けることになります。
+ * これは味方のパーティメンバーに対しても同様に行われます。
+ * この条件照合をパスした者だけが、有効なターゲットとなります。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   HP% param <= 50%: Heal, Lowest HP%
+ *       MP param > 90: Mana Drain, Highest MP
+ *       ATK param > user.atk: Power Break, Highest ATK
+ *       LEVEL param > 10 && target.notState(5): Blind, Random
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * type PARTY LEVEL eval
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 'type'を'highest', 'lowest', 'average'に置き換えて、
+ * スキル範囲の決定のため、それぞれのパーティレベルを取得します。
+ * またこの時のレベルとは、パーティ全体のレベルを指し示すものです。
+ * この条件が満たされたとき、全てのターゲットが有効なターゲットとなります。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   Highest Party Level > 10: Skill 10, Lowest MP%
+ *       Lowest Party Level < 12: Skill 11, Lowest HP%
+ *       Average Party Level > 15: Skill 12, Highest HP%
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * RANDOM x%
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 条件を、ランダムな x %の確率に基づかせるように変更できます。
+ * この条件は、可能性のある全てのターゲットを有効なターゲットとみなします。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   Random 50%: Skill 10, Lowest HP%
+ *       Random 75%: Skill 11, Highest HP%
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * STATE === state x
+ * STATE === state name
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * スコープ内のターゲットが x というステートを持っているかどうかを検出します。
+ * (ステート名を使っている場合はその名前で検出)
+ * そうである場合は、そのターゲットは有効ターゲットのプールに追加されます。
+ * ステートに影響を受けていないターゲットは全て無視されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   State === State 5: DeBlind, Highest ATK
+ *       State === Knockout: Life, Random
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * STATE !== state x
+ * STATE !== state name
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * スコープ内のターゲットが x というステートを持っていないかどうかを検出します。
+ * (ステート名を使っている場合はその名前で検出)
+ * 持っていない場合は、そのターゲットは有効ターゲットのプールに追加されます。
+ * ステートに影響を受けていないターゲットは全て無視されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   State !== State 12: Haste, Random
+ *       State !== Courage: Cowardice, Highest ATK
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * SWITCH X case
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ *  x をチェックさせたいスイッチのIDに置き換えてください。 Replace  with
+ * また'case'の部分は 'on' か 'off'に置き換えてください。 ('true'か'false'も可)
+ * そのスイッチが x とマッチしたら、条件は満たされ、全てのスキルターゲットが
+ * 有効なターゲットとなります。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   Switch 5 On: Skill 10, Lowest HP%
+ *       Switch 6 Off: Skill 11, Highest HP%
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * TURN eval
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターンカウントに基づく条件を eval で実行することができるようになります。
+ * この条件は、可能性のある全てのターゲットを有効なターゲットとみなします。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Example:   Turn > 3: Skill 10, Lowest hp%
+ *            Turn === 4: Skill 11, Highest hp%
+ *            Turn <= $gameVariables.value(2): Skill 12, Random
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ * VARIABLE X eval
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 変数 x の値を呼び出し、条件を満たすかどうか確認します。
+ * そうである場合、全てのスキルターゲットが有効なターゲットとなります。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 例:   Variable 3 > 10: Skill 10, Lowest HP%
+ *       Variable 5 <= 100: Skill 11, Highest HP%
+ *       Variable 2 === user.atk: Skill 12
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *
+ * ============================================================================
+ * Targeting
+ * ============================================================================
+ *
+ * これはオプション機能ですが、条件への微細な変更で行うことができます。
+ * ただスキルのあとに','をつけるだけで、有効なターゲットグループの中から
+ * どのターゲットを指定したいか選ぶことができます。例えば下記のように行います。
+ *
+ *             Random 50%: Fire, Highest HP%
+ *
+ * この条件は50%の確率で満たされ、その場合は、ターゲットスコープ内のチームから
+ * 最も高いHP % の者が選ばれてターゲットとなります。
+ * またこのとき、ターゲットには'ファイア'のスキルが使われることになります
+ *
+ * もしターゲットが特定されなかった場合は、有効なターゲットの中から
+ * ランダムなターゲットが選出されることになります。
+ * それ以外については、下記のリストを参照してください。
+ *
+ * ----------------------------------------------------------------------------
+ *      <<nothing>>       有効ターゲットグループ内からランダムに選出します。
+ *      First             有効ターゲットグループ内から最初のメンバーを選びます。
+ *      Highest MaxHP     最も高い最大HPを持った有効ターゲットを選びます。
+ *      Highest HP        最も高いHPを持った有効ターゲットを選びます。
+ *      Highest HP%       最も高いHP%を持った有効ターゲットを選びます。(*注1)
+ *      Highest MaxMP     最も高い最大MPを持った有効ターゲットを選びます。
+ *      Highest MaxTP     最も高い最大TPを持った有効ターゲットを選びます。
+ *      Highest TP        最も高いTPを持った有効ターゲットを選びます。
+ *      Highest TP%       最も高いTP%を持った有効ターゲットを選びます。(*注1)
+ *      Highest MP        最も高いMPを持った有効ターゲットを選びます。
+ *      Highest MP%       最も高いMP%を持った有効ターゲットを選びます。(*注1)
+ *      Highest ATK       最も高いATKを持った有効ターゲットを選びます。
+ *      Highest DEF       最も高いDEFを持った有効ターゲットを選びます。
+ *      Highest MAT       最も高いMATを持った有効ターゲットを選びます。
+ *      Highest MDF       最も高いMDFを持った有効ターゲットを選びます。
+ *      Highest AGI       最も高いAGIを持った有効ターゲットを選びます。
+ *      Highest LUK       最も高いLUKを持った有効ターゲットを選びます。
+ *      Highest Level     最も高いレベルの有効ターゲットを選びます。(*注2)
+ *      Lowest MaxHP      最も低い最大HPを持った有効ターゲットを選びます。
+ *      Lowest HP         最も低いHPを持った有効ターゲットを選びます。
+ *      Lowest HP%        最も低いHP%を持った有効ターゲットを選びます。(*注1)
+ *      Lowest MaxMP      最も低い最大MPを持った有効ターゲットを選びます。
+ *      Lowest MP         最も低いMPを持った有効ターゲットを選びます。
+ *      Lowest MP%        最も低いMP%を持った有効ターゲットを選びます。(*注1)
+ *      Lowest MaxTP      最も低い最大TPを持った有効ターゲットを選びます。
+ *      Lowest TP         最も低いTPを持った有効ターゲットを選びます。
+ *      Lowest TP%        最も低いTP%を持った有効ターゲットを選びます。(*注1)
+ *      Lowest ATK        最も低いATKを持った有効ターゲットを選びます。
+ *      Lowest DEF        最も低いDEFを持った有効ターゲットを選びます。
+ *      Lowest MAT        最も低いMATを持った有効ターゲットを選びます。
+ *      Lowest MDF        最も低いMDFを持った有効ターゲットを選びます。
+ *      Lowest AGI        最も低いAGIを持った有効ターゲットを選びます。
+ *      Lowest LUK        最も低いLUKを持った有効ターゲットを選びます。
+ *      Lowest Level      最も低いレベルの有効ターゲットを選びます。(*注2)
+ *
+ * 注1: 現在のHPを最大HPで割り算、もしくは現在のMPを最大MPで割り算して算出
+ *
+ * 注2: もし適切な敵レベルのプラグインがない状態でこれが実行されると
+ * プレイヤーパーティの最大レベルを返します。
+ *
+ * ----------------------------------------------------------------------------
+ *
+ * ============================================================================
+ * Special Notes
+ * ============================================================================
+ *
+ * もしYEP_Taunt.jsを使っている場合、デフォルトでは敵は挑発を受けなくなります。 
+ * この問題により、ターゲットは挑発エフェクトによって守られ、
+ * それにより、AIの動作はシャットダウンされてしまいます。
+ * もし敵に相手の挑発エフェクトを反映させたい場合は、
+ * 下記のNotetagを敵のノートボックス内に挿入してください。
+ *
+ *   <AI Consider Taunt>
+ *
+ * 敵の行動決定フェーズで、挑発された敵についても考慮が成されるようになります。
+ * 愚鈍な敵向けにはこのNotetagを無効にし、
+ * 賢い敵のみに有効にするという使い方をすることもできます。
+ */
 //=============================================================================
 
 //=============================================================================
@@ -505,11 +760,7 @@ Yanfly.Parameters = PluginManager.parameters('YEP_BattleAICore');
 Yanfly.Param = Yanfly.Param || {};
 
 Yanfly.Param.CoreAIDynamic = String(Yanfly.Parameters['Dynamic Actions']);
-Yanfly.Param.CoreAIDynamic = eval(Yanfly.Param.CoreAIDynamic);
-Yanfly.Param.CoreAIDynTurnCnt = String(Yanfly.Parameters['Dynamic Turn Count']);
-Yanfly.Param.CoreAIDynTurnCnt = eval(Yanfly.Param.CoreAIDynTurnCnt);
 Yanfly.Param.CoreAIElementTest = String(Yanfly.Parameters['Element Testing']);
-Yanfly.Param.CoreAIElementTest = eval(Yanfly.Param.CoreAIElementTest);
 Yanfly.Param.CoreAIDefaultLevel = Number(Yanfly.Parameters['Default AI Level']);
 
 //=============================================================================
@@ -593,14 +844,12 @@ DataManager.processCoreAINotetags4 = function(group) {
 // BattleManager
 //=============================================================================
 
-if (Yanfly.Param.CoreAIDynamic) {
+if (eval(Yanfly.Param.CoreAIDynamic)) {
   Yanfly.CoreAI.BattleManager_getNextSubject =
       BattleManager.getNextSubject;
   BattleManager.getNextSubject = function() {
-    //this.updateAIPatterns();
-    var battler = Yanfly.CoreAI.BattleManager_getNextSubject.call(this);
-    if (battler && battler.isEnemy()) battler.setAIPattern();
-    return battler;
+    this.updateAIPatterns();
+    return Yanfly.CoreAI.BattleManager_getNextSubject.call(this);
   };
 };
 
@@ -644,7 +893,7 @@ Game_Battler.prototype.hasSkill = function(skillId) {
 };
 
 Game_Battler.prototype.hasState = function(stateId) {
-    return this.states().contains($dataStates[stateId]);
+    return this.isStateAffected(stateId);
 };
 
 Game_Battler.prototype.notState = function(stateId) {
@@ -767,7 +1016,7 @@ Game_Troop.prototype.setup = function(troopId) {
 
 Game_Troop.prototype.aiElementRateKnown = function(target, elementId) {
     if (target.isEnemy()) return true;
-    if (!Yanfly.Param.CoreAIElementTest) return true;
+    if (!eval(Yanfly.Param.CoreAIElementTest)) return true;
     var index = target.index();
     if (this._aiKnownElementRates[index] === undefined) {
       this._aiKnownElementRates[index] = [];
@@ -776,7 +1025,7 @@ Game_Troop.prototype.aiElementRateKnown = function(target, elementId) {
 };
 
 Game_Troop.prototype.aiRegisterElementRate = function(target, elementId) {
-    if (!Yanfly.Param.CoreAIElementTest) return;
+    if (!eval(Yanfly.Param.CoreAIElementTest)) return;
     var index = target.index();
     if (this._aiKnownElementRates[index] === undefined) {
       this._aiKnownElementRates[index] = [];
@@ -852,9 +1101,8 @@ AIManager.isDecidedActionAI = function(line) {
       return false;
     }
     if (!this.initialCheck(this._aiSkillId)) return false;
-    if (!this.meetCustomAIConditions(this._aiSkillId)) return false;
     this.action().setSkill(this._aiSkillId);
-    if (!this.passAllAIConditions(condition)) return false;
+    if (!this.passAIConditions(condition)) return false;
     return true;
 };
 
@@ -887,46 +1135,32 @@ AIManager.hasSkill = function(skillId) {
     return this.battler().hasSkill(skillId);
 };
 
-AIManager.meetCustomAIConditions = function(skillId) {
-  return true;
-};
-
 AIManager.getActionGroup = function() {
-  var action = this.action();
-  if (Imported.YEP_X_SelectionControl) action.setSelectionFilter(true);
-  if (!action) return [];
-  if (action.isForUser()) {
-    var group = [this.battler()];
-  } else if (action.isForDeadFriend()) {
-    var group = action.friendsUnit().deadMembers();
-  } else if (action.isForFriend()) {
-    var group = action.friendsUnit().aliveMembers();
-  } else if (action.isForOpponent()) {
-    if (this.battler().aiConsiderTaunt()) {
-      $gameTemp._tauntMode = true;
-      $gameTemp._tauntAction = action;
-      var group = action.opponentsUnit().tauntMembers();
-      $gameTemp._tauntMode = false;
-      $gameTemp._tauntAction = undefined;
+    var action = this.action();
+    if (!action) return [];
+    if (action.isForUser()) {
+      var group = [this.battler()];
+    } else if (action.isForDeadFriend()) {
+      var group = action.friendsUnit().deadMembers();
+    } else if (action.isForFriend()) {
+      var group = action.friendsUnit().aliveMembers();
+    } else if (action.isForOpponent()) {
+      if (this.battler().aiConsiderTaunt()) {
+        $gameTemp._tauntMode = true;
+        $gameTemp._tauntAction = action;
+        var group = action.opponentsUnit().tauntMembers();
+        $gameTemp._tauntMode = false;
+        $gameTemp._tauntAction = undefined;
+      } else {
+        var group = action.opponentsUnit().aliveMembers();
+      }
     } else {
-      var group = action.opponentsUnit().aliveMembers();
+      var group = [];
     }
-  } else {
-    var group = [];
-  }
-  if (this._setActionGroup !== undefined) {
-    group = Yanfly.Util.getCommonElements(this._setActionGroup, group);
-  }
-  this._setActionGroup = group;
-  return this._setActionGroup;
-};
-
-AIManager.setActionGroup = function(group) {
-  this._setActionGroup = group;
+    return group;
 };
 
 AIManager.setProperTarget = function(group) {
-    this.setActionGroup(group);
     var action = this.action();
     var randomTarget = group[Math.floor(Math.random() * group.length)];
     if (!randomTarget) return action.setTarget(0);
@@ -934,9 +1168,6 @@ AIManager.setProperTarget = function(group) {
     var line = this._aiTarget.toUpperCase();
     if (line.match(/FIRST/i)) {
       action.setTarget(0);
-    } else if (line.match(/USER/i)) {
-      var index = group.indexOf();
-      action.setTarget(action.subject().index());
     } else if (line.match(/HIGHEST[ ](.*)/i)) {
       var param = this.getParamId(String(RegExp.$1));
       if (param < 0) return action.setTarget(randomTarget.index());
@@ -946,8 +1177,7 @@ AIManager.setProperTarget = function(group) {
       if (param === 11) return this.setHighestMpRateTarget(group);
       if (param === 12) return this.setHighestLevelTarget(group);
       if (param === 13) return this.setHighestMaxTpTarget(group);
-      if (param === 14) return this.setHighestTpTarget(group);
-      if (param > 15) return action.setTarget(randomTarget.index());
+      if (param > 14) return action.setTarget(randomTarget.index());
       this.setHighestParamTarget(group, param);
     } else if (line.match(/LOWEST[ ](.*)/i)) {
       var param = this.getParamId(String(RegExp.$1));
@@ -958,8 +1188,7 @@ AIManager.setProperTarget = function(group) {
       if (param === 11) return this.setLowestMpRateTarget(group);
       if (param === 12) return this.setLowestLevelTarget(group);
       if (param === 13) return this.setLowestMaxTpTarget(group);
-      if (param === 14) return this.setLowestTpTarget(group);
-      if (param > 15) return action.setTarget(randomTarget.index());
+      if (param > 14) return action.setTarget(randomTarget.index());
       this.setLowestParamTarget(group, param);
     } else {
       this.setRandomTarget(group);
@@ -1201,7 +1430,7 @@ AIManager.elementRateMatch = function(target, elementId, type) {
       if (!$gameTroop.aiElementRateKnown(target, elementId)) return true;
     }
     if (['NEUTRAL', 'NORMAL'].contains(type)) {
-      return rate >= 0.90 && rate <= 1.10;
+      return rate === 1.00;
     } else if (['WEAK', 'WEAKNESS', 'VULNERABLE'].contains(type)) {
       return rate > 1.00;
     } else if (['RESIST', 'RESISTANT', 'STRONG'].contains(type)) {
@@ -1212,17 +1441,6 @@ AIManager.elementRateMatch = function(target, elementId, type) {
       return rate < 0.00;
     }
     return false;
-};
-
-AIManager.passAllAIConditions = function(line) {
-  this._setActionGroup = undefined;
-  var conditions = line.split('+++');
-  if (conditions.length <= 0) return false;
-  while (conditions.length > 0) {
-    var condition = conditions.shift().trim();
-    if (!this.passAIConditions(condition)) return false;
-  }
-  return true;
 };
 
 AIManager.passAIConditions = function(line) {
@@ -1250,12 +1468,6 @@ AIManager.passAIConditions = function(line) {
       var members = String(RegExp.$1);
       var condition = String(RegExp.$2);
       return this.conditionGroupDead(members, condition);
-    }
-    // USER PARAM EVAL
-    if (line.match(/USER[ ](.*)[ ]PARAM[ ](.*)/i)) {
-      var paramId = this.getParamId(String(RegExp.$1));
-      var condition = String(RegExp.$2);
-      return this.conditionUserParamEval(paramId, condition);
     }
     // PARAM EVAL
     if (line.match(/(.*)[ ]PARAM[ ](.*)/i)) {
@@ -1337,12 +1549,7 @@ AIManager.conditionEval = function(condition) {
     var user = this.battler();
     var s = $gameSwitches._data;
     var v = $gameVariables._data;
-    try {
-      if (!eval(condition)) return false;
-    } catch (e) {
-      Yanfly.Util.displayError(e, condition, 'A.I. EVAL ERROR');
-      return false;
-    }
+    if (!eval(condition)) return false;
     var group = this.getActionGroup();
     this.setProperTarget(group);
     return true;
@@ -1364,12 +1571,7 @@ AIManager.conditionGroupAlive = function(members, condition) {
     }
     if (members.length <= 0) return false;
     condition = 'members.length ' + condition;
-    try {
-      if (!eval(condition)) return false;
-    } catch (e) {
-      Yanfly.Util.displayError(e, condition, 'A.I. GROUP ALIVE ERROR');
-      return false;
-    }
+    if (!eval(condition)) return false;
     var group = this.getActionGroup();
     this.setProperTarget(group);
     return true;
@@ -1391,12 +1593,7 @@ AIManager.conditionGroupDead = function(members, condition) {
     }
     if (members.length <= 0) return false;
     condition = 'members.length ' + condition;
-    try {
-      if (!eval(condition)) return false;
-    } catch (e) {
-      Yanfly.Util.displayError(e, condition, 'A.I. GROUP DEAD ERROR');
-      return false;
-    }
+    if (!eval(condition)) return false;
     var group = this.getActionGroup();
     this.setProperTarget(group);
     return true;
@@ -1422,53 +1619,9 @@ AIManager.conditionPartyLevel = function(type, condition) {
     } else if (action.isForOpponent()) {
       condition = 'action.opponentsUnit()' + condition;
     }
-    try {
-      if (!eval(condition)) return false;
-    } catch (e) {
-      Yanfly.Util.displayError(e, condition, 'A.I. PARTY LEVEL ERROR');
-      return false;
-    }
+    if (!eval(condition)) return false;
     var group = this.getActionGroup();
     this.setProperTarget(group);
-    return true;
-};
-
-AIManager.conditionUserParamEval = function(paramId, condition) {
-    var action = this.action();
-    var item = action.item();
-    var user = this.battler();
-    var s = $gameSwitches._data;
-    var v = $gameVariables._data;
-    condition = condition.replace(/(\d+)([%％])/g, function() {
-      return this.convertIntegerPercent(parseInt(arguments[1]));
-    }.bind(this));
-    if (paramId < 0) return false;
-    if (paramId >= 0 && paramId <= 7) {
-      condition = 'user.param(paramId) ' + condition;
-    } else if (paramId === 8) {
-      condition = 'user.hp ' + condition;
-    } else if (paramId === 9) {
-      condition = 'user.mp ' + condition;
-    } else if (paramId === 10) {
-      condition = 'user.hp / user.mhp ' + condition;
-    } else if (paramId === 11) {
-      condition = 'user.mp / user.mmp ' + condition;
-    } else if (paramId === 12) {
-      condition = 'user.level ' + condition;
-    }
-    var group = this.getActionGroup();
-    var validTargets = [];
-    for (var i = 0; i < group.length; ++i) {
-      var target = group[i];
-      if (!target) continue;
-      try {
-        if (eval(condition)) validTargets.push(target);
-      } catch (e) {
-        Yanfly.Util.displayError(e, condition, 'A.I. USER PARAM ERROR')
-      }
-    }
-    if (validTargets.length <= 0) return false;
-    this.setProperTarget(validTargets);
     return true;
 };
 
@@ -1500,11 +1653,7 @@ AIManager.conditionParamEval = function(paramId, condition) {
     for (var i = 0; i < group.length; ++i) {
       var target = group[i];
       if (!target) continue;
-      try {
-        if (eval(condition)) validTargets.push(target);
-      } catch (e) {
-        Yanfly.Util.displayError(e, condition, 'A.I. PARAM ERROR')
-      }
+      if (eval(condition)) validTargets.push(target);
     }
     if (validTargets.length <= 0) return false;
     this.setProperTarget(validTargets);
@@ -1572,8 +1721,6 @@ AIManager.conditionSwitch = function(switchId, value) {
     return true;
 };
 
-if (!Yanfly.Param.CoreAIDynTurnCnt) {
-
 AIManager.conditionTurnCount = function(condition) {
     var action = this.action();
     var item = action.item();
@@ -1585,52 +1732,11 @@ AIManager.conditionTurnCount = function(condition) {
     } else {
       condition = '$gameTroop.turnCount() ' + condition;
     }
-    try {
-      if (!eval(condition)) return false;
-    } catch (e) {
-      Yanfly.Util.displayError(e, condition, 'A.I. TURN COUNT ERROR');
-      return false;
-    }
+    if (!eval(condition)) return false;
     var group = this.getActionGroup();
     this.setProperTarget(group);
     return true;
 };
-
-} else {
-// Alternative provided by Talonos
-
-AIManager.conditionTurnCount = function(condition) {
-    var action = this.action();
-    var item = action.item();
-    var user = this.battler();
-    var s = $gameSwitches._data;
-    var v = $gameVariables._data;
-    if (Imported.YEP_BattleEngineCore) {
-      if (BattleManager._phase === "input" && BattleManager.isTurnBased()) {
-        condition = '(user.turnCount() + 1) ' + condition;
-      } else {
-        condition = 'user.turnCount() ' + condition;
-      }
-    } else {
-      if (BattleManager._phase === "input") {
-        condition = '($gameTroop.turnCount() + 1) ' + condition;
-      } else {
-        condition = '$gameTroop.turnCount() ' + condition;
-      }
-    }
-    try {
-      if (!eval(condition)) return false;
-    } catch (e) {
-      Yanfly.Util.displayError(e, condition, 'A.I. TURN COUNT ERROR');
-      return false;
-    }
-    var group = this.getActionGroup();
-    this.setProperTarget(group);
-    return true;
-};
-
-} // Yanfly.Param.CoreAIDynamic
-
 
 AIManager.conditionVariable = function(variableId, condition) {
     var action = this.action();
@@ -1639,42 +1745,10 @@ AIManager.conditionVariable = function(variableId, condition) {
     var s = $gameSwitches._data;
     var v = $gameVariables._data;
     condition = '$gameVariables.value(' + variableId + ') ' + condition;
-    try {
-      if (!eval(condition)) return false;
-    } catch (e) {
-      Yanfly.Util.displayError(e, condition, 'A.I. VARIABLE ERROR');
-      return false;
-    }
+    if (!eval(condition)) return false;
     var group = this.getActionGroup();
     this.setProperTarget(group);
     return true;
-};
-
-//=============================================================================
-// Utilities
-//=============================================================================
-
-Yanfly.Util = Yanfly.Util || {};
-
-Yanfly.Util.displayError = function(e, code, message) {
-  console.log(message);
-  console.log(code || 'NON-EXISTENT');
-  console.error(e);
-  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
-    if (!require('nw.gui').Window.get().isDevToolsOpen()) {
-      require('nw.gui').Window.get().showDevTools();
-    }
-  }
-};
-
-Yanfly.Util.getCommonElements = function(array1, array2) {
-  var elements = [];
-  var length = array1.length;
-  for (var i = 0; i < length; ++i) {
-    var element = array1[i];
-    if (array2.contains(element)) elements.push(element);
-  }
-  return elements;
 };
 
 //=============================================================================

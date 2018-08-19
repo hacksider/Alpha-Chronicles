@@ -1,7 +1,7 @@
 //=============================================================================
 // Yanfly Engine Plugins - Gamepad Config
 // GamepadConfig.js
-// Version: 1.01
+// Version: 1.00
 //=============================================================================
 
 var Imported = Imported || {};
@@ -9,11 +9,10 @@ Imported.GamepadConfig = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.GamepadConfig = Yanfly.GamepadConfig || {};
-Yanfly.GamepadConfig.version = 1.01;
 
 //=============================================================================
  /*:
- * @plugindesc v1.01 Allows players to adjust their button configuration
+ * @plugindesc v1.00 Allows players to adjust their button configuration
  * for gamepads.
  * @author Yanfly Engine Plugins
  *
@@ -97,84 +96,96 @@ Yanfly.GamepadConfig.version = 1.01;
  * at any point where a Gamepad is not detected inside of the Option or Gamepad
  * Config menu, the game will automatically eject the player out the prevent
  * the player from being locked inside.
- *
- * ============================================================================
- * Options Core Settings - Adding the New Options
- * ============================================================================
- *
- * If you are using YEP_OptionsCore.js, you can add a new Option using this
- * plugin. Here's the following code/parameter settings you can use with it.
- *
- * ---------
- * Settings:
- * ---------
- * 
- * Name:
- * \i[83]Gamepad Config
- *
- * Help Description:
- * Configure the game's gamepad settings.
- *
- * Symbol:
- * gamepadConfig
- *
- * Show/Hide:
- * if (Imported.GamepadConfig && Input.isControllerConnected()) {
- *   show = !Utils.isMobileDevice();
- * } else {
- *   show = false;
- * }
- *
- * Enable:
- * enabled = true;
- *
- * Ext:
- * ext = 0;
- *
- * ----------
- * Functions:
- * ----------
- * 
- * Make Option Code:
- * this.addCommand(name, symbol, enabled, ext);
- *
- * Draw Option Code:
- * var rect = this.itemRectForText(index);
- * var statusWidth = this.statusWidth();
- * var titleWidth = rect.width - statusWidth;
- * this.resetTextColor();
- * this.changePaintOpacity(this.isCommandEnabled(index));
- * this.drawOptionsName(index);
- *
- * Process OK Code:
- * this.playOkSound();
- * SceneManager.push(Scene_GamepadConfig);
- *
- * Cursor Right Code:
- * // Empty. Provided by this plugin.
- * 
- * Cursor Left Code:
- * // Empty. Provided by this plugin.
- *
- * Default Config Code:
- * // Empty. Provided by this plugin.
- *
- * Save Config Code:
- * // Empty. Provided by this plugin.
- *
- * Load Config Code:
- * // Empty. Provided by this plugin.
- *
- * ============================================================================
- * Changelog
- * ============================================================================
- *
- * Version 1.01:
- * - Compatibility update with YEP_OptionsCore.js!
- *
- * Version 1.00:
- * - Finished Plugin!
  */
+
+ /*:ja
+ * @plugindesc ゲームパッド向けにボタンコンフィグを行なうプラグインです。
+ * @author Yanfly Engine Plugins
+ *
+ * @param Command Name
+ * @desc メインメニューに表示されるオプション名を変更できます
+ * @default Gamepad Config
+ *
+ * @param Button Name
+ * @desc コンフィグメニューでのボタン名の表示方法を変更できます
+ * @default Button %1
+ *
+ * @param OK Button
+ * @desc OKボタンに対するコマンド名を変更できます
+ * @default OK / Talk
+ *
+ * @param OK Help
+ * @desc OKボタンに対するヘルプを設定できます
+ * @default メニューの決定/人に話しかける際に使うボタンです
+ *
+ * @param Cancel Button
+ * @desc キャンセルボタン
+ * @desc キャンセルボタンに対するコマンド名を変更できます
+ * @default Cancel
+ *
+ * @param Cancel Help
+ * @desc キャンセルボタンに対するヘルプを設定できます
+ * @default メニューアクションをキャンセルする際に使うボタンです
+ *
+ * @param Shift Button
+ * @desc シフトボタンに対するコマンド名を変更できます
+ * @default ダッシュ
+ *
+ * @param Shift Help
+ * @desc シフトボタンに対するヘルプを設定できます
+ * @default 長押しするとフィールド上をダッシュできます
+ *
+ * @param Menu Button
+ * @desc メニューボタンに対するコマンド名を変更できます
+ * @default Menu
+ *
+ * @param Menu Help
+ * @desc メニューボタンに対するヘルプを設定できます
+ * @default フィールドからメインメニューにアクセスします
+ *
+ * @param PageUp Button
+ * @desc ページアップボタンに対するコマンド名を変更できます
+ * @default Page Up
+ *
+ * @param PageUp Help
+ * @desc ページアップボタンに対するヘルプを設定できます
+ * @default メニューを素早くスクロールアップできます
+ *
+ * @param PageDown Button
+ * @desc ページダウンボタンに対するコマンド名を変更できます
+ * @default Page Down
+ *
+ * @param PageDown Help
+ * @desc ページダウンボタンに対するヘルプを設定できます
+ * @default メニューを素早くスクロールダウンできます
+ *
+ * @param Reset Default
+ * @desc コンフィグをリセットする際のコマンド名を変更できます
+ * @default Reset to Default
+ *
+ * @param Reset Help
+ * @desc リセットボタンに対するヘルプを設定できます
+ * @default コントローラコンフィグをデフォルトに戻します
+ *
+ * @param Finish Config
+ * @desc コンフィグを完了する際のコマンド名を変更できます
+ * @default Finish Configuration
+ *
+ * @param Finish Help
+ * @desc 完了ボタンに対するヘルプを設定できます
+ * @default ゲームパッドのコンフィグを完了しますか？
+ *
+ * @help
+ * ゲームパッドが使用される場合、
+ * "Gamepad Config"をオプションメニューに追加してください。
+ * プレイヤーは好みのコンフィグ設定を行うことができ、
+ * その設定は毎回プレイ時に自動的にロードされます。
+ * 
+ * ゲームパッドがオプションやゲームパッドコンフィグから検出されなくなると、
+ * ゲームは自動的にプレイヤーを排出し、ゲーム内に閉じ込められることを防ぎます。
+ * 
+ */
+
 //=============================================================================
 
 //=============================================================================
@@ -312,14 +323,14 @@ ConfigManager.readGamepadConfig = function(config, name) {
 };
 
 //=============================================================================
-// Window_Options
+// Window_MenuCommand
 //=============================================================================
 
 Yanfly.GamepadConfig.Window_Options_addGeneralOptions =
 	Window_Options.prototype.addGeneralOptions;
 Window_Options.prototype.addGeneralOptions = function() {
   Yanfly.GamepadConfig.Window_Options_addGeneralOptions.call(this);
-  if (!Imported.YEP_OptionsCore) this.addGameConfigCommand();
+	this.addGameConfigCommand();
 };
 
 Window_Options.prototype.addGameConfigCommand = function() {
@@ -339,8 +350,6 @@ Window_Options.prototype.update = function() {
 		this.updatePlacement();
 	}
 };
-
-if (!Imported.YEP_OptionsCore) {
 
 Yanfly.GamepadConfig.Window_Options_drawItem =
 	Window_Options.prototype.drawItem;
@@ -365,9 +374,6 @@ Window_Options.prototype.processOk = function() {
 		Yanfly.GamepadConfig.Window_Options_processOk.call(this);
 	}
 };
-
-}; // Imported.YEP_OptionsCore
-
 
 //=============================================================================
 // Window_GamepadConfig

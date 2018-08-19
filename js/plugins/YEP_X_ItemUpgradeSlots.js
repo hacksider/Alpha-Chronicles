@@ -8,22 +8,18 @@ Imported.YEP_X_ItemUpgrades = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.IUS = Yanfly.IUS || {};
-Yanfly.IUS.version = 1.08;
 
 //=============================================================================
  /*:
- * @plugindesc v1.08 (Requires YEP_ItemCore.js) Allows independent items to
+ * @plugindesc v1.06 (Requires YEP_ItemCore.js) Allows independent items to
  * be upgradeable and gain better stats.
  * @author Yanfly Engine Plugins
  *
  * @param Default Slots
- * @type number
- * @min 0
  * @desc The default amount of slots items can be upgraded.
  * @default 3
  *
  * @param Slot Variance
- * @type number
  * @desc The default slot variance for items with slots.
  * @default 1
  *
@@ -33,9 +29,6 @@ Yanfly.IUS.version = 1.08;
  * @default Upgrade %1
  *
  * @param Show Only
- * @type boolean
- * @on YES
- * @off NO
  * @desc The Upgrade Command will only show if item is upgradeable.
  * NO - false     YES - true
  * @default true
@@ -46,9 +39,6 @@ Yanfly.IUS.version = 1.08;
  * @default Slots Available
  *
  * @param Show Slot Upgrades
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows what upgrades applied to slots in info window.
  * NO - false     YES - true
  * @default true
@@ -59,9 +49,6 @@ Yanfly.IUS.version = 1.08;
  * @default \}Slot%1: %2\{
  *
  * @param Default Sound
- * @type file
- * @dir audio/se/
- * @require 1
  * @desc This is the default sound played when using an
  * item upgrade.
  * @default Heal2
@@ -146,34 +133,32 @@ Yanfly.IUS.version = 1.08;
  * The following is a list of effects you can use for the <Upgrade Effects>
  * notetag to have it apply the desired effects to the upgraded item.
  *
- * Effect Text               Upgrade Effect:
- *   Base Name: x            - Changes item's base name to x. *Note2
- *   Boost Count: +x         - Increases Boost Count by x. *Note2
- *   Boost Count: -x         - Decreases Boost Count by x. *Note2
- *   Eval: x                 - Runs x as a piece of code. *Note2
- *   Name: x                 - Changes item's name to x. *Note2
- *   Icon: x                 - Changes item's icon to x. *Note2
- *   Picture Image: filename - Changes item's picture image to filename. *Note4
- *   Picture Hue: x          - Changes item's picture hue to x. *Note4
- *   Prefix: x               - Changes item's prefix to x. *Note2
- *   Priority Name: x        - Sets priority name to x. *Note2
- *   Random Stat: x          - Increases or decreases 'Stat' by 0 to x. *Note1
- *   Random Stat: +x         - Increases 'Stat' by 0 to x. *Note1
- *   Random Stat: -x         - Decreases 'Stat' by 0 to x. *Note1
- *   Reset Base Name         - Resets the base name to default.
- *   Reset Boost Count       - Resets the Boost Count to 0.
- *   Reset Icon              - Resets the icon back to the default icon.
- *   Reset Prefix            - Resets name prefix to default.
- *   Reset Stat              - Resets 'Stat' back to base stat values. *Note1
- *   Reset Suffix            - Resets name suffix to default.
- *   Reset Full              - Resets every single aspect about item. *Note3
- *   Slots: x                - Changes the slot consumption cost to x. *Note1
- *   Stat: +x                - Increases 'Stat' by x. *Note1
- *   Stat: +x%               - Increases 'Stat' by x% of base stat. *Note1
- *   Stat: -x                - Decreases 'Stat' by x. *Note1
- *   Stat: -x%               - Decreases 'Stat' by x% of base stat. *Note1
- *   Suffix: x               - Changes item's suffix to x. *Note2
- *   Text Color: x           - Changes item's text color to x.
+ * Effect Text             Upgrade Effect:
+ *   Base Name: x          - Changes item's base name to x. *Note2
+ *   Boost Count: +x       - Increases Boost Count by x. *Note2
+ *   Boost Count: -x       - Decreases Boost Count by x. *Note2
+ *   Eval: x               - Runs x as a piece of code. *Note2
+ *   Name: x               - Changes item's name to x. *Note2
+ *   Icon: x               - Changes item's icon to x. *Note2
+ *   Prefix: x             - Changes item's prefix to x. *Note2
+ *   Priority Name: x      - Sets priority name to x. *Note2
+ *   Random Stat: x        - Increases or decreases 'Stat' by 0 to x. *Note1
+ *   Random Stat: +x       - Increases 'Stat' by 0 to x. *Note1
+ *   Random Stat: -x       - Decreases 'Stat' by 0 to x. *Note1
+ *   Reset Base Name       - Resets the base name to default.
+ *   Reset Boost Count     - Resets the Boost Count to 0.
+ *   Reset Icon            - Resets the icon back to the default icon.
+ *   Reset Prefix          - Resets name prefix to default.
+ *   Reset Stat            - Resets 'Stat' back to base stat values. *Note1
+ *   Reset Suffix          - Resets name suffix to default.
+ *   Reset Full            - Resets every single aspect about item. *Note3
+ *   Slots: x              - Changes the slot consumption cost to x. *Note1
+ *   Stat: +x              - Increases 'Stat' by x. *Note1
+ *   Stat: +x%             - Increases 'Stat' by x% of base stat. *Note1
+ *   Stat: -x              - Decreases 'Stat' by x. *Note1
+ *   Stat: -x%             - Decreases 'Stat' by x% of base stat. *Note1
+ *   Suffix: x             - Changes item's suffix to x. *Note2
+ *   Text Color: x         - Changes item's text color to x.
  *
  * Note1: 'Stat' is to be replaced by 'MaxHP', 'MaxMP', 'ATK', 'DEF', 'MAT',
  * 'MDF', 'AGI', 'LUK', 'SLOTS', 'ALL' or 'CURRENT'. 'ALL' affects all stats.
@@ -186,8 +171,6 @@ Yanfly.IUS.version = 1.08;
  * Note3: Because this effect resets absolutely everything about an item, it
  * will send the player away from the upgrade menu to reset the standings of
  * the item.
- *
- * Note4: This requires the Item Picture Images plugin.
  *
  * ============================================================================
  * Plugin Commands
@@ -208,15 +191,206 @@ Yanfly.IUS.version = 1.08;
  * Changelog
  * ============================================================================
  *
- * Version 1.08:
- * - Updated for RPG Maker MV version 1.5.0.
- *
- * Version 1.07:
- * - Lunatic Mode fail safes added.
- *
- * Version 1.06a:
+ * Version 1.06:
  * - Fixed a bug that caused an error with the way items upgraded.
- * - Fixed a bug that didn't connect with the Equip Customize Command plugin.
+ *
+ * Version 1.05:
+ * - Updated for RPG Maker MV version 1.1.0.
+ *
+ * Version 1.04:
+ * - Added 'Text Color: x' upgrade effect to allow you to change the text color
+ * of independent items.
+ *
+ * Version 1.03:
+ * - Fixed a bug that caused slot variance to not calculate correctly.
+ * - Added 'stat +x%' and 'stat -x%' to upgrade effects.
+ *
+ * Version 1.02:
+ * - Fixed a bug that prevented upgrading if the only effect is boosting.
+ *
+ * Version 1.01:
+ * - Added 'Show Only' parameter. This will cause the upgrade command to only
+ * appear if the item can be upgraded.
+ *
+ * Version 1.00:
+ * - Finished plugin!
+ */
+ /*:ja
+ * @plugindesc v1.06 個別アイテムを強化出来るようになります。
+ * (使用するにはYEP_ItemCore.jsが必要です)
+ * @author Yanfly Engine Plugins
+ *
+ * @param Default Slots
+ * @desc デフォルトのスロットアイテム数をアップグレードすることができます。
+ * @default 3
+ *
+ * @param Slot Variance
+ * @desc デフォルトのアイテムのスロット変数を変更します。
+ * @default 1
+ *
+ * @param Upgrade Command
+ * @desc 選択されたアイテムを強化する際のコマンドテキストを指定します。空白にすることで非表示になります。   %1 - アイテム名
+ * @default Upgrade %1
+　*
+ * @param Show Only
+ * @desc アップグレード可能のアイテムのみを表示します。
+ * いいえ - false     はい - true
+ * @default true
+ *
+ * @param Slots Available
+ * @desc 使用可能なアップグレードスロットを表示する際のテキストを指定します。空白にすることで非表示になります。
+ * @default Slots Available
+ *
+ * @param Show Slot Upgrades
+ * @desc インフォメーションウィンドウで、スロットにどのアップグレードが適用されたか表示します。　非表示 - false     表示 - true
+ * @default true
+ *
+ * @param Slot Upgrade Format
+ * @desc スロットがアップグレードされる際に表示されるテキストフォーマットです。 %1 - スロット番号    %2 - アイテムアイコンと名前
+ * @default \}Slot%1: %2\{
+ *
+ * @param Default Sound
+ * @desc アイテムアップグレードを使った際に流れるデフォルト音源を指定します。
+ * @default Heal2
+ *
+ * @help
+ * ============================================================================
+ * Introduction
+ * ============================================================================
+ *
+ * このプラグインを利用するには、YEP_ItemCoreが必要です。プラグインリスト内では
+ * YEP_ItemCoreの下にこのプラグインが来るようにしてください。
+ *
+ * このプラグインではアイテムアップデートが利用できるようになります。
+ * 任意のアイテムにこのプラグインを適用することで、そのアイテムのパラメータを
+ * 増大させることができます。
+ *
+ * ============================================================================
+ * Notetags
+ * ============================================================================
+ *
+ * アイテムアップグレードを調整するには、下記のNotetagを使ってください。
+ *
+ * 武器、防具のNotetag
+ *   <Upgrade Slots: x>
+ *   データベースに基づくデフォルトの数値の代わりに、アイテムのアップグレード
+ *   回数を指定できます。
+ *
+ *   <Slot Variance: x>
+ *   アイテムのスロット数を、ランダムな変数で指定することができます。このNotetag
+ *   が使用されない場合は、パラメータセッティングの通りになります。
+ *
+ *   <Upgrade Sound: filename>
+ *   アップグレード音を'filename'に変更します。このNotetagが使用されない場合は、. If this notetag isn't
+ *   'Default Sound' が代わりに使われます。
+ *
+ *   <Upgrade Effect>
+ *    effect
+ *    effect
+ *   </Upgrade Effect>
+ *   適用されるエフェクトを指定できます。次のセクションの'Upgrade Effects List'
+ *   を参考に、アップグレードアイテムにこれらのエフェクトを付与してください。 
+ *
+ *   <Upgrade Item Type: All>
+ *   <Upgrade Item Type: Regular>
+ *   <Upgrade Item Type: Key>
+ *   <Upgrade Item Type: Hidden A>
+ *   <Upgrade Item Type: Hidden B>
+ *   <Upgrade Item Type: Always>
+ *   <Upgrade Item Type: Battle>
+ *   <Upgrade Item Type: Menu>
+ *   <Upgrade Item Type: Never>
+ *   <Upgrade Item Type: string>
+ *   タイプ・使用可能時がマッチしているアイテムに対して、このアイテムを使って
+ *   アップデートを行うことができるようになります。もしこれらがどれも使えない
+ *   場合、下記のNotetagを用いて、例えば'string'をアイテムアップグレード
+ *   のタイプ内に挿入してください。
+ *
+ *   <Type: string>
+ *   アイテムのNotetag内にこのタイプを挿入してください。(武器や防具には不可)
+ *   アイテムは'string'をタイプとして認識します。このNotetagの複数コピーを
+ *   挿入すれば、アイテムに更に多くのタイプを持たせることができます。前述の
+ *   Notetagのタイプにこれらがマッチしていれば、そのアイテムタイプを用いて
+ *   アイテムを強化できるようになります。
+ *
+ *   <Upgrade Weapon Type: x>
+ *   <Upgrade Weapon Type: x, x, x>
+ *   <Upgrade Weapon Type: x through x>
+ *   タイプ x の武器だけが、このアイテムによって強化されるように
+ *   なります。'type 0'を利用すると、全ての武器タイプに対して有効になります。
+ *
+ *   <Upgrade Armor Type: x>
+ *   <Upgrade Armor Type: x, x, x>
+ *   <Upgrade Armor Type: x through x>
+ *   タイプ x の防具だけが、このアイテムによって強化されるように
+ *   なります。'type 0'を利用すると、全ての防具タイプに対して有効になります。
+ *
+ * ============================================================================
+ * Upgrade Effects List
+ * ============================================================================
+ *
+ * 下記のエフェクを<Upgrade Effects>のNotetagに用いることで、アップグレード
+ * アイテムにエフェクトを適用することができます。
+ *
+ * Effect Text             Upgrade Effect:
+ *   Base Name: x          - アイテムのベース名を x に変更します。（注2）
+ *   Boost Count: +x       - ブーストカウントを x 増加させます。（注2）
+ *   Boost Count: -x       - ブーストカウントを x 減少させます。（注2）
+ *   Eval: x               - x をコードの一部として実行させます。（注2）
+ *   Name: x               - アイテム名を x に変更します。（注2）
+ *   Icon: x               - アイテムのアイコンを x に変更します。（注2）
+ *   Prefix: x             - アイテムの接頭辞を x に変更します。（注2）
+ *   Priority Name: x      - プライオリティネームを x に変更します。（注2）
+ *   Random Stat: x        - ステータスを0からx の範囲で増減させます。（注1）
+ *   Random Stat: +x       - ステータスを0からx の範囲で増加させます。（注1）
+ *   Random Stat: -x       - ステータスを0からx の範囲で減少させます。（注1）
+ *   Reset Base Name       - ベースネームをデフォルトに戻します。
+ *   Reset Boost Count     - ブースとカウントを0に戻します。
+ *   Reset Icon            - アイコンをデフォルトアイコンに戻します。
+ *   Reset Prefix          - 接頭辞をデフォルトに戻します。
+ *   Reset Stat            - ステータスの値をデフォルトに戻します。（注1）
+ *   Reset Suffix          - 接頭辞をデフォルトに戻します
+ *   Reset Full            - アイテムの全ての要素をリセットします。（注3）
+ *   Slots: x              - スロットの消費コストを x に変更します。（注1）
+ *   Stat: +x              - ステータスを x 増加させます。（注1）
+ *   Stat: +x%             - ベースステータスのステータスを　x% 増加させます。（注1）
+ *   Stat: -x              - ステータスを x 減少させます。（注1）
+ *   Stat: -x%             - ベースステータスのステータスを　x% 減少させます。（注1）
+ *   Suffix: x             - アイテムの接尾辞を x に変更します。（注2）
+ *   Text Color: x         - アイテムのテキスト色を x に変更します。
+ *
+ * 注1 : 'Stat' を 'MaxHP', 'MaxMP', 'ATK', 'DEF', 'MAT', 'MDF', 'AGI',
+ * 'LUK', 'SLOTS', 'ALL', 'CURRENT'にもできます。'ALL'にすれば、全ステータスに
+ * 影響します。'CURRENT' は0ではないステータスに影響します。このエフェクトは
+ * ブーストカウントを1増加させ、アイテム名をアップデートします。
+ *
+ * 注2 : エフェクトによって変更されない限り、これはブーストカウントを変更したり
+ * アイテム名をアップデートすることはません。
+ *
+ * 注3 : このエフェクトはアイテムに関するすべてをリセットするため、プレイヤーは
+ * アップグレードメニューから閉め出されてしまいます。
+ *
+ * ============================================================================
+ * Plugin Commands
+ * ============================================================================
+ *
+ * 下記のプラグインコマンドは、アイテムメニューのアップグレードオプションに
+ * 用いることができます。
+ *
+ * プラグインコマンド一覧:
+ *   ShowItemUpgrade    - Shows the upgrade option in the item menu.
+ *   HideItemUpgrade    - Hides the upgrade option in the item menu.
+ *   DisableItemUpgrade - Disables the upgrade option in the item menu.
+ *   EnableItemUpgrade  - Enables the upgrade option in the item menu.
+ *
+ * これらを用いていつでもアップグレードオプションを調整できます。
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.06:
+ * - Fixed a bug that caused an error with the way items upgraded.
  *
  * Version 1.05:
  * - Updated for RPG Maker MV version 1.1.0.
@@ -447,17 +621,6 @@ ItemManager.checkIUSEffects = function(mainItem, effectItem) {
 };
 
 ItemManager.processIUSEffect = function(line, mainItem, effectItem) {
-    // Imported.YEP_X_ItemPictureImg
-    if (Imported.YEP_X_ItemPictureImg) {
-      if (line.match(/PICTURE IMAGE:[ ](.*)/i)) {
-        var filename = String(RegExp.$1);
-        return this.effectIUSPictureHue(mainItem, filename, undefined);
-      }
-      if (line.match(/PICTURE HUE:[ ](\d+)/i)) {
-        var hue = parseInt(RegExp.$1).clamp(0, 360);
-        return this.effectIUSPictureHue(mainItem, undefined, hue);
-      }
-    }
     // BASE NAME: X
     if (line.match(/BASE NAME:[ ](.*)/i)) {
       var value = String(RegExp.$1);
@@ -559,11 +722,7 @@ ItemManager.effectIUSBaseName = function(item, value) {
 ItemManager.effectIUSEval = function(mainItem, effectItem, code) {
     var item = mainItem;
     var baseItem = DataManager.getBaseItem(item);
-    try {
-      eval(code);
-    } catch (e) {
-      Yanfly.Util.displayError(e, code, 'ITEM UPGRADE EFFECT ERROR');
-    }
+    eval(code);
 };
 
 ItemManager.effectIUSIcon = function(item, value) {
@@ -1177,8 +1336,8 @@ Scene_Item.prototype.onActionUpgrade = function() {
     this._itemActionWindow.deactivate();
     this._upgradeListWindow.show();
     this._upgradeListWindow.activate();
-    this._upgradeItem = this.item();
-    this._upgradeListWindow.setItem(this.item());
+    this._upgradeItem = this._itemWindow.item();
+    this._upgradeListWindow.setItem(this._upgradeItem);
 };
 
 Scene_Item.prototype.onUpgradeListOk = function() {
@@ -1227,17 +1386,6 @@ Yanfly.Util.getRange = function(n, m) {
     var result = [];
     for (var i = n; i <= m; ++i) result.push(i);
     return result;
-};
-
-Yanfly.Util.displayError = function(e, code, message) {
-  console.log(message);
-  console.log(code || 'NON-EXISTENT');
-  console.error(e);
-  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
-    if (!require('nw.gui').Window.get().isDevToolsOpen()) {
-      require('nw.gui').Window.get().showDevTools();
-    }
-  }
 };
 
 //=============================================================================

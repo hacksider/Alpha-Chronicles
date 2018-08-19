@@ -8,11 +8,10 @@ Imported.YEP_EquipCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.Equip = Yanfly.Equip || {};
-Yanfly.Equip.version = 1.17;
 
 //=============================================================================
  /*:
- * @plugindesc v1.17 Allows for the equipment system to be more flexible to
+ * @plugindesc v1.11 Allows for the equipment system to be more flexible to
  * allow for unique equipment slots per class.
  * @author Yanfly Engine Plugins
  *
@@ -20,44 +19,29 @@ Yanfly.Equip.version = 1.17;
  * @default
  *
  * @param Text Align
- * @parent ---General---
- * @type combo
- * @option left
- * @option center
- * @option right
  * @desc How to align the text for the command window.
  * left     center     right
  * @default center
  *
  * @param Finish Command
- * @parent ---General---
  * @desc The command text used for exiting the equip scene.
- * Leave empty to not include this command.
  * @default Finish
  *
  * @param Remove Text
- * @parent ---General---
  * @desc The text used to display the "Remove" command in the equip
  * item list.
  * @default Remove
  *
  * @param Remove Icon
- * @parent ---General---
- * @type number
- * @min 0
  * @desc The icon used to display next to the "Remove" command in
  * the equip item list.
  * @default 16
  *
  * @param Empty Text
- * @parent ---General---
  * @desc The text used to display an "Empty" piece of equipment.
  * @default <Empty>
  *
  * @param Empty Icon
- * @parent ---General---
- * @type number
- * @min 0
  * @desc The icon used to display next to the "Empty" piece of
  * equipment in the equipment list.
  * @default 16
@@ -66,19 +50,11 @@ Yanfly.Equip.version = 1.17;
  * @default
  *
  * @param Non-Removable Types
- * @parent ---Rules---
- * @type number
- * @min 1
- * @max 100
  * @desc These types must always have an item equipped and cannot
  * be empty. Separate the type ID's by a space.
  * @default 1
  *
  * @param Non-Optimized Types
- * @parent ---Rules---
- * @type number
- * @min 1
- * @max 100
  * @desc These types will be ignored when the actor optimizes
  * equips. Separate the type ID's by a space.
  * @default 5
@@ -183,26 +159,189 @@ Yanfly.Equip.version = 1.17;
  * Changelog
  * ============================================================================
  *
- * Version 1.17:
- * - Updated for RPG Maker MV version 1.5.0.
+ * Version 1.11:
+ * - Updated for RPG Maker MV version 1.1.0.
  *
- * Version 1.16:
- * - Lunatic Mode fail safes added.
+ * Version 1.10:
+ * - Fixed a bug that did not clear changes made to an actor's stats after
+ * having unequipped them and then switching actors.
  *
- * Version 1.15:
- * - Optimization update.
+ * Version 1.09:
+ * - For users using the Item Core plugin and the new Item Scene layout option,
+ * the Item Info Window is now added to the Equip Scene. Pressing Left/Right
+ * will toggle the stat comparison window with the info window. Pressing Tab on
+ * the keyboard will also switch them as well as clicking on those windows.
  *
- * Version 1.14:
- * - Added an actor refresh upon listing the various equip slots to ensure that
- * all slots are updated in case any cache'd instances may have been missed.
+ * Version 1.08:
+ * - Fixed a bug where changing an actor's equips would revive them if dead.
  *
- * Version 1.13:
- * - Fixed a bug that caused a crash for those who weren't using the Item Core
- * in addition to this plugin.
+ * Version 1.07:
+ * - Fixed a bug with 'Optimize' and 'Remove All' not refreshing windows.
  *
- * Version 1.12:
- * - Added optional functionality. Leaving 'Finish Command' empty will remove
- * it from being added to the command list.
+ * Version 1.06:
+ * - Fixed a bug with 'Change Equipment' event where it would only change the
+ * slot of the marked equipment rather than the slot type.
+ *
+ * Version 1.05:
+ * - Fixed an issue where unequipping items can kill actors.
+ *
+ * Version 1.04a:
+ * - Fixed a bug and rewrote the initializing equipment process.
+ *
+ * Version 1.03:
+ * - Fixed an bug that resulted in null object errors.
+ *
+ * Version 1.02:
+ * - Fixed an issue that did not keep HP and MP rates the same when using the
+ * optimize and clear commands.
+ *
+ * Version 1.01:
+ * - Fixed a bug that did not update the stats properly when compared.
+ *
+ * Version 1.00:
+ * - Finished plugin!
+ */
+
+ /*:ja
+ * @plugindesc ver 1.11 クラスごとに独自の装備スロットを提供し、
+ * 装備のシステムをより柔軟なものにできます。
+ * @author Yanfly Engine Plugins
+ *
+ * @param ---一般---
+ * @default
+ *
+ * @param Text Align
+ * @desc コマンドウィンドウでのテキストの配置を変更します。
+ * left(左)    center(中央)    right(右)
+ * @default center
+ *
+ * @param Finish Command
+ * @desc 装備シーンから出るときのテキストを指定します。
+ * @default 終了
+ *
+ * @param Remove Text
+ * @desc 装備アイテムリストで"外す"を表すテキストを指定します。
+ * @default 外す
+ *
+ * @param Remove Icon
+ * @desc 装備アイテムリストで"外す"を表すアイコンを指定します。
+ * @default 16
+ *
+ * @param Empty Text
+ * @desc 装備リストで、装備品が空であることを表すテキストを指定します。
+ * @default <空き>
+ *
+ * @param Empty Icon
+ * @desc 装備リストで、装備品が空であることを表すアイコンを指定します。
+ * @default 16
+ *
+ * @param ---ルール---
+ * @default
+ *
+ * @param Non-Removable Types
+ * @desc ここで指定したタイプは常に何かアイテムを装備していなければなりません。
+ * 複数のタイプIDを指定する場合はスペースで区切ってください。
+ * @default 1
+ *
+ * @param Non-Optimized Types
+ * @desc 最強装備の機能使用時に、ここで指定したタイプを無視させます。
+ * 複数のタイプIDを指定する場合はスペースで区切ってください。
+ * @default 5
+ *
+ * @help
+ * ============================================================================
+ * Introduction
+ * ============================================================================
+ *
+ * このプラグインでは、装備のハンドリングに関するいくつかの要素を変更します。
+ * 詳細は下記を参照してください:
+ *
+ * 1. Scene_Equip
+ * Scene_Equipは見た目の変更を行います。主にメインメニューの見た目を統一して
+ * プレイヤーにとって親しみやすいものへと変更します。更に、今後リリースされる
+ * 拡張プラグインにもきちんと対応できるように、コマンドウィンドウについても
+ * 最適化されています。
+ *
+ * 2. 装備タイプの扱い
+ * 職業のノートにいくつかNotetagを加えるだけで、異なる職業がそれぞれの
+ * セッティングを持つことができるようになります。以前は、マッチした名前を持った
+ * 装備タイプは、単独としてバラバラに扱われていました。このプラグインでは、
+ * 同じタイプの物として扱うことができます。
+ *
+ * 3. 装備ルール
+ * 特定の装備タイプは外すことができなくなります。例として、このプラグインでは
+ * 「武器スロットには常に何かしら装備していなくてはならない」というような設定が
+ * 可能で、プレイヤーは武器を勝手に外すことはできなくなります。(イベントを通して
+ * 解除させることもできます。) それに加えて、特定の装備タイプを指定して、
+ * 最強装備を制限することもできます。アクセサリーのような装備品タイプに関しては
+ * 手動で決定させた方が良いでしょう。
+ *
+ * 4. パラメータコントロール
+ * Notetagを用いることで、装備パラメータに、大きな値やカスタマイズされた値を
+ * 付与することができます。(コードを通して実行されます)
+ * 装備品は固定の性能を持ったアイテムではなくなり、これにより、ゲームを通して
+ * 性能が変動するようなものとなります。
+ *
+ * Note: アイテムコア（Item Core）を使用してる方々へ
+ * アイテムコアのプラグイン、または更新されてるItem Sceneレイアウトオプション
+ * を使っている方へ。「Item Info Window」は「Equip Scene」に移動されました。
+ * 左・右キー、タブキー、またはそれぞれのウィンドウをクリックするとパラメータを
+ * 比べるウィンドウとInfoウィンドウが表示されます。
+ *
+ * ============================================================================
+ * Notetags
+ * ============================================================================
+ *
+ * 職業の装備設定を変更するには、下記のNotetagを用いてください。
+ *
+ * 職業のNotetags:
+ *   <Equip Slot: x>      例: <Equip Slot: 1, 2, 3, 4, 5, 5, 5, 5>
+ *   <Equip Slot: x, x, x>
+ *   職業の装備スロットを x に変更してください。繰り返し同じ番号を使うことにより
+ *   装備タイプを複製し、その職業は同タイプの装備を複数着けることができます。
+ *   タイプIDを見つけるには、データベースのタイプタブを参照してください。
+ *
+ *   上記の方法が気に入らない場合は、下記のNotetagを代わりに用いてください。
+ *
+ *   <Equip Slot>            例: <Equip Slot>
+ *    string                        Weapon
+ *    string                        Armor
+ *    string                        Accessory
+ *    string                        Accessory
+ *   </Equip Slot>                 </Equip Slot>
+ *   'string'を装備タイプの名前に変えてください。非常に正確な照合のため、
+ *   名前欄が完璧にマッチしない場合は、スロットはその職業と認められません。
+ *   複数コピーされた名前欄は、その職業がそのタイプの装備を複数持てることを
+ *   表しています。全て、前述のNotetagと同様に動作します。
+ *
+ * 武器と防具のNotetags:
+ *   <stat: +x>
+ *   <stat: -x>
+ *   武器もしくは防具のステータスを、 x だけ増加・減少させます。
+ *   "stat"の部分を"hp", "mp", "atk", "def", "mat", "mdf", "agi", "luk"
+ *   のような特定のステータスに変更してください。この機能は、デフォルトの
+ *   最大値の上限を無視して使うことができます。
+ *   ここで成された変更は、ベースのパラメータを上書きします。
+ *
+ * ============================================================================
+ * Lunatic Mode - Custom Parameters
+ * ============================================================================
+ *
+ *   <Custom Parameters>  　　例: <Custom Parameters>
+ *    code                          atk = $gameVariables.value(1);
+ *    code                          mat = atk / 2;
+ *    code                          all = $gameParty.members().length;
+ *    code                         </Custom Parameters>
+ *   </Code Parameters>
+ *   パラメータに、コードによって適用されたレートを設定することができます。
+ *   次のパラメータが定義されます: 'maxhp', 'maxmp', 'atk', 'def', 'mat', 'mdf',
+ *   'agi', 'luk', and 'all' 
+ *   'all' のパラメータは、全てのパラメータに作用します。
+ *   ここでの変更はベースのパラメータを上書きしませんが、追加保存されます。
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
  *
  * Version 1.11:
  * - Updated for RPG Maker MV version 1.1.0.
@@ -246,6 +385,7 @@ Yanfly.Equip.version = 1.17;
  * Version 1.00:
  * - Finished plugin!
  */
+
 //=============================================================================
 
 //=============================================================================
@@ -544,12 +684,7 @@ Game_Actor.prototype.evalParamPlus = function(item, paramId) {
     var user = this;
     var s = $gameSwitches._data;
     var v = $gameVariables._data;
-    var code = item.parameterEval;
-    try {
-      eval(code);
-    } catch (e) {
-      Yanfly.Util.displayError(e, code, 'CUSTOM PARAMETER FORMULA ERROR');
-    }
+    eval(item.parameterEval);
     switch (paramId) {
       case 0:
         value += hp + maxhp + mhp;
@@ -628,7 +763,6 @@ Window_EquipCommand.prototype.addCustomCommand = function() {
 };
 
 Window_EquipCommand.prototype.addFinishCommand = function() {
-    if (Yanfly.Param.EquipFinishCmd === '') return;
     this.addCommand(Yanfly.Param.EquipFinishCmd, 'cancel');
 };
 
@@ -640,11 +774,6 @@ Yanfly.Equip.Window_EquipSlot_setActor = Window_EquipSlot.prototype.setActor;
 Window_EquipSlot.prototype.setActor = function(actor) {
     this.setSlotNameWidth(actor);
     Yanfly.Equip.Window_EquipSlot_setActor.call(this, actor);
-};
-
-Window_EquipSlot.prototype.refresh = function() {
-    if (this._actor) this._actor.refresh();
-    Window_Selectable.prototype.refresh.call(this);
 };
 
 Window_EquipSlot.prototype.isEnabled = function(index) {
@@ -1056,13 +1185,12 @@ Scene_Equip.prototype.onItemOk = function() {
 Yanfly.Equip.Scene_Equip_onItemCancel = Scene_Equip.prototype.onItemCancel;
 Scene_Equip.prototype.onItemCancel = function() {
     Yanfly.Equip.Scene_Equip_onItemCancel.call(this);
-    this._compareWindow.setTempActor(null);
     this._itemWindow.hide();
 };
 
 Scene_Equip.prototype.update = function() {
     Scene_MenuBase.prototype.update.call(this);
-    if (this.isActive()) this.updateLowerRightWindowTriggers();
+    this.updateLowerRightWindowTriggers()
 };
 
 Scene_Equip.prototype.updateLowerRightWindowTriggers = function() {
@@ -1118,13 +1246,6 @@ Scene_Equip.prototype.playLowerRightWindowSound = function() {
     SoundManager.playCursor();
 };
 
-Yanfly.Equip.Scene_Equip_onActorChange = Scene_Equip.prototype.onActorChange;
-Scene_Equip.prototype.onActorChange = function() {
-    Yanfly.Equip.Scene_Equip_onActorChange.call(this);
-    this._compareWindow.setTempActor(null);
-    if (this._infoWindow) this._infoWindow.setItem(null);
-};
-
 //=============================================================================
 // Utilities
 //=============================================================================
@@ -1135,17 +1256,6 @@ if (!Yanfly.Util.toGroup) {
     Yanfly.Util.toGroup = function(inVal) {
         return inVal;
     }
-};
-
-Yanfly.Util.displayError = function(e, code, message) {
-  console.log(message);
-  console.log(code || 'NON-EXISTENT');
-  console.error(e);
-  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
-    if (!require('nw.gui').Window.get().isDevToolsOpen()) {
-      require('nw.gui').Window.get().showDevTools();
-    }
-  }
 };
 
 //=============================================================================

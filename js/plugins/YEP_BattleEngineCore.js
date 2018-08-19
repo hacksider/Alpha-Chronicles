@@ -8,11 +8,10 @@ Imported.YEP_BattleEngineCore = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.BEC = Yanfly.BEC || {};
-Yanfly.BEC.version = 1.46;
 
 //=============================================================================
  /*:
- * @plugindesc v1.46 Have more control over the flow of the battle system
+ * @plugindesc v1.34 Have more control over the flow of the battle system
  * with this plugin and alter various aspects to your liking.
  * @author Yanfly Engine Plugins
  *
@@ -20,22 +19,11 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Action Speed
- * @parent ---General---
  * @desc This is the formula used for an action's base speed.
- * Default: agi + Math.randomInt(Math.floor(5 + agi / 4))
+ * Default: agi
  * @default agi
  *
  * @param Default System
- * @parent ---General---
- * @type select
- * @option Default Turn Battle
- * @value dtb
- * @option Active Turn Battle (plugin required)
- * @value atb
- * @option Charge Turn Battle (plugin required)
- * @value ctb
- * @option Standard Turn Battle (plugin required)
- * @value stb
  * @desc This is the default battle system your game uses.
  * Default: dtb
  * @default dtb
@@ -44,82 +32,53 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Escape Ratio
- * @parent ---Escape---
  * @desc This is the formula used to determine escape success.
  * Default: 0.5 * $gameParty.agility() / $gameTroop.agility()
  * @default 0.5 * $gameParty.agility() / $gameTroop.agility()
  *
  * @param Fail Escape Boost
- * @parent ---Escape---
- * @type number
- * @decimals 2
  * @desc Each time the player fails escape, increase the success
- * rate by this much. Default: 0.10
- * @default 0.10
+ * rate by this much. Default: 0.1
+ * @default 0.1
  *
  * @param ---Animation---
  * @default
  *
  * @param Animation Base Delay
- * @parent ---Animation---
- * @type number
- * @min 0
  * @desc This sets the base delay in between animations.
- * Default: 8
+ * Default: 0
  * @default 0
  *
  * @param Animation Next Delay
- * @parent ---Animation---
- * @type number
- * @min 0
  * @desc This sets the sequential delay in between animations.
- * Default: 12
+ * Default: 0
  * @default 0
  *
  * @param Certain Hit Animation
- * @parent ---Animation---
- * @type number
- * @min 0
  * @desc Default animation to play for certain hit skills.
  * Use 0 if you wish for no animation.
- * @default 0
+ * @default 120
  *
  * @param Physical Animation
- * @parent ---Animation---
- * @type number
- * @min 0
  * @desc Default animation to play for physical skills.
  * Use 0 if you wish for no animation.
  * @default 52
  *
  * @param Magical Animation
- * @parent ---Animation---
- * @type number
- * @min 0
  * @desc Default animation to play for magical skills.
  * Use 0 if you wish for no animation.
  * @default 51
  *
  * @param Enemy Attack Animation
- * @parent ---Animation---
- * @type number
- * @min 0
  * @desc This is the default attack animation played by enemies.
  * Default: 0
  * @default 39
  *
  * @param Reflect Animation
- * @parent ---Animation---
- * @type number
- * @min 0
  * @desc The animation used when magic attacks are reflected.
  * @default 42
  *
  * @param Motion Waiting
- * @parent ---Animation---
- * @type boolean
- * @on After
- * @off During
  * @desc Play animations after performing an action or during?
  * During - false     After - true     Default: false
  * @default false
@@ -128,35 +87,21 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Front Position X
- * @parent ---Frontview---
  * @desc This formula determines the actor's home X position.
- * Default: 0
+ * Default: Graphics.boxWidth / 8 + Graphics.boxWidth / 4 * index
  * @default Graphics.boxWidth / 8 + Graphics.boxWidth / 4 * index
  *
  * @param Front Position Y
- * @parent ---Frontview---
  * @desc This formula determines the actor's home Y position.
- * Default: 0
+ * Default: Graphics.boxHeight - 180
  * @default Graphics.boxHeight - 180
  *
  * @param Front Actor Sprite
- * @parent ---Frontview---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Show the actor battle sprite in frontview?
  * NO - false     YES - true     Default - false
  * @default false
  *
  * @param Front Sprite Priority
- * @parent ---Frontview---
- * @type select
- * @option Normal
- * @value 0
- * @option Actors on Top
- * @value 1
- * @option Enemies on Top
- * @value 2
  * @desc Give actor sprites the priority of always being on top?
  * 0 - Normal   1 - Actors on Top   2 - Enemies on Top
  * @default 1
@@ -165,26 +110,16 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Home Position X
- * @parent ---Sideview---
  * @desc This formula determines the actor's home X position.
- * Default: 600 + index * 32
+ * Default: screenWidth - 16 - (maxSize + 2) * 32 + index * 32
  * @default screenWidth - 16 - (maxSize + 2) * 32 + index * 32
  *
  * @param Home Position Y
- * @parent ---Sideview---
  * @desc This formula determines the actor's home Y position.
- * Default: 280 + index * 48
+ * Default: screenHeight - statusHeight - maxSize * 48 + (index+1) * 48 - 32
  * @default screenHeight - statusHeight - maxSize * 48 + (index+1) * 48 - 32
  *
  * @param Side Sprite Priority
- * @parent ---Sideview---
- * @type select
- * @option Normal
- * @value 0
- * @option Actors on Top
- * @value 1
- * @option Enemies on Top
- * @value 2
  * @desc Give actor sprites the priority of always being on top?
  * 0 - Normal   1 - Actors on Top   2 - Enemies on Top
  * @default 1
@@ -193,40 +128,26 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Default X Anchor
- * @parent ---Sprites---
- * @type number
- * @decimals 2
  * @desc Default value used for your sprites's X Anchor.
- * Default: 0.50
- * @default 0.50
+ * Default: 0.5
+ * @default 0.5
  *
  * @param Default Y Anchor
- * @parent ---Sprites---
- * @type number
- * @decimals 2
  * @desc Default value used for your sprites's Y Anchor.
- * Default: 1.00
- * @default 1.00
+ * Default: 1.0
+ * @default 1.0
  *
  * @param Step Distance
- * @parent ---Sprites---
- * @type number
  * @desc This is the distance a unit steps forward for actions.
  * Default: 48
  * @default 48
  *
  * @param Flinch Distance
- * @parent ---Sprites---
- * @type number
  * @desc In sideview, when a unit takes damage or dodges, it will
  * flinch a certain distance in pixels.
  * @default 12
  *
  * @param Show Shadows
- * @parent ---Sprites---
- * @type boolean
- * @on Show Shadows
- * @off Hide Shadows
  * @desc Do you wish to have shadows appear under actors?
  * NO - false     YES - true
  * @default true
@@ -235,40 +156,26 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Popup Duration
- * @parent ---Damage Popups---
- * @type number
- * @min 1
  * @desc Adjusts how many frames a popup will stay visible for.
- * Default: 90
+ * Default: 128
  * @default 128
  *
  * @param Newest Popup Bottom
- * @parent ---Damage Popups---
- * @type boolean
- * @on Newest at bottom
- * @off Newest at top
  * @desc Places the newest popup at the bottom of a group.
  * NO - false     YES - true
  * @default true
  *
  * @param Popup Overlap Rate
- * @parent ---Damage Popups---
- * @type number
- * @decimals 1
  * @desc When multiple damage popups appear, they cover each other.
  * Use this to change the buffer rate amount for each sprite.
  * @default 0.9
  *
  * @param Critical Popup
- * @parent ---Damage Popups---
  * @desc Adjusts the popup's flashing color for critical hits.
  * Default: 255, 0, 0, 160
  * @default 255, 0, 0, 160
  *
  * @param Critical Duration
- * @parent ---Damage Popups---
- * @type number
- * @min 1
  * @desc How many frames the flashing will remain for a critical.
  * Default: 60
  * @default 60
@@ -277,35 +184,20 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Timed States
- * @parent ---Tick-Settings---
- * @type boolean
- * @on Time-Based States
- * @off Turn-Based States
  * @desc If the battle system is Tick-based, use time instead of
  * turns for states? NO - false   YES - true
  * @default false
  *
  * @param Timed Buffs
- * @parent ---Tick-Settings---
- * @type boolean
- * @on Time-Based Buffs
- * @off Turn-Based Buffs
  * @desc If the battle system is Tick-based, use time instead of
  * turns for buffs? NO - false   YES - true
  * @default false
  *
  * @param Turn Time
- * @parent ---Tick-Settings---
- * @type number
- * @min 1
  * @desc How many ticks must past to equal 1 turn?
  * @default 100
  * 
  * @param AI Self Turns
- * @parent ---Tick-Settings---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Set AI to be based on their own individual turns?
  * NO - false     YES - true
  * @default true
@@ -314,54 +206,31 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Lower Windows
- * @parent ---Window Settings---
- * @type boolean
- * @on Bottom Layout
- * @off Default Layout
  * @desc Places the skill and item windows at the screen's bottom.
  * OFF - false     ON - true
  * @default true
  *
  * @param Window Rows
- * @parent ---Window Settings---
- * @number
- * @min 1
  * @desc For lower windows, how many rows of items do you wish for
  * the windows to display?
  * @default 4
  *
  * @param Command Window Rows
- * @parent ---Window Settings---
- * @type number
- * @min 1
  * @desc Sets the number of rows for each command window to display.
  * Default: 4
  * @default 4
  *
  * @param Command Alignment
- * @parent ---Window Settings---
- * @type combo
- * @option left
- * @option center
- * @option right
  * @desc Sets the text alignment for the Party/Actor Commands.
  * Default: left
  * @default center
  *
  * @param Start Actor Command
- * @parent ---Window Settings---
- * @type boolean
- * @on Actor Command Window
- * @off Party Command Window
  * @desc Starts turn with the Actor Command Window instead of Party.
  * OFF - false     ON - true
  * @default true
  *
  * @param Current Max
- * @parent ---Window Settings---
- * @type boolean
- * @on Current / Max
- * @off Just Current
  * @desc Display the entire current / max value of HP/MP?
  * NO - false     YES - true     Default: true
  * @default false
@@ -370,56 +239,41 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Mouse Over
- * @parent ---Selection Help---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Allows you to mouse over the enemies to auto-select them.
  * OFF - false     ON - true
  * @default true
  *
  * @param Select Help Window
- * @parent ---Selection Help---
- * @type boolean
- * @on YES
- * @off NO
  * @desc When selecting actors and enemies, show the help window?
  * NO - false     YES - true
  * @default true
  *
  * @param User Help Text
- * @parent ---Selection Help---
  * @desc The singular form of 'User' used in a help window.
  * @default User
  *
  * @param Ally Help Text
- * @parent ---Selection Help---
  * @desc The singular form of 'Ally' used in a help window.
  * @default Ally
  *
  * @param Allies Help Text
- * @parent ---Selection Help---
  * @desc The plural form of 'Allies' used in a help window.
  * @default Allies
  *
  * @param Enemy Help Text
- * @parent ---Selection Help---
  * @desc The singular form of 'Enemy' used in a help window.
  * @default Enemy
  *
  * @param Enemies Help Text
- * @parent ---Selection Help---
  * @desc The plural form of 'Enemy' used in a help window.
  * @default Enemies
  *
  * @param All Help Text
- * @parent ---Selection Help---
  * @desc When selecting a entire group of targets.
  * %1 - Target Group (Allies or Enemies)
  * @default All %1
  *
  * @param Random Help Text
- * @parent ---Selection Help---
  * @desc When selecting a random selection of targets.
  * %1 - Target Group (Allies or Enemies)     %2 - Number
  * @default %2 Random %1
@@ -428,42 +282,26 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Visual Enemy Select
- * @parent ---Enemy Select---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Replaces the enemy selection screen with a more visual one.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Enemy Name
- * @parent ---Enemy Select---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Show enemy names with Visual Enemy Select.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Select Box
- * @parent ---Enemy Select---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Show a selection box when selecting enemies.
  * OFF - false     ON - true
  * @default false
  *
  * @param Enemy Font Size
- * @parent ---Enemy Select---
- * @type number
- * @min 1
  * @desc Changes the font size used to display enemy names.
- * Default: 28
+ * Default: 20
  * @default 20
  *
  * @param Enemy Auto Select
- * @parent ---Enemy Select---
  * @desc Changes what enemy is automatically selected at first.
  * LEFT - 0     RIGHT - this.furthestRight()
  * @default this.furthestRight()
@@ -472,10 +310,6 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Visual Actor Select
- * @parent ---Actor Select---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Allows you to click the actor on screen to select it.
  * OFF - false     ON - true
  * @default true
@@ -484,154 +318,86 @@ Yanfly.BEC.version = 1.46;
  * @default
  *
  * @param Show Emerge Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows the battle start text for enemies appearing.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Pre-Emptive Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows the text for getting a pre-emptive attack.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Surprise Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows the text for getting a surprise attack.
  * OFF - false     ON - true
  * @default true
  *
  * @param Optimize Speed
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Cuts log base line process to optimize the battle speed.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Action Text
- * @parent ---Battle Log---
- * @type boolean
- * @on Full
- * @off Simple
  * @desc Displays full action text or a simplified version of it.
  * SIMPLE - false     FULL - true
  * @default false
  *
  * @param Show State Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows all text regarding states.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Buff Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows all text regarding buffs.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Counter Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows text regarding counter attacks.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Reflect Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows text regarding reflected spells.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Substitute Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows text regarding substituted damage.
  * OFF - false     ON - true
  * @default true
  *
  * @param Show Fail Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows text regarding failed attacks.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Critical Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows text regarding critical hits.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Miss Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows text regarding missed attacks.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show Evasion Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows text regarding evaded attacks.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show HP Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows text regarding HP damage or heals.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show MP Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows text regarding MP damage or heals.
  * OFF - false     ON - true
  * @default false
  *
  * @param Show TP Text
- * @parent ---Battle Log---
- * @type boolean
- * @on YES
- * @off NO
  * @desc Shows text regarding TP damage or heals.
  * OFF - false     ON - true
  * @default false
@@ -882,69 +648,8 @@ Yanfly.BEC.version = 1.46;
  * Changelog
  * ============================================================================
  *
- * Version 1.46:
- * - Updated for RPG Maker MV version 1.6.1.
- *
- * Version 1.45:
- * - Updated for RPG Maker MV version 1.5.0.
- *
- * Version 1.44:
- * - Fixed a bug where the enemy name windows disappear if you change scenes
- * mid-way through battle and return to it.
- *
- * Version 1.43b:
- * - Bug fixed to prevent crash if non-existent actions are used.
- * - Optimization update.
- *
- * Version 1.42:
- * - Optimization update.
- *
- * Version 1.41:
- * - Fixed a bug that allowed certain sprites to remain in the active pool
- * while party members were removed midway through battle.
- *
- * Version 1.40:
- * - Updated for RPG Maker MV version 1.3.2.
- *
- * Version 1.39c:
- * - Fixed a bug that caused dead actors to not be a part of action sequence
- * targeting for "Not Focus".
- * - Optimization update.
- * - Updated "queueForceAction" to utilize both numbers and actual targets.
- *
- * Version 1.38a:
- * - Optimization update.
- * - Compatibility update for Selection Control v1.08.
- * - Bug fixed for mirrored animations on enemies.
- *
- * Version 1.37:
- * - Fixed a bug where if the enemy's size is too small, the enemy's name
- * during selection will be cut off.
- *
- * Version 1.36d:
- * - Made an update for the battle background image snaps when there is no
- * battleback being used. This will prevent the player party and enemy troop
- * from appearing in the background snapshot when entering menus mid-battle.
- * - 'Death Break' action sequence now only triggers upon dead status and not
- * an 'or 0 HP' condition.
- * - Updated Forced Action sequencing for more efficiency.
- * - 'Action Times+' traits now work properly for DTB again.
- * - Optimized message displaying for battle log.
- * - Optimized z sorting algorithm for sprites.
- *
- * Verison 1.35d:
- * - Scopes that target a dead ally will automatically target the first dead
- * ally now. Scopes that target all dead allies will lock onto the first dead
- * ally. This will hopefully provide less confusion amongst playing.
- * - Added anti-crash measure for sprite bitmaps.
- * - Added anti-crash measure for faux actions.
- * - Added anti-crash measure to prevent non-existant animations from playing.
- * - Added a check that prevents hidden battlers from appearing when using
- * certain action sequences.
- *
- * Version 1.34a:
+ * Version 1.34:
  * - Fixed a bug where 'NOT FOCUS' targets were not including dead members.
- * - Fixed a bug where using NOT FOCUS would cause dead targets to be visible.
  *
  * Version 1.33:
  * - Updated for RPG Maker MV version 1.1.0.
@@ -1157,6 +862,849 @@ Yanfly.BEC.version = 1.46;
  * Version 1.00:
  * - Finished plugin!
  */
+ /*:ja
+ * @plugindesc Ver 1.34 戦闘システムをカスタムし、様々な要素を変更することができます
+ * @author Yanfly Engine Plugins
+ *
+ * @param ---一般---
+ * @default
+ *
+ * @param Action Speed
+ * @desc アクションの基本となるスピードを変更する式です
+ * Default: agi
+ * @default agi
+ *
+ * @param Default System
+ * @desc ゲームで使われるデフォルトの戦闘システムです
+ * Default: dtb
+ * @default dtb
+ *
+ * @param ---逃走---
+ * @default
+ *
+ * @param Escape Ratio
+ * @desc 逃走の成功率を変更する式です
+ * Default: 0.5 * $gameParty.agility() / $gameTroop.agility()
+ * @default 0.5 * $gameParty.agility() / $gameTroop.agility()
+ *
+ * @param Fail Escape Boost
+ * @desc 逃走を失敗する度に、この確率だけ成功率を上げます。
+ * Default: 0.1
+ * @default 0.1
+ *
+ * @param ---アニメーション---
+ * @default
+ *
+ * @param Animation Base Delay
+ * @desc アニメーション間のベース遅延量を設定します
+ * Default: 0
+ * @default 0
+ *
+ * @param Animation Next Delay
+ * @desc アニメーション間の連続的な遅延量を設定します
+ * Default: 0
+ * @default 0
+ *
+ * @param Certain Hit Animation
+ * @desc 必ず命中するスキルに対するデフォルトアニメーションを設定します。不要な場合は0を適用してください。
+ * @default 120
+ *
+ * @param Physical Animation
+ * @desc 物理スキルに対するデフォルトアニメーションを設定します。不要な場合は0を適用してください。
+ * @default 52
+ *
+ * @param Magical Animation
+ * @desc 魔法スキルに対するデフォルトアニメーションを設定します。不要な場合は0を適用してください。
+ * @default 51
+ *
+ * @param Enemy Attack Animation
+ * @desc 敵のデフォルト攻撃アニメーションを設定します
+ * @default 39
+ *
+ * @param Reflect Animation
+ * @desc 魔法攻撃が反射した時のアニメーションを設定します
+ * @default 42
+ *
+ * @param Motion Waiting
+ * @desc アニメーションを再生するタイミングを変更します
+ * 行動中 - false     行動後 - true     デフォルト: false
+ * @default false
+ *
+ * @param ---フロントビュー---
+ * @default
+ *
+ * @param Front Position X
+ * @desc この式でアクターの X 軸のホームポジションを決定します
+ * Default: Graphics.boxWidth / 8 + Graphics.boxWidth / 4 * index
+ * @default Graphics.boxWidth / 8 + Graphics.boxWidth / 4 * index
+ *
+ * @param Front Position Y
+ * @desc この式でアクターの Y 軸のホームポジションを決定します
+ * Default: Graphics.boxHeight - 180
+ * @default Graphics.boxHeight - 180
+ *
+ * @param Front Actor Sprite
+ * @desc フロントビューでの、アクターのスプライト表示を切り替えます
+ * 表示 - false     非表示 - true     Default - false
+ * @default false
+　*
+ * @param Front Sprite Priority
+ * @desc アクターのスプライトを常に手前に表示するかどうかを設定します
+ * 0 - 通常   1 - アクターがトップ   2 - 敵がトップ
+ * @default 1
+ *
+ * @param ---サイドビュー---
+ * @default
+ *
+ * @param Home Position X
+ * @desc この式でアクターの X 軸のホームポジションを決定します
+ * Default: screenWidth - 16 - (maxSize + 2) * 32 + index * 32
+ * @default screenWidth - 16 - (maxSize + 2) * 32 + index * 32
+ *
+ * @param Home Position Y
+ * @desc この式でアクターの Y 軸のホームポジションを決定します
+ * Default: screenHeight - statusHeight - maxSize * 48 + (index+1) * 48 - 32
+ * @default screenHeight - statusHeight - maxSize * 48 + (index+1) * 48 - 32
+ *
+ * @param Side Sprite Priority
+ * @desc アクターのスプライトを常にトップに表示を設定します
+ * 0 - 通常   1 - アクターがトップ   2 - 敵がトップ
+ * @default 1
+ *
+ * @param ---スプライト---
+ * @default
+ *
+ * @param Default X Anchor
+ * @desc スプライトを固定する際のX軸の値を設定します
+ * Default: 0.5
+ * @default 0.5
+ *
+ * @param Default Y Anchor
+ * @desc スプライトを固定する際のY軸の値を設定します
+ * Default: 1.0
+ * @default 1.0
+ *
+ * @param Step Distance
+ * @desc アクション時、ユニットが前に踏み出す距離を指定します
+ * Default: 48
+ * @default 48
+ *
+ * @param Flinch Distance
+ * @desc ダメージを受けた際、ユニットがひるむ(後退する)距離を指定します
+ * @default 12
+ *
+ * @param Show Shadows
+ * @desc アクターの下に影を表示させます
+ * 非表示 - false     表示 - true
+ * @default true
+ *
+ * @param ---ダメージポップアップ---
+ * @default
+ *
+ * @param Popup Duration
+ * @desc ポップアップが何フレーム分表示されるか指定します
+ * Default: 128
+ * @default 128
+ *
+ * @param Newest Popup Bottom
+ * @desc グループの下部に最新のポップアップを表示させます
+ * 非表示 - false     表示 - true
+ * @default true
+ *
+ * @param Popup Overlap Rate
+ * @desc 複数のダメージ表示が重なった際の、それぞれのスプライトのバッファを指定します
+ * @default 0.9
+ *
+ * @param Critical Popup
+ * @desc クリティカルヒットした際の、ポップアップの点滅色を指定します
+ * Default: 255, 0, 0, 160
+ * @default 255, 0, 0, 160
+ *
+ * @param Critical Duration
+ * @desc クリティカルヒットした際の、点滅が何フレーム続くか指定します
+ * Default: 60
+ * @default 60
+ *
+ * @param ---ティックセッティング---
+ * @default
+ * 
+ * @param Timed States
+ * @desc バトルシステムがティック制になっている場合、ステータスを
+ * ターン式ではなく時間式にしますか? いいえ - false   はい - true
+ * @default false
+ * 
+ * @param Timed Buffs		
+ * @desc バトルシステムがティック制になってる場合、バフをターン式では
+ * なく、時間式にしますか? いいえ - false   はい - true		
+ * @default false		
+ *		
+ * @param Turn Time		
+ * @desc ティックの何回分で1ターンにしますか？		
+ * @default 100		
+ * 		
+ * @param AI Self Turns		
+ * @desc AIを、AI独自のターンに基づいて行動させますか？		
+ * いいえ - false   はい - true	
+ * @default true		
+ *
+ * @param ---ウィンドウセッティング---
+ * @default
+ *
+ * @param Lower Windows
+ * @desc スキルとアイテムウィンドウをスクリーンの下部に表示します
+ * OFF - false     ON - true
+ * @default true
+ *
+ * @param Window Rows
+ * @desc 下部ウィンドウを使用する際、表示列数を指定します
+ * @default 4
+ *
+ * @param Command Window Rows
+ * @desc コマンドウィンドウの表示列数を指定します
+ * Default: 4
+ * @default 4
+ *
+ * @param Command Alignment
+ * @desc パーティ/アクターコマンドのテキスト位置を指定します
+ * Default: センター
+ * @default center
+ *
+ * @param Start Actor Command
+ * @desc ターン開始時、アクターコマンドで開始します
+ * OFF - false     ON - true
+ * @default true
+ *
+ * @param Current Max		
+ * @desc 現在のHP/MPの最大数を表示しますか？
+ * いいえ - false     はい - true     Default: true		
+ * @default false		
+ *
+ * @param ---選択ヘルプ---
+ * @default
+ * 
+ * @param Mouse Over
+ * @desc マウスを敵に乗せると自動的に選択します
+ * OFF - false     ON - true		
+ * @default true
+ * 
+ * @param Select Help Window
+ * @desc アクター、敵を選択した際にヘルプウィンドウを表示します
+ * NO - false     YES - true
+ * @default true
+ * 
+ * @param User Help Text
+ * @desc ヘルプウィンドウ内で"ユーザー"を表す言葉を設定します
+ * @default ユーザー
+ * 
+ * @param Ally Help Text
+ * @desc ヘルプウィンドウ内で"味方"(単数)を表す言葉を設定します
+ * @default 味方
+ * 
+ * @param Allies Help Text
+ * @desc ヘルプウィンドウ内で"味方"(複数)を表す言葉を設定します
+ * @default 味方
+ * 
+ * @param Enemy Help Text
+ * @desc ヘルプウィンドウ内で"敵"(単数)を表す言葉を設定します
+ * @default 敵
+ * 
+ * @param Enemies Help Text
+ * @desc ヘルプウィンドウ内で"敵"(複数)を表す言葉を設定します
+ * @default 敵
+ * 
+ * @param All Help Text
+ * @desc ターゲットのグループ全体を選択した際に表示される言葉を設定します
+ * %1 - ターゲットとなるグループ (味方/敵)
+ * @default 全ての %1
+ * 
+ * @param Random Help Text
+ * @desc ランダムターゲットを選択した際に表示される言葉を設定します
+ * %1 - ターゲットとなるグループ (味方/敵)     %2 - 数
+ * @default %2 ランダムな %1
+ * 
+ * @param ---エネミーセレクト---
+ * @default
+ * 
+ * @param Visual Enemy Select
+ * @desc 敵の選択画面をより視覚的なものに変更します
+ * OFF - false     ON - true
+ * @default true
+ *
+ * @param Show Enemy Name
+ * @desc Visual Enemy Selectで敵の名前を表示します
+ * OFF - false     ON - true
+ * @default true
+ *		
+ * @param Show Select Box		
+ * @desc 敵を選択してる枠を表示します		
+ * OFF - false     ON - true		
+ * @default false
+ *
+ * @param Enemy Font Size
+ * @desc 敵の名前のフォントサイズを変更します
+ * Default: 20
+ * @default 20
+ *
+ * @param Enemy Auto Select
+ * @desc 最初に自動的に選択される敵を変更します
+ * 左 - 0     右 - this.furthestRight()
+ * @default this.furthestRight()
+ *
+ * @param ---アクターセレクト---
+ * @default
+ *
+ * @param Visual Actor Select
+ * @desc 画面をクリックしてアクターを選択できるようになります
+ * OFF - false     ON - true
+ * @default true
+ *
+ * @param ---バトルログ---
+ * @default
+ *
+ * @param Show Emerge Text
+ * @desc 敵の出現時に、戦闘開始のテキストを表示します
+ * OFF - false     ON - true
+ * @default false
+ *
+ * @param Show Pre-Emptive Text
+ * @desc 先制攻撃を受けた時に、テキストを表示します
+ * OFF - false     ON - true
+ * @default true
+ *
+ * @param Show Surprise Text
+ * @desc 不意打ち攻撃を受けた時に、テキストを表示します
+ * OFF - false     ON - true
+ * @default true
+ *
+ * @param Optimize Speed
+ * @desc ベースラインログをカットして戦闘スピードの最適化を図ります
+ * OFF - false     ON - true
+ * @default true
+ *
+ * @param Show Action Text
+ * @desc アクションテキストのフル表示/シンプル表示の切り替えを行います
+ * シンプル - false     フル - true
+ * @default false
+ *
+ * @param Show State Text
+ * @desc ステートに関する全てのテキストを表示します
+ * OFF - false     ON - true
+ * @default false
+ *
+ * @param Show Buff Text
+ * @desc バフに関するテキストを表示します
+ * OFF - false     ON - true
+ * @default false
+ *
+ * @param Show Counter Text
+ * @desc カウンター攻撃に関するテキストを表示します
+ * OFF - false     ON - true
+ * @default true
+ *
+ * @param Show Reflect Text
+ * @desc 反射スペルに関するテキストを表示します
+ * OFF - false     ON - true
+ * @default true
+ *
+ * @param Show Substitute Text
+ * @desc 置換ダメージに関するテキストを表示します
+ * OFF - false     ON - true
+ * @default true
+ *
+ * @param Show Fail Text
+ * @desc 攻撃の失敗に関するテキストを表示します
+ * OFF - false     ON - true
+ * @default false
+ *
+ * @param Show Critical Text
+ * @desc クリティカルヒットに関するテキストを表示します
+ * OFF - false     ON - true
+ * @default false
+ *
+ * @param Show Miss Text
+ * @desc ミスアタックに関するテキストを表示します
+ * OFF - false     ON - true
+ * @default false
+ *
+ * @param Show Evasion Text
+ * @desc 攻撃回避に関するテキストを表示します
+ * OFF - false     ON - true
+ * @default false
+ *
+ * @param Show HP Text
+ * @desc HPダメージまたは回復に関するテキストを表示します
+ * OFF - false     ON - true
+ * @default false
+ *
+ * @param Show MP Text
+ * @desc MP減少または回復に関するテキストを表示します
+ * OFF - false     ON - true
+ * @default false
+ *
+ * @param Show TP Text
+ * @desc TP減少または回復に関するテキストを表示します
+ * OFF - false     ON - true
+ * @default false
+ *
+ * @help
+ * ============================================================================
+ * Introduction
+ * ============================================================================
+ *
+ * このプラグインは、デフォルトの戦闘システムに様々な変更を行うことで、
+ * これまでのRPGとは一線を画した戦闘を可能にします。
+ * 戦闘のログウィンドウ上部に表示されるテキストを選んだり、
+ * またそれがどのように表示されるかを選ぶことができます。
+ *
+ * ============================================================================
+ * Battle Messages
+ * ============================================================================
+ *
+ * 戦闘時に表示される"用語"と"メッセージ"を変更する際は、
+ * 下記のタグをメッセージのどこかに挿入することで
+ * メッセージをバトルログの中央に表示させることができます。
+ *
+ *   <CENTER>
+ *   このタグは頭に置くようにし、バトルログウィンドウに、これが
+ *   メッセージを中央に配置する命令であると認識させるようにしてください。
+ *
+ * スキルとアイテムの表示の仕方を変えるためのノートタグが存在します。
+ * これを使う事により、『ハロルドの攻撃』などの表示を変更することが出来ます。
+ *		
+ * スキルとアイテムのノートタグ:		
+ *		
+ *   <Display Text: x>		
+ *   表示されてるテキストを x　に変更。		
+ *		
+ *   <Display Icon: x>		
+ *   表示されてるアイコンを x　に変更。		
+ *
+ *
+ * ============================================================================
+ * Battle Windows
+ * ============================================================================
+ *
+ * 戦闘システムをより直感的にするため、ウィンドウ設定を行います。
+ * たとえば、パーティコマンドウィンドウ(戦う/逃げるウィンドウ)の代わりに
+ * アクターコマンドウィンドウでターンを開始するといった方式が可能になります。
+ * その際アクターウィンドウでキャンセルを押せば、
+ * パーティコマンドウィンドウを表示させることもできます。
+ *
+ * ============================================================================
+ * Battle Order
+ * ============================================================================
+ *
+ * バトルのターンシステムについても修正が成されています。
+ * 戦闘中に変化するAGI値を持ったキャラクターには、
+ * その変更を現在のターンから即反映させることができます。
+ * アクションスピードの計算についても調整が成されており、
+ * ランダム要因の微調整を行い、AGIをタクティカルなパラメーターとして
+ * 有効なものにすることができます。
+ *		
+ * スキルとアイテムのノートタグ:		
+ *   <speed: +x>		
+ *   <speed: -x>		
+ *   これを使う事により、エディタで制限されてる最大（2000）・最低（-2000)の数値
+ *   以外でも設定する事が出来るようになり、よりアクションを自由にコントロール
+ *   出来るようになります。
+ *
+ * ============================================================================
+ * Multiple Hits
+ * ============================================================================
+ *
+ * マルチヒットアクションの途中でターゲットが死亡した場合でも、
+ * アクションが途中で終わってしまうことはありません。
+ * この機能は不死身ステートを用いることで使用可能になるため、
+ * データベース内のどこか不死身状態のIDを持っておく必要があります。
+ * この機能が不要である場合、そのIDのパラメータを0に設定してください。
+ *
+ * ============================================================================
+ * Popup Revamp
+ * ============================================================================
+ *
+ * ダメージのポップアップについても変更が成されています。
+ * デフォルトのものと見た目の変化はありませんが、
+ * ポップアップ生成のプロセスが変更されています。
+ * これまで、ポップアップは各フレームごとに1つずつの表示となっていましたが、
+ * 本変更では、同時に起こったアクションに対して、
+ * 同フレーム内に全てのポップアップを表示することが可能になっています。
+ * これにより、ダメージポップアップをスムーズに表示できるようになります。
+ *
+ * ============================================================================
+ * Common Events
+ * ============================================================================
+ *
+ * 敵のパーティが生存しているか否かに関わらず、
+ * 各アクションの終わりにコモンイベントを起こすことができます。
+ * アクションシークエンスのタグを用いれば、
+ * スキルのコモンイベントをアクションの途中で呼び出すこともできます。
+ * ただし、アクションの途中で別のアクションを強制的に実行した場合、
+ * 前に実行していたアクションのシークエンスリストは
+ * 無効になってしまうことに気を付けてください。 
+ * 
+ * ============================================================================
+ * Casting Animations
+ * ============================================================================
+ *
+ * この機能を用いると、戦闘時にどのバトラーが次に行動をするか、もしくは、
+ * どのタイプのスキルを使うかという視覚的なヒントを
+ * プレイヤーに与えることができます。
+ * このプラグインを用いると、スキルに"振り"のアニメーションを付与することが
+ * でき、スキルごとに設定することも、全体に一括設定することも可能です。
+ *
+ * スキルノートタグ:
+ *   <Cast Animation: x>
+ *   アニメーションID x に、振りのアニメーションを付与します。
+ *   xの値を0にすれば、アニメーションは設定されません。
+ *
+ * ============================================================================
+ * Changing Battle Systems
+ * ============================================================================
+ *
+ * プレイヤーが戦闘中でない際でも、プラグインコマンドを使えば
+ * 戦闘システムを変更することができます。
+ * 現在このプラグインには、デフォルトの戦闘システムのみが含まれています。
+ *
+ * プラグインコマンド:
+ *   setBattleSys DTB      戦闘システムをデフォルトのターン制に設定します
+ *
+ * Battle Engine Coreを利用するその他の戦闘システムは、
+ * 今後リリースされるプラグインに収録される予定です。
+ *
+ * ============================================================================
+ * Sideview Actions
+ * ============================================================================
+ *
+ * RPGツクールMVのサイドビュー/フロントビュー設定では
+ * 反撃、魔法反射、メンバー交代の表示をすることができませんでした。
+ * Battle Engine Coreを利用すれば、
+ * サイドビュー設定のゲームにアニメーションを付与し、
+ * より多くの視覚的な情報をプレイヤーに与えることができます。
+ * 
+ * Magic Reflectionを使えば、そのバトラーに魔法反射能力があることを
+ * アニメーションで表すことができます。
+ * このアニメーションはパラメータによって変更することが可能です。
+ * また特定のアクター、クラス、敵、武器、防具、ステータスにも、
+ * アニメーションを付与することができます。
+ *
+ * アクター、クラス、敵、武器、アーマー、ステータスのノートタグ：
+ *   <Reflect Animation ID: x>
+ *   xに対して反射のアニメーションの変更を行うことができます。
+ *   下記の優先順位で適用されます
+ *   アクター＞クラス＞敵＞武器＞アーマー＞ステート＞デフォルト
+ *
+ * 敵、もしくは特定のアクターの動作を封じたい時は、
+ * 下記のノートタグを用いてください。
+ * 
+ * アクター、クラス、敵、武器、アーマー、ステータスのノートタグ：
+ *   <Sprite Cannot Move>
+ *   バトラーの動きを封じます。
+ *   下記の優先順位で適用されます
+ *   アクター＞クラス＞敵＞武器＞アーマー＞ステータス
+ * この状態で敵がアクションを取ると、フロントビュー表示時と同様、白く光ります。
+ * 
+ *
+ * ============================================================================
+ * Custom Sideview Battler Anchor
+ * ============================================================================
+ *
+ * サイドビュー時バトラーは通常、水平方向に集約され、直立して配置されますが、
+ * このカスタマイズで、通常とは異なる向きにバトラーを固定することができます。
+ *
+ * アクター、クラス、武器、防具、ステータスのノートタグ:
+ *   <Anchor X: y.z>
+ *   <Anchor Y: y.z>
+ *   アクターのサイドビューバトラーのアンカー固定位置を、
+ *    y.zで指定することができます。
+ *    デフォルトでは、Xアンカーは0.5、Yアンカーは1.0で設定されています。
+ *    Xアンカーを左に動かすには、数値を0.5以下に、
+ *    Yアンカーを上に動かすには、数値を1.0以下にしてください。
+ *
+ * もしアンカーが複数特性を持っていて、他のアンカーと関わってるのであれば
+ * 下記の優先順位で適用されます。
+ *
+ *   ステータス
+ *   武器
+ *   防具
+ *   クラス
+ *   アクター
+ *   デフォルト
+ *
+ * 優先順位は上から下となります。高ければ高いほど優先的になります。
+ *
+ * ============================================================================
+ * Action Sequences
+ * ============================================================================
+ *
+ * アクションシークエンスは、視覚的・機能的に
+ * カスタマイズスキルを作成できる、基本的な命令です。
+ * Battle Engine Coreには基礎的もののみが含まれていますが、
+ * 将来的には、拡張プラグインのヘルプファイル内に、
+ * カスタムアクションシークエンスの作成方法が収録される予定です。
+　*
+ * ============================================================================
+ * Enemy Attack Animation
+ * ============================================================================
+ *
+ * 以下のノートタグを使えば、敵にオリジナル攻撃アニメーションを付与できます。
+ *
+ * 敵のノートタグ:
+ *   <Attack Animation: x>
+ *   xに対して敵のデフォルト攻撃アニメーションの変更が出来ます。
+ *
+ * ============================================================================
+ * Automatic State Removal Conditions
+ * ============================================================================
+ *
+ * RPG Maker MVのデフォルトバトルシステムでは下記の3つの条件でステータスの自動
+ * 解除を実行することが出来ます。：「なし」、「行動終了時」、「戦闘終了時」。
+ *
+ * 「なし」と「戦闘終了時」は想定通りに動いてますが、「行動終了時」は、終了時
+ * ではなく、行動開始時のステータス解除となっていました。この仕様を変更し、
+ * きちんと終了時に働くように直します。
+ *
+ * 更に2つの自動解除条件も足されています。「行動開始時」と「戦闘開始時」です。
+ * 下記のノートタグを使うと実行できます。
+ *
+ * ステータスのノートタグ:
+ *   <Action Start: x>
+ *   <Action Start: x to y>
+ *   このステータスについては、行動開始時に残っているターン数でアップデート
+ *   されます。x はそのターン数を表します。「x to y」を使った場合は
+ *   xからyの間、ランダムに自動解除されます。
+ *
+ *   <Turn Start: x>
+ *   <Turn Start: x to y>
+ *   このステータスについては、バトルターン開始時に残っているターン数で
+ *   アップデートされます。x はそのターン数を表します。「x to y」を使った場合は
+ *   xからyの間、ランダムに自動解除します。
+ *
+ * 「行動終了時」を選んだ場合は独特な仕様があり、もしステータスのキャスターが
+ * 現在のアクティブアクターであった場合、そしてユーザーにそのステータスが適用
+ * された場合は、「フリーターン」を得ることになります。この「フリーターン」は
+ * ユーザーが無駄に1ターンを使ってしまうことを防ぎます。そうしなければ行動
+ * 終了時にターン数がへるという仕様になってまして、そのターン
+ * だけ効果が無駄になってしまいます。
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
+ *
+ * Version 1.34:
+ * - Fixed a bug where 'NOT FOCUS' targets were not including dead members.
+ *
+ * Version 1.33:
+ * - Updated for RPG Maker MV version 1.1.0.
+ *
+ * Version 1.32d:
+ * - Fixed a bug that caused a crash when an actor died.
+ * - Added a motion engine to be used for future plugins.
+ * - Preparation for a future plugin.
+ * - <Anchor X: y.z> and <Anchor Y: y.z> notetags for actors are now extended
+ * to actors, classes, weapons, armors, and states.
+ * - Added <Display Text: x> and <Display Icon: x> notetags for skills and
+ * items. These notetags will alter the display name shown and icon shown
+ * respectively while performing a skill.
+ * - Switched Magic Reflect checking order with Counterattack checking order.
+ * This is to give priority to reflected actions over countered actions.
+ *
+ * Version 1.31b:
+ * - States with Action End now have a unique trait to them where if the caster
+ * of the state is the current active battler (subject) and if the state is
+ * then applied on the user itself, they will gain a 'free turn'. The 'free
+ * turn' is to mitigate the user from losing 1 duration of the turn since with
+ * an Action End timing, they would lose the benefit of being under the state
+ * for that turn's timing.
+ * - Added failsafes for Free Turns in case other plugins have overwritten the
+ * on battle start functions.
+ * - Added a compatibility update to Animated SV Enemies for dead motion.
+ *
+ * Version 1.30:
+ * - Optimization update.
+ * - Fixed a bug that prevented added state effects be unable to apply if they
+ * are an added Death state.
+ * - Battlelog lines are now able to display text codes.
+ *
+ * Version 1.29:
+ * - Fixed a bug with the 'else if' action sequences not working in the right
+ * order of sequence conditions.
+ *
+ * Version 1.28d:
+ * - Fixed a bug if instant casting a skill that would make an opponent battler
+ * to force an action to end incorrectly. Thanks to DoubleX for the fix.
+ * - Fixed a bug with mouse over not working properly.
+ * - Fixed a bug regarding forced actions that will cause the battle to freeze
+ * if the forced action causes the main active subject to leave the battle.
+ * - Fixed a bug with timed states not updating their turns properly.
+ * - Changed priority of IF action sequences to higher to no longer interfere
+ * other action sequences.
+ *
+ * Version 1.27:
+ * - Mechanic change. This will only affect those using turn-based state timing
+ * mechanics. Turn End state updates are now shifted from Turn End to occur at
+ * Regeneration timing to have a more synchronized aspect. The timings are very
+ * close so there's next to no notice in difference. Buff turn updates are also
+ * moved to the regeneration timing, too.
+ *
+ * Version 1.26:
+ * - Added 'Mouse Over' parameter to Selection Help. This parameter enables
+ * mouse users to simply hover over the enemy to select them rather than having
+ * to click an enemy twice to select them.
+ *
+ * Version 1.25f:
+ * - Added failsafes for Forced Action queues.
+ * - Added 'Show Select Box' parameter when selecting enemies.
+ * - Fixed a bug that caused End Turn events to not function properly.
+ * - Battle animations, by default, are positioned relative to the base bitmap
+ * for its target sprite. However, actor sprites do not have a base bitmap and
+ * therefore, battle animations, regardless of position, will always target the
+ * actor sprite's feet. This update now gives actor sprites a base bitmap.
+ * - Readjusted sprite width and sprite height calculations.
+ * - Added a failsafe for when no sideview actor graphics are used.
+ *
+ * Version 1.24:
+ * - Implemented a Forced Action queue list. This means if a Forced Action
+ * takes place in the middle of an action, the action will resume after the
+ * forced action finishes rather than cancels it out like MV does.
+ * 
+ * Version 1.23:
+ * - Fixed a bug that didn't regenerate HP/MP/TP properly for tick-based.
+ *
+ * Version 1.22:
+ * - Fixed a bug within MV that caused Forced Actions at Turn End to prompt and
+ * trigger all turn-end related activities (such as regeneration and state turn
+ * updating).
+ * - Made a mechanic change so that Action Start and Action End state turns do
+ * not update their turns through forced actions.
+ *
+ * Version 1.21:
+ * - Fixed a bug where states Action End weren't going down properly with DTB.
+ *
+ * Version 1.20:
+ * - Fixed a bug where revived actors using instant cast aren't properly set to
+ * use actions immediately.
+ *
+ * Version 1.19:
+ * - Added <Attack Animation: x> notetag for enemies.
+ * - Added 'AI Self Turns' for Tick-Based Battles. Enemies can now have their
+ * A.I. revolve around their own individual turns rather than the battle's.
+ * - Mechanic change for states. Following suit with the change to Action End
+ * removal, there are now two more conditions added: Action Start, Turn Start.
+ * - Added <Action Start: x>, <Action Start: x to y>, <Turn Start: x>, and
+ * <Turn Start: x to y> notetags for automatic state removal.
+ *
+ * Version 1.18:
+ * - Fixed a bug with irregular targeting scopes.
+ * - Fixed an MV-related bug with Recover All event not refreshing battlers.
+ * 
+ * Version 1.17b:
+ * - Fixed a bug with action end states to remove multiple at once.
+ * - Fixed a visual error with flinching sprites.
+ * - Added 'Current Max' parameter to change HP current/max display in battle.
+ * - Mechanic change for states that update on Action End to end at the end of
+ * a battler's turn instead of at the start.
+ * - Began preparations for another battle system.
+ *
+ * Version 1.16:
+ * - Fixed an issue with mirrored enemies having mirrored state icons.
+ *
+ * Version 1.15a:
+ * - Fixed a bug revolving the status window not updating.
+ * - Updated default home position formula to better fit other party sizes.
+ * New Home Position X:
+ *   screenWidth - 16 - (maxSize + 2) * 32 + index * 32
+ * New Home Position Y:
+ *   screenHeight - statusHeight - maxSize * 48 + (index+1) * 48 - 16
+ *
+ * Version 1.14:
+ * - Fixed a bug with Forced Actions locking out the battle.
+ * - New mechanic: For tick-based battle systems, states with action-end will
+ * go down in turns based on how many actions took place for the actor instead.
+ * Previously, they were indistinguishable from states with Turn End removal.
+ * - New mechanic: Using Instant Skills/Items from YEP_InstantCast.js will also
+ * cause states with action-end to go down in turns upon using actions.
+ *
+ * Version 1.13a:
+ * - Fixed a bug that made battlebacks disappear.
+ * - Reworked visual enemy selection.
+ * - Victory phase doesn't immediately display level up changes in battle
+ * status window.
+ * - Fixed a bug with the visual enemy select showing dead enemy names.
+ *
+ * Version 1.12b:
+ * - If the Battle HUD has been hidden for whatever reason during the victory
+ * sequence, it will be returned.
+ * - Added <speed: +x> and <speed: -x> notetags to break past editor limits.
+ * - Added new conditions where the battle won't end until all action sequences
+ * have been fulfilled.
+ *
+ * Version 1.11:
+ * - Fixed a bug that didn't show HP/MP Regeneration.
+ *
+ * Version 1.10:
+ * - Removed immortal state dependancy. Immortality is now its own setting.
+ * - Added more abbreviated variables for action speed calculation.
+ * - Fixed a bug where all-scope attacks would reveal Appear-Halfway enemies.
+ * - Fixed a bug where the battle wouldn't end if the final enemy was killed
+ * by state damage.
+ *
+ * Version 1.09:
+ * - Fixed a undefined actor bug for refreshing the status window.
+ * - Added 'Show Shadows' parameter to the plugin settings.
+ * - Reworked the default action sequences so that forced actions do not appear
+ * on top of each other and party-heal animations occur simultaneously.
+ *
+ * Version 1.08:
+ * - Fixed a bug where battlers gaining HP/MP in the damage formula for
+ * themselves wouldn't trigger popups.
+ * - Fixed a bug where if the party failed to escape from battle, states that
+ * would be removed by battle still get removed. *Fixed by Emjenoeg*
+ * - Fixed a bug where instant death skills didn't work.
+ * - Changed Sprite Priority settings to decide whether actors, enemies, or
+ * neither would always be on top.
+ *
+ * Version 1.07:
+ * - Optimized status window to refresh at a minimum.
+ * - Set up frame work for future plugins:
+ * - Added 'Escape Ratio' and 'Fail Escape Boost' to parameters to allow users
+ * to set the escape ratio they want.
+ * - Added 'Front Sprite Priority' and 'Side Sprite Priority' to parameters to
+ * dictate if actor sprites are always on top.
+ * - Added 'Tick-Settings' category for tick-based battle systems.
+ *
+ * Version 1.06:
+ * - Fixed a bug that causes dead actors at the start of battle to not spawn.
+ * - Fixed a bug where the help window on an empty slot would show the
+ * previous skill's message.
+ *
+ * Version 1.05:
+ * - Added new target typing: Character X, which allows you to select
+ * specifically the actor with an actor ID of X if he/she/it is in the party.
+ * - Fixed a bug that prevented Miss and Evade popups from showing.
+ *
+ * Version 1.04:
+ * - Fixed a bug where popups didn't show under certain animation types.
+ * - Fixed certain battler motions from not refreshing correctly.
+ * - Actions with no scope will not trigger the confirmation selection window.
+ *
+ * Version 1.03:
+ * - Added 'Wait for Effect' action sequence.
+ * - Actions now wait for effects (such as collapsing) to be done before
+ * continuing on with battle or to end battle.
+ *
+ * Version 1.02:
+ * - Fixed a bug where the help window would retain descriptions on no skills.
+ * - Synched up weapons with actor sprites so they would occur simultaneously.
+ * - Fixed an issue where requesting certain motions from enemies that don't
+ * exist would cause them to crash.
+ *
+ * Version 1.01:
+ * - Skills and items that affect both HP and MP will now show popups for both.
+ *
+ * Version 1.00:
+ * - Finished plugin!
+ */
+ 
 //=============================================================================
 
 //=============================================================================
@@ -1174,22 +1722,14 @@ Yanfly.Param.CastPhysical = Number(Yanfly.Parameters['Physical Animation']);
 Yanfly.Param.CastMagical = Number(Yanfly.Parameters['Magical Animation']);
 Yanfly.Param.EnemyAtkAni = Number(Yanfly.Parameters['Enemy Attack Animation']);
 Yanfly.Param.BECOptSpeed = String(Yanfly.Parameters['Optimize Speed']);
-Yanfly.Param.BECOptSpeed = eval(Yanfly.Param.BECOptSpeed);
 Yanfly.Param.BECEmergeText = String(Yanfly.Parameters['Show Emerge Text']);
-Yanfly.Param.BECEmergeText = eval(Yanfly.Param.BECEmergeText);
 Yanfly.Param.BECPreEmpText = String(Yanfly.Parameters['Show Pre-Emptive Text']);
-Yanfly.Param.BECPreEmpText = eval(Yanfly.Param.BECPreEmpText);
 Yanfly.Param.BECSurpText = String(Yanfly.Parameters['Show Surprise Text']);
-Yanfly.Param.BECSurpText = eval(Yanfly.Param.BECSurpText);
 Yanfly.Param.BECPopupOverlap = String(Yanfly.Parameters['Popup Overlap Rate']);
-Yanfly.Param.BECPopupOverlap = eval(Yanfly.Param.BECPopupOverlap);
 Yanfly.Param.BECNewPopBottom = String(Yanfly.Parameters['Newest Popup Bottom']);
-Yanfly.Param.BECNewPopBottom = eval(Yanfly.Param.BECNewPopBottom);
 Yanfly.Param.BECStartActCmd = String(Yanfly.Parameters['Start Actor Command']);
-Yanfly.Param.BECStartActCmd = eval(Yanfly.Param.BECStartActCmd);
 Yanfly.Param.BECCurMax = eval(String(Yanfly.Parameters['Current Max']));
 Yanfly.Param.BECSelectHelp = String(Yanfly.Parameters['Select Help Window']);
-Yanfly.Param.BECSelectHelp = eval(Yanfly.Param.BECSelectHelp);
 Yanfly.Param.BECHelpUserTx = String(Yanfly.Parameters['User Help Text']);
 Yanfly.Param.BECHelpAllyTx = String(Yanfly.Parameters['Ally Help Text']);
 Yanfly.Param.BECHelpAlliesTx = String(Yanfly.Parameters['Allies Help Text']);
@@ -1200,76 +1740,51 @@ Yanfly.Param.BECHelpRandTx = String(Yanfly.Parameters['Random Help Text']);
 Yanfly.Param.BECFrontPosX = String(Yanfly.Parameters['Front Position X']);
 Yanfly.Param.BECFrontPosY = String(Yanfly.Parameters['Front Position Y']);
 Yanfly.Param.BECFrontSprite = String(Yanfly.Parameters['Front Actor Sprite']);
-Yanfly.Param.BECFrontSprite = eval(Yanfly.Param.BECFrontSprite);
 Yanfly.Param.BECFrSpPrio = String(Yanfly.Parameters['Front Sprite Priority']);
 Yanfly.Param.BECHomePosX = String(Yanfly.Parameters['Home Position X']);
 Yanfly.Param.BECHomePosY = String(Yanfly.Parameters['Home Position Y']);
 Yanfly.Param.BECSideSpPrio = String(Yanfly.Parameters['Side Sprite Priority']);
-Yanfly.Param.BECSideSpPrio = eval(Yanfly.Param.BECSideSpPrio);
 Yanfly.Param.BECAnchorX = Number(Yanfly.Parameters['Default X Anchor']);
 Yanfly.Param.BECAnchorY = Number(Yanfly.Parameters['Default Y Anchor']);
 Yanfly.Param.BECStepDist = Number(Yanfly.Parameters['Step Distance']);
 Yanfly.Param.BECFlinchDist = Number(Yanfly.Parameters['Flinch Distance']);
 Yanfly.Param.BECShowShadows = String(Yanfly.Parameters['Show Shadows']);
-Yanfly.Param.BECShowShadows = eval(Yanfly.Param.BECShowShadows);
-Yanfly.Param.BECPopupDur = Number(Yanfly.Parameters['Popup Duration']);
+Yanfly.Param.BECPopupDur = String(Yanfly.Parameters['Popup Duration']);
 Yanfly.Param.BECCritPopup = String(Yanfly.Parameters['Critical Popup']);
-Yanfly.Param.BECCritDur = Number(Yanfly.Parameters['Critical Duration']);
+Yanfly.Param.BECCritDur = String(Yanfly.Parameters['Critical Duration']);
 Yanfly.Param.BECActionSpeed = String(Yanfly.Parameters['Action Speed']);
 Yanfly.Param.BECReflectAni = Number(Yanfly.Parameters['Reflect Animation']);
 Yanfly.Param.BECMotionWait = String(Yanfly.Parameters['Motion Waiting']);
-Yanfly.Param.BECMotionWait = eval(Yanfly.Param.BECMotionWait);
 Yanfly.Param.BECTimeStates = String(Yanfly.Parameters['Timed States']);
-Yanfly.Param.BECTimeStates = eval(Yanfly.Param.BECTimeStates);
 Yanfly.Param.BECTimeBuffs = String(Yanfly.Parameters['Timed Buffs']);
-Yanfly.Param.BECTimeBuffs = eval(Yanfly.Param.BECTimeBuffs);
 Yanfly.Param.BECTurnTime = Number(Yanfly.Parameters['Turn Time']);
 Yanfly.Param.BECAISelfTurn = eval(String(Yanfly.Parameters['AI Self Turns']));
 Yanfly.Param.BECLowerWindows = String(Yanfly.Parameters['Lower Windows']);
-Yanfly.Param.BECLowerWindows = eval(Yanfly.Param.BECLowerWindows);
 Yanfly.Param.BECSelectMouseOver = eval(String(Yanfly.Parameters['Mouse Over']));
 Yanfly.Param.BECEnemySelect = String(Yanfly.Parameters['Visual Enemy Select']);
-Yanfly.Param.BECEnemySelect = eval(Yanfly.Param.BECEnemySelect);
 Yanfly.Param.BECActorSelect = String(Yanfly.Parameters['Visual Actor Select']);
-Yanfly.Param.BECActorSelect = eval(Yanfly.Param.BECActorSelect);
-Yanfly.Param.BECWindowRows = Number(Yanfly.Parameters['Window Rows']);
+Yanfly.Param.BECWindowRows = String(Yanfly.Parameters['Window Rows']);
 Yanfly.Param.BECEnemyFontSize = Number(Yanfly.Parameters['Enemy Font Size']);
 Yanfly.Param.BECShowEnemyName = String(Yanfly.Parameters['Show Enemy Name']);
-Yanfly.Param.BECShowEnemyName = eval(Yanfly.Param.BECShowEnemyName);
 Yanfly.Param.BECShowSelectBox = String(Yanfly.Parameters['Show Select Box']);
-Yanfly.Param.BECShowSelectBox = eval(Yanfly.Param.BECShowSelectBox);
 Yanfly.Param.BECEnemyAutoSel = String(Yanfly.Parameters['Enemy Auto Select']);
 Yanfly.Param.BECCommandAlign = String(Yanfly.Parameters['Command Alignment']);
-Yanfly.Param.BECCommandRows = Number(Yanfly.Parameters['Command Window Rows']);
-Yanfly.Param.BECAniBaseDel = Number(Yanfly.Parameters['Animation Base Delay']);
-Yanfly.Param.BECAniNextDel = Number(Yanfly.Parameters['Animation Next Delay']);
-
+Yanfly.Param.BECCommandRows = String(Yanfly.Parameters['Command Window Rows']);
+Yanfly.Param.BECAniBaseDel = String(Yanfly.Parameters['Animation Base Delay']);
+Yanfly.Param.BECAniNextDel = String(Yanfly.Parameters['Animation Next Delay']);
 Yanfly.Param.BECFullActText = String(Yanfly.Parameters['Show Action Text']);
-Yanfly.Param.BECFullActText = eval(Yanfly.Param.BECFullActText);
 Yanfly.Param.BECShowCntText = String(Yanfly.Parameters['Show Counter Text']);
-Yanfly.Param.BECShowCntText = eval(Yanfly.Param.BECShowCntText);
 Yanfly.Param.BECShowRflText = String(Yanfly.Parameters['Show Reflect Text']);
-Yanfly.Param.BECShowRflText = eval(Yanfly.Param.BECShowRflText);
 Yanfly.Param.BECShowSubText = String(Yanfly.Parameters['Show Substitute Text']);
-Yanfly.Param.BECShowSubText = eval(Yanfly.Param.BECShowSubText);
 Yanfly.Param.BECShowFailText = String(Yanfly.Parameters['Show Fail Text']);
-Yanfly.Param.BECShowFailText = eval(Yanfly.Param.BECShowFailText);
 Yanfly.Param.BECShowCritText = String(Yanfly.Parameters['Show Critical Text']);
-Yanfly.Param.BECShowCritText = eval(Yanfly.Param.BECShowCritText);
 Yanfly.Param.BECShowMissText = String(Yanfly.Parameters['Show Miss Text']);
-Yanfly.Param.BECShowMissText = eval(Yanfly.Param.BECShowMissText);
 Yanfly.Param.BECShowEvaText = String(Yanfly.Parameters['Show Evasion Text']);
-Yanfly.Param.BECShowEvaText = eval(Yanfly.Param.BECShowEvaText);
 Yanfly.Param.BECShowHpText = String(Yanfly.Parameters['Show HP Text']);
-Yanfly.Param.BECShowHpText = eval(Yanfly.Param.BECShowHpText);
 Yanfly.Param.BECShowMpText = String(Yanfly.Parameters['Show MP Text']);
-Yanfly.Param.BECShowMpText = eval(Yanfly.Param.BECShowMpText);
 Yanfly.Param.BECShowTpText = String(Yanfly.Parameters['Show TP Text']);
-Yanfly.Param.BECShowTpText = eval(Yanfly.Param.BECShowTpText);
 Yanfly.Param.BECShowStateText = String(Yanfly.Parameters['Show State Text']);
-Yanfly.Param.BECShowStateText = eval(Yanfly.Param.BECShowStateText);
 Yanfly.Param.BECShowBuffText = String(Yanfly.Parameters['Show Buff Text']);
-Yanfly.Param.BECShowBuffText = eval(Yanfly.Param.BECShowBuffText);
 
 //=============================================================================
 // DataManager
@@ -1361,7 +1876,7 @@ Yanfly.BEC.DefaultActionWhole = [
 Yanfly.BEC.DefaultActionTarget = [
     ['PERFORM ACTION'],
 ];
-if (Yanfly.Param.BECMotionWait) {
+if (eval(Yanfly.Param.BECMotionWait)) {
   Yanfly.BEC.DefaultActionWhole.push(['MOTION WAIT', ['USER']]);
   Yanfly.BEC.DefaultActionTarget.push(['MOTION WAIT', ['USER']]);
 } else {
@@ -1697,20 +2212,8 @@ BattleManager.stopAllSelection = function() {
 Yanfly.BEC.BattleManager_makeEscapeRatio = BattleManager.makeEscapeRatio;
 BattleManager.makeEscapeRatio = function() {
     if (this.isDTB()) {
-      var code = Yanfly.Param.BECEscRatio;
-      try {
-        this._escapeRatio = eval(code);
-      } catch (e) {
-        this._escapeRatio = 0;
-        Yanfly.Util.displayError(e, code, 'ESCAPE RATIO FORMULA ERROR');
-      }
-      var code = Yanfly.Param.BECEscFail;
-      try {
-        this._escapeFailBoost = eval(code);
-      } catch (e) {
-        this._escapeFailBoost = 0;
-        Yanfly.Util.displayError(e, code, 'ESCAPE FAIL BOOST FORMULA ERROR');
-      }
+      this._escapeRatio = eval(Yanfly.Param.BECEscRatio);
+      this._escapeFailBoost = eval(Yanfly.Param.BECEscFail);
     } else {
       this._escapeFailBoost = 0.1;
       Yanfly.BEC.BattleManager_makeEscapeRatio.call(this);
@@ -1721,7 +2224,7 @@ BattleManager.timeBasedStates = function() {
     if (!$gameParty.inBattle()) return false;
     if (this.isTurnBased()) return false;
     if (this._timeBasedStates !== undefined) return this._timeBasedStates;
-    this._timeBasedStates = Yanfly.Param.BECTimeStates;
+    this._timeBasedStates = eval(Yanfly.Param.BECTimeStates);
     return this._timeBasedStates;
 };
 
@@ -1729,19 +2232,19 @@ BattleManager.timeBasedBuffs = function() {
     if (!$gameParty.inBattle()) return false;
     if (this.isTurnBased()) return false;
     if (this._timeBasedBuffs !== undefined) return this._timeBasedBuffs;
-    this._timeBasedBuffs = Yanfly.Param.BECTimeBuffs;
+    this._timeBasedBuffs = eval(Yanfly.Param.BECTimeBuffs);
     return this._timeBasedBuffs;
 };
 
 BattleManager.displayStartMessages = function() {
-    if (Yanfly.Param.BECEmergeText) {
+    if (eval(Yanfly.Param.BECEmergeText)) {
       $gameTroop.enemyNames().forEach(function(name) {
           $gameMessage.add(TextManager.emerge.format(name));
       });
     }
-    if (this._preemptive && Yanfly.Param.BECPreEmpText) {
+    if (this._preemptive && eval(Yanfly.Param.BECPreEmpText)) {
         $gameMessage.add(TextManager.preemptive.format($gameParty.name()));
-    } else if (this._surprise && Yanfly.Param.BECSurpText) {
+    } else if (this._surprise && eval(Yanfly.Param.BECSurpText)) {
         $gameMessage.add(TextManager.surprise.format($gameParty.name()));
     }
 };
@@ -1762,9 +2265,9 @@ BattleManager.getSprite = function(battler) {
 
 BattleManager.setSpritePriority = function() {
     if ($gameSystem.isSideView()) {
-      this._spritePriority = Yanfly.Param.BECSideSpPrio;
+      this._spritePriority = eval(Yanfly.Param.BECSideSpPrio);
     } else {
-      this._spritePriority = Yanfly.Param.BECFrontSprite;
+      this._spritePriority = eval(Yanfly.Param.BECFrontSprite);
     }
     if (this._spritePriority === false) this._spritePriority = 0;
     if (this._spritePriority === true) this._spritePriority = 1;
@@ -1827,7 +2330,6 @@ BattleManager.processEscape = function() {
     $gameParty.performEscape();
     SoundManager.playEscape();
     var success = this._preemptive ? true : (Math.random() < this._escapeRatio);
-    if ($gamePlayer.isDebugThrough()) success = true;
     if (success) {
         $gameParty.performEscapeSuccess();
         this.displayEscapeSuccessMessage();
@@ -1846,11 +2348,6 @@ Yanfly.BEC.BattleManager_processAbort = BattleManager.processAbort;
 BattleManager.processAbort = function() {
     $gameParty.removeBattleStates();
     Yanfly.BEC.BattleManager_processAbort.call(this);
-};
-
-BattleManager.refreshAllMembers = function() {
-  $gameParty.refreshMembers();
-  $gameTroop.refreshMembers();
 };
 
 BattleManager.startTurn = function() {
@@ -1878,7 +2375,6 @@ BattleManager.endTurn = function() {
     }
     this._enteredEndPhase = true;
     Yanfly.BEC.BattleManager_endTurn.call(this);
-    BattleManager.refreshAllMembers();
 };
 
 BattleManager.getNextSubject = function() {
@@ -1895,14 +2391,10 @@ BattleManager.getNextSubject = function() {
         var battler = this._actionBattlers.shift();
         if (!battler) return null;
         if (battler.isBattleMember() && battler.isAlive()) {
-            this.pushPerformedBattler(battler);
+            this._performedBattlers.push(battler);
             return battler;
         }
     }
-};
-
-BattleManager.pushPerformedBattler = function(battler) {
-  this._performedBattlers.push(battler);
 };
 
 BattleManager.update = function() {
@@ -1954,55 +2446,8 @@ BattleManager.updateEvent = function() {
     return this.checkAbort();
 };
 
-BattleManager.queueForceAction = function(user, skillId, target) {
-    if (target === undefined) {
-      var targetIndex = 0;
-    } else if (typeof target === 'number') {
-      var targetIndex = target;
-    } else {
-      var targetIndex = target.index();
-    }
-    var param = [
-      user.isEnemy() ? 0 : 1,
-      user.isActor() ? user.actorId() : user.index(),
-      skillId,
-      targetIndex
-    ];
-    var command = {
-      code: 339,
-      indent: 0,
-      parameters: param
-    }
-    $gameTemp.forceActionQueue(command);
-    this.clearResults();
-    if (this.isTickBased()) this._phase = 'action';
-};
-
-BattleManager.addText = function(text, wait) {
-  if (!SceneManager._scene._logWindow) return;
-  wait = wait || 0;
-  SceneManager._scene._logWindow.addText(text);
-  if (wait <= 0) return;
-  var last = this._actionList[this._actionList.length - 1];
-  if (last && last[0] === 'WAIT') return;
-  this._actionList.push(['WAIT', [wait]]);
-};
-
-BattleManager.clearResults = function() {
-  var group = this.allBattleMembers();
-  var length = group.length;
-  for (var i = 0; i < length; ++i) {
-    var member = group[i];
-    if (member) member.clearResult();
-  }
-  this._allTargets = [];
-  this._targets = [];
-  this._target = undefined;
-};
-
 Yanfly.BEC.BattleManager_forceAction = BattleManager.forceAction;
 BattleManager.forceAction = function(battler) {
-    if (this._subject) this._subject.clearResult();
     this.createForceActionFailSafes();
     this.savePreForceActionSettings();
     Yanfly.BEC.BattleManager_forceAction.call(this, battler);
@@ -2099,7 +2544,7 @@ BattleManager.updateAction = function() {
 };
 
 BattleManager.invokeAction = function(subject, target) {
-  if (!Yanfly.Param.BECOptSpeed)  this._logWindow.push('pushBaseLine');
+  if (!eval(Yanfly.Param.BECOptSpeed))  this._logWindow.push('pushBaseLine');
   var normal = true;
   if (Math.random() < this._action.itemMrf(target)) {
     this.invokeMagicReflection(subject, target);
@@ -2108,8 +2553,8 @@ BattleManager.invokeAction = function(subject, target) {
   } else {
     this.invokeNormalAction(subject, target);
   }
-  if (subject) subject.setLastTarget(target);
-  if (!Yanfly.Param.BECOptSpeed) this._logWindow.push('popBaseLine');
+  subject.setLastTarget(target);
+  if (!eval(Yanfly.Param.BECOptSpeed)) this._logWindow.push('popBaseLine');
 };
 
 BattleManager.invokeCounterAttack = function(subject, target) {
@@ -2117,7 +2562,7 @@ BattleManager.invokeCounterAttack = function(subject, target) {
     this._logWindow.displayCounter(target);
     action.setAttack();
     action.apply(subject);
-    this._logWindow.displayActionResults(target, subject);
+    this._logWindow.displayActionResults(subject, subject);
     if (subject.isDead()) subject.performCollapse();
 };
 
@@ -2190,14 +2635,11 @@ BattleManager.createFinishActions = function() {
 
 Yanfly.BEC.BattleManager_endAction = BattleManager.endAction;
 BattleManager.endAction = function() {
-    if (this._subject) {
-      this._subject.onAllActionsEnd();
-    }
     if (this._processingForcedAction) {
-      this._subject.removeCurrentAction();
       this._phase = this._preForcePhase;
     }
     this._processingForcedAction = false;
+    if (this._subject) this._subject.onAllActionsEnd();
     if (this.loadPreForceActionSettings()) return;
     Yanfly.BEC.BattleManager_endAction.call(this);
 };
@@ -2270,11 +2712,8 @@ BattleManager.updateActionTargetList = function() {
 
 BattleManager.startAction = function() {
     var subject = this._subject;
-    if (!subject) return this.endAction();
     var action = subject.currentAction();
     this._action = action;
-    if (!this._action) return this.endAction();
-    if (!this._action.item()) return this.endAction();
     var targets = action.makeTargets();
     this.setTargets(targets);
     this._allTargets = targets.slice();
@@ -2390,7 +2829,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._targets;
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2398,7 +2837,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameParty.aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2406,7 +2845,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameParty.battleMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2422,9 +2861,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameParty.aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target !== this._subject && target.isAppeared()) {
-          targets.push(target);
-        }
+        if (target && target !== this._subject) targets.push(target);
       }
       return targets;
     }
@@ -2433,7 +2870,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameTroop.aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2441,7 +2878,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameTroop.members();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2458,25 +2895,23 @@ BattleManager.makeActionTargets = function(string) {
       var group = $gameTroop.aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target !== this._subject && target.isAppeared()) {
-          targets.push(target);
-        }
+        if (target && target !== this._subject) targets.push(target);
       }
       return targets;
     }
     if (string.match(/ACTOR[ ](\d+)/i)) {
       var target = $gameParty.battleMembers()[parseInt(RegExp.$1)];
-      if (target && target.isAppeared()) return [target];
+      if (target) return [target];
     }
     if (string.match(/ENEMY[ ](\d+)/i)) {
       var target = $gameTroop.members()[parseInt(RegExp.$1)];
-      if (target && target.isAppeared()) return [target];
+      if (target) return [target];
     }
     if (['FRIEND', 'FRIENDS', 'ALLIES'].contains(string)) {
       var group = this._action.friendsUnit().aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2484,7 +2919,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._action.friendsUnit().members();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2492,7 +2927,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._action.friendsUnit().deadMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2500,7 +2935,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._action.opponentsUnit().aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2508,7 +2943,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._action.opponentsUnit().members();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2525,26 +2960,24 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._action.friendsUnit().aliveMembers();
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target !== this._subject && target.isAppeared()) {
-          targets.push(target);
-        }
+        if (target && target !== this._subject) targets.push(target);
       }
       return targets;
     }
     if (string.match(/(?:FRIEND|ALLY)[ ](\d+)/i)) {
       var target = this._action.friendsUnit().members()[parseInt(RegExp.$1)];
-      if (target && target.isAppeared()) return [target];
+      if (target) return [target];
     }
     if (string.match(/(?:OPPONENT|FOE|RIVAL)[ ](\d+)/i)) {
       var target = this._action.opponentsUnit().members()[parseInt(RegExp.$1)]
-      if (target && target.isAppeared()) return [target];
+      if (target) return [target];
     }
     if (['ALL ALIVE'].contains(string)) {
       var group = this._action.friendsUnit().aliveMembers();
       group = group.concat(this._action.opponentsUnit().aliveMembers());
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2553,7 +2986,7 @@ BattleManager.makeActionTargets = function(string) {
       group = group.concat(this._action.opponentsUnit().members());
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       return targets;
     }
@@ -2571,9 +3004,7 @@ BattleManager.makeActionTargets = function(string) {
       group = group.concat(this._action.opponentsUnit().aliveMembers());
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target !== this._subject && target.isAppeared()) {
-          targets.push(target);
-        }
+        if (target && target !== this._subject) targets.push(target);
       }
       return targets;
     }
@@ -2581,7 +3012,7 @@ BattleManager.makeActionTargets = function(string) {
       var group = this._targets;
       for (var i = 0; i < group.length; ++i) {
         var target = group[i];
-        if (target && target.isAppeared()) targets.push(target);
+        if (target) targets.push(target);
       }
       if (!targets.contains(this._subject)) targets.push(this._subject);
       return targets;
@@ -2593,23 +3024,7 @@ BattleManager.makeActionTargets = function(string) {
         var target = group[i];
         if (target) {
           if (target === this._subject) continue;
-          if (target.isHidden()) continue;
           if (this._targets.contains(target)) continue;
-
-          if (target.isDead()) {
-            if (Imported.YEP_X_AnimatedSVEnemies && target.isEnemy()) {
-              if (target.hasSVBattler() && !target.sideviewCollapse()) {
-                // Ignore
-              } else {
-                continue;
-              }
-            } else if (target.isActor()) {
-              // Ignore
-            } else {
-              continue;
-            }
-          }
-
           targets.push(target);
         }
       }
@@ -2629,50 +3044,44 @@ BattleManager.makeActionTargets = function(string) {
 };
 
 BattleManager.actionConditionsMet = function(actSeq) {
-  var ci = this._conditionFlags.length - 1;
-  var actionName = actSeq[0];
-  var actionArgs = actSeq[1];
-  var subject = this._subject;
-  var user = this._subject;
-  var target = this._targets[0];
-  var targets = this._targets;
-  var action = this._action;
-  var item = this._action.item();
-  if (actionName.match(/ELSE[ ]IF[ ](.*)/i)) {
-    if (this._conditionFlags.length <= 0) return false;
-    if (this._conditionFlags[ci]) {
-      this._conditionFlags[ci] = false;
-      this._trueFlags[ci] = true;
-    } else if (!this._conditionFlags[ci] && !this._trueFlags[ci]) {
-      var text = String(RegExp.$1);
-      try {
-        this._conditionFlags[ci] = eval(text);
-        this._trueFlags[ci] = eval(text);
-      } catch (e) {
-        Yanfly.Util.displayError(e, text, 'ACTION SEQUENCE IF CONDITION ERROR');
+    var ci = this._conditionFlags.length - 1;
+    var actionName = actSeq[0];
+    var actionArgs = actSeq[1];
+    var subject = this._subject;
+    var user = this._subject;
+    var target = this._targets[0];
+    var targets = this._targets;
+    var action = this._action;
+    var item = this._action.item();
+    if (actionName.match(/ELSE[ ]IF[ ](.*)/i)) {
+      if (this._conditionFlags.length <= 0) return false;
+      if (this._conditionFlags[ci]) {
         this._conditionFlags[ci] = false;
-        this._trueFlags[ci] = false;
+        this._trueFlags[ci] = true;
+      } else if (!this._conditionFlags[ci] && !this._trueFlags[ci]) {
+        var text = String(RegExp.$1);
+        this._conditionFlags[ci] = eval('(' + text + ')');
+        this._trueFlags[ci] = eval('(' + text + ')');
       }
+      return false;
+    } else if (actionName.match(/ELSE[ ]*(.*)/i)) {
+      if (this._conditionFlags.length <= 0) return false;
+      if (this._conditionFlags[ci]) {
+        this._conditionFlags[ci] = false;
+        this._trueFlags[ci] = true;
+      } else if (!this._conditionFlags[ci] && !this._trueFlags[ci]) {
+        this._conditionFlags[ci] = true;
+        this._trueFlags[ci] = true;
+      }
+      return false;
+    } else if (actionName.toUpperCase() === 'END') {
+      if (this._conditionFlags.length <= 0) return false;
+      this._conditionFlags.pop();
+      this._trueFlags.pop();
+      return false;
     }
-    return false;
-  } else if (actionName.match(/ELSE[ ]*(.*)/i)) {
-    if (this._conditionFlags.length <= 0) return false;
-    if (this._conditionFlags[ci]) {
-      this._conditionFlags[ci] = false;
-      this._trueFlags[ci] = true;
-    } else if (!this._conditionFlags[ci] && !this._trueFlags[ci]) {
-      this._conditionFlags[ci] = true;
-      this._trueFlags[ci] = true;
-    }
-    return false;
-  } else if (actionName.toUpperCase() === 'END') {
-    if (this._conditionFlags.length <= 0) return false;
-    this._conditionFlags.pop();
-    this._trueFlags.pop();
-    return false;
-  }
-  if (this._conditionFlags.length > 0) return this._conditionFlags[ci];
-  return true
+    if (this._conditionFlags.length > 0) return this._conditionFlags[ci];
+    return true
 };
 
 BattleManager.actionActionAnimation = function(actionArgs) {
@@ -2753,7 +3162,7 @@ BattleManager.actionClearBattleLog = function() {
 };
 
 BattleManager.actionDeathBreak = function() {
-    if (this._subject.isDead()) {
+    if (this._subject.isDead() || this._subject.hp <= 0) {
       this._targets = [];
       this._actionList = [];
       this._individualTargets = [];
@@ -2772,20 +3181,13 @@ BattleManager.actionIfConditions = function(actionName, actionArgs) {
   var subject = this._subject;
   var user = this._subject;
   var target = this._targets[0];
-  var critical = false;
-  if (target && target.result()) critical = target.result().critical;
   var targets = this._targets;
   var action = this._action;
   var item = this._action.item();
   var actionName = this._actSeq[0];
   if (actionName.match(/IF[ ](.*)/i)) {
     var text = String(RegExp.$1);
-    try {
-      this._conditionFlags.push(eval(text));
-    } catch (e) {
-      this._conditionFlags.push(false);
-      Yanfly.Util.displayError(e, text, 'ACTION SEQUENCE IF CONDITION ERROR');
-    }
+    this._conditionFlags.push(eval(text));
     this._trueFlags.push(false);
     var ci = this._conditionFlags.length;
   }
@@ -2795,11 +3197,7 @@ BattleManager.actionIfConditions = function(actionName, actionArgs) {
 BattleManager.actionImmortal = function(actionArgs) {
     var targets =
       this.makeActionTargets(actionArgs[0]).filter(Yanfly.Util.onlyUnique);
-    try {
-      var value = eval(String(actionArgs[1]).toLowerCase());
-    } catch (e) {
-      var value = false;
-    }
+    var value = eval(String(actionArgs[1]).toLowerCase());
     targets.forEach(function (target) {
       if (value) {
         target.addImmortal();
@@ -2876,22 +3274,6 @@ BattleManager.actionWaitForPopups = function() {
 };
 
 //=============================================================================
-// SceneManager
-//=============================================================================
-
-Yanfly.BEC.SceneManager_snapForBackground = SceneManager.snapForBackground;
-SceneManager.snapForBackground = function() {
-    if ($gameParty.inBattle()) {
-      var spriteset = this._scene._spriteset;
-      if (spriteset.battleback1Name() === '' && 
-      spriteset.battleback2Name() === '') {
-        return;
-      }
-    }
-    Yanfly.BEC.SceneManager_snapForBackground.call(this);
-};
-
-//=============================================================================
 // Sprite_Battler
 //=============================================================================
 
@@ -2948,8 +3330,8 @@ Sprite_Battler.prototype.setupDamagePopup = function() {
 };
 
 Sprite_Battler.prototype.pushDamageSprite = function(sprite) {
-    var heightBuffer = Yanfly.Param.BECPopupOverlap;
-    if (Yanfly.Param.BECNewPopBottom) {
+    var heightBuffer = eval(Yanfly.Param.BECPopupOverlap);
+    if (eval(Yanfly.Param.BECNewPopBottom)) {
       this._damages.push(sprite);
       this._damages.forEach(function(spr) {
         for (var i = 0; i < spr.children.length; i++) {
@@ -3065,7 +3447,7 @@ Sprite_Actor.prototype.postSpriteInitialize = function() {
 Yanfly.BEC.Sprite_Actor_updateShadow = Sprite_Actor.prototype.updateShadow;
 Sprite_Actor.prototype.updateShadow = function() {
     if (this._hideShadows === undefined) {
-      this._hideShadows = Yanfly.Param.BECShowShadows;
+      this._hideShadows = eval(Yanfly.Param.BECShowShadows);
     }
     if (!this._hideShadows) return this._shadowSprite.visible = false;
     Yanfly.BEC.Sprite_Actor_updateShadow.call(this);
@@ -3080,35 +3462,11 @@ Sprite_Actor.prototype.setActorHome = function(index) {
     statusHeight *= Window_Base.prototype.lineHeight.call(this);
     statusHeight += Window_Base.prototype.standardPadding.call(this) * 2;
     if ($gameSystem.isSideView()) {
-      var code = Yanfly.Param.BECHomePosX;
-      try {
-        var homeX = eval(code);
-      } catch (e) {
-        var homeX = 0;
-        Yanfly.Util.displayError(e, code, 'SIDE VIEW HOME X FORMULA ERROR');
-      }
-      var code = Yanfly.Param.BECHomePosY;
-      try {
-        var homeY = eval(code);
-      } catch (e) {
-        var homeY = 0;
-        Yanfly.Util.displayError(e, code, 'SIDE VIEW HOME Y FORMULA ERROR');
-      }
+      var homeX = eval(Yanfly.Param.BECHomePosX);
+      var homeY = eval(Yanfly.Param.BECHomePosY);
     } else {
-      var code = Yanfly.Param.BECFrontPosX;
-      try {
-        var homeX = eval(code);
-      } catch (e) {
-        var homeX = 0;
-        Yanfly.Util.displayError(e, code, 'FRONT VIEW HOME X FORMULA ERROR');
-      }
-      var code = Yanfly.Param.BECFrontPosY;
-      try {
-        var homeY = eval(code);
-      } catch (e) {
-        var homeY = 0;
-        Yanfly.Util.displayError(e, code, 'FRONT VIEW HOME Y FORMULA ERROR');
-      }
+      var homeX = eval(Yanfly.Param.BECFrontPosX);
+      var homeY = eval(Yanfly.Param.BECFrontPosY);
     }
     this._checkAliveStatus = false;
     if ($gameParty.battleMembers()[index]) {
@@ -3223,7 +3581,7 @@ Sprite_Actor.prototype.refreshMotion = function() {
 
 Sprite_Enemy.prototype.preSpriteInitialize = function(battler) {
     Sprite_Battler.prototype.preSpriteInitialize.call(this, battler);
-    this._visualSelect = Yanfly.Param.BECEnemySelect;
+    this._visualSelect = eval(Yanfly.Param.BECEnemySelect);
     if (this._visualSelect) this.createVisualSelectWindow();
 };
 
@@ -3231,7 +3589,6 @@ Yanfly.BEC.Sprite_Enemy_update = Sprite_Enemy.prototype.update;
 Sprite_Enemy.prototype.update = function() {
     Yanfly.BEC.Sprite_Enemy_update.call(this);
     this.addVisualSelectWindow();
-    this.checkExistInSceneChildren()
 };
 
 Sprite_Enemy.prototype.addVisualSelectWindow = function() {
@@ -3254,17 +3611,6 @@ Sprite_Enemy.prototype.setBattler = function(battler) {
     if (this._visualSelectWindow) this._visualSelectWindow.setBattler(battler);
 };
 
-Sprite_Enemy.prototype.checkExistInSceneChildren = function() {
-    if (!this._visualSelect) return;
-    if (!SceneManager._scene) return;
-    var scene = SceneManager._scene;
-    if (!scene._windowLayer) return;
-    if (!scene.children.contains(this._visualSelectWindow)) {
-      this._addedVisualSelect = true;
-      scene.addChild(this._visualSelectWindow);
-    }
-};
-
 //=============================================================================
 // Sprite_Weapon
 //=============================================================================
@@ -3282,12 +3628,11 @@ Sprite_Weapon.prototype.setup = function(weaponImageId) {
 Yanfly.BEC.Sprite_Damage_initialize = Sprite_Damage.prototype.initialize;
 Sprite_Damage.prototype.initialize = function() {
     Yanfly.BEC.Sprite_Damage_initialize.call(this);
-    this._duration = Yanfly.Param.BECPopupDur;
+    this._duration = eval(Yanfly.Param.BECPopupDur);
 };
 
 Sprite_Damage.prototype.setup = function(target) {
-    this._result = target.shiftDamagePopup();
-    var result = this._result;
+    var result = target.shiftDamagePopup();
     if (result.missed || result.evaded) {
       this.createMiss();
     } else if (result.hpAffected) {
@@ -3302,7 +3647,7 @@ Sprite_Damage.prototype.setup = function(target) {
 
 Sprite_Damage.prototype.setupCriticalEffect = function() {
     this._flashColor = eval('[' + Yanfly.Param.BECCritPopup + ']');
-    this._flashDuration = Yanfly.Param.BECCritDur;
+    this._flashDuration = eval(Yanfly.Param.BECCritDur);
 };
 
 //=============================================================================
@@ -3350,22 +3695,12 @@ Spriteset_Battle.prototype.update = function() {
 };
 
 Spriteset_Battle.prototype.updateZCoordinates = function() {
-  if (Imported.YEP_ImprovedBattlebacks) {
-    this.updateBattlebackGroupRemove();
-  } else {
-    this._battleField.removeChild(this._back1Sprite);
-    this._battleField.removeChild(this._back2Sprite);
-  }
-  this._battleField.children.sort(this.battleFieldDepthCompare);
-  if (Imported.YEP_ImprovedBattlebacks) {
-    this.updateBattlebackGroupAdd();
-  } else {
-    this._battleField.addChildAt(this._back2Sprite, 0);
-    this._battleField.addChildAt(this._back1Sprite, 0);
-  }
+    this._battleField.children.sort(this.battleFieldDepthCompare);
 };
 
 Spriteset_Battle.prototype.battleFieldDepthCompare = function(a, b) {
+    if (a.tilePosition && !b.tilePosition) return -1;
+    if (b.tilePosition && !a.tilePosition) return 1;
     var priority = BattleManager.getSpritePriority();
     if (a._battler && b._battler && priority !== 0) {
       if (priority === 1) {
@@ -3389,56 +3724,11 @@ Spriteset_Battle.prototype.isPopupPlaying = function() {
     });
 };
 
-Yanfly.BEC.Spriteset_Battle_battlerSprites =
-  Spriteset_Battle.prototype.battlerSprites;
-Spriteset_Battle.prototype.battlerSprites = function() {
-  var sprites = Yanfly.BEC.Spriteset_Battle_battlerSprites.call(this);
-  var length = sprites.length;
-  var result = [];
-  for (var i = 0; i < length; ++i) {
-    var sprite = sprites[i];
-    if (!sprite) continue;
-    if (!sprite._battler) continue;
-    result.push(sprite);
-  }
-  return result;
-};
-
 //=============================================================================
 // Game_Temp
 //=============================================================================
 
 Game_Temp.prototype.clearActionSequenceSettings = function() {
-};
-
-Game_Temp.prototype.forceActionQueue = function(command) {
-  if (!this._forceActionQueue) {
-    this._forceActionQueue = JsonEx.makeDeepCopy($dataCommonEvents[1]);
-    this._forceActionQueue.list = [];
-  }
-  this._forceActionQueue.list.push(command);
-};
-
-Yanfly.BEC.Game_Temp_clearCommonEvent = Game_Temp.prototype.clearCommonEvent;
-Game_Temp.prototype.clearCommonEvent = function() {
-    this._forceActionQueue = undefined;
-    Yanfly.BEC.Game_Temp_clearCommonEvent.call(this);
-};
-
-Yanfly.BEC.Game_Temp_isCommonEventReserved =
-  Game_Temp.prototype.isCommonEventReserved;
-Game_Temp.prototype.isCommonEventReserved = function() {
-  if (this._forceActionQueue) return true;
-  return Yanfly.BEC.Game_Temp_isCommonEventReserved.call(this);
-};
-
-Yanfly.BEC.Game_Temp_reservedCommonEvent =
-  Game_Temp.prototype.reservedCommonEvent;
-Game_Temp.prototype.reservedCommonEvent = function() {
-  if (this._forceActionQueue) {
-    return this._forceActionQueue;
-  }
-  return Yanfly.BEC.Game_Temp_reservedCommonEvent.call(this);
 };
 
 //=============================================================================
@@ -3493,13 +3783,7 @@ Game_Action.prototype.speed = function() {
     var atk = user.atk; var def = user.def; var mat = user.mat;
     var int = user.mat; var mdf = user.mdf; var res = user.res;
     var agi = user.agi; var luk = user.luk;
-    var code = Yanfly.Param.BECActionSpeed;
-    try {
-      var speed = eval(code);
-    } catch (e) {
-      var speed = 0;
-      Yanfly.Util.displayError(e, code, 'ACTION SPEED FORMULA ERROR');
-    }
+    var speed = eval(Yanfly.Param.BECActionSpeed);
     if (this.item()) speed += this.item().speed;
     if (this.isAttack()) speed += this.subject().attackSpeed();
     return speed;
@@ -3697,7 +3981,6 @@ Game_BattlerBase.prototype.paySkillCost = function(skill) {
 Yanfly.BEC.Game_Battler_useItem = Game_Battler.prototype.useItem;
 Game_Battler.prototype.useItem = function(item) {
     Yanfly.BEC.Game_Battler_useItem.call(this, item);
-    this.refresh();
     if (!$gameParty.inBattle()) return;
     this.increaseSelfTurnCount();
     this.updateStateActionStart();
@@ -3735,20 +4018,17 @@ Game_Battler.prototype.isSelected = function() {
 
 Yanfly.BEC.Game_Battler_regenerateAll = Game_Battler.prototype.regenerateAll;
 Game_Battler.prototype.regenerateAll = function() {
-    this.clearResult();
     var lifeState = this.isAlive();
     Yanfly.BEC.Game_Battler_regenerateAll.call(this);
-    if ($gameParty.inBattle()) {
-      if (!BattleManager.timeBasedStates()) this.updateStateTurns();
-      if (!BattleManager.timeBasedBuffs()) {
-        this.updateBuffTurns();
-        this.removeBuffsAuto();
-      }
-      if (this.isDead() && lifeState === true) {
-        this.performCollapse();
-      }
-      this.startDamagePopup();
+    if (!BattleManager.timeBasedStates()) this.updateStateTurns();
+    if (!BattleManager.timeBasedBuffs()) {
+      this.updateBuffTurns();
+      this.removeBuffsAuto();
     }
+    if (this.isDead() && lifeState === true) {
+      this.performCollapse();
+    }
+    if ($gameParty.inBattle()) this.startDamagePopup();
 };
 
 Game_Battler.prototype.addImmortal = function() {
@@ -4017,7 +4297,7 @@ Game_Battler.prototype.spritePosY = function() {
 Game_Battler.prototype.spriteWidth = function() {
     if ($gameSystem.isSideView() && this.battler() && this.battler().bitmap) {
       return this.battler().bitmap.width;
-    } else if (this.battler() && this.battler().bitmap) {
+    } else if (this.battler()) {
       return this.battler().bitmap.width;
     } else {
       return 1;
@@ -4027,7 +4307,7 @@ Game_Battler.prototype.spriteWidth = function() {
 Game_Battler.prototype.spriteHeight = function() {
     if ($gameSystem.isSideView() && this.battler() && this.battler().bitmap) {
       return this.battler().bitmap.height;
-    } else if (this.battler() && this.battler().bitmap) {
+    } else if (this.battler()) {
       return this.battler().bitmap.height;
     } else {
       return 1;
@@ -4193,11 +4473,9 @@ Game_Battler.prototype.addState = function(stateId) {
 
 Game_Battler.prototype.canAddStateFreeTurn = function(stateId) {
     if (!$gameParty.inBattle()) return false;
+    if (!this.isStateAffected(stateId)) return false;
     if (BattleManager._subject !== this) return false;
     if ($dataStates[stateId].autoRemovalTiming !== 1) return false;
-    if (Imported.YEP_BuffsStatesCore) {
-      if ($dataStates[stateId].reapplyRules === 0) return false;
-    }
     return true;
 };
 
@@ -4238,12 +4516,6 @@ Game_Battler.prototype.waitMotion = function() {
     return 'wait';
 };
 
-Yanfly.BEC.Game_Battler_startAnimation = Game_Battler.prototype.startAnimation;
-Game_Battler.prototype.startAnimation = function(animationId, mirror, delay) {
-  if (!$dataAnimations[animationId]) return;
-  Yanfly.BEC.Game_Battler_startAnimation.call(this, animationId, mirror, delay);
-};
-
 //=============================================================================
 // Game_Actor
 //=============================================================================
@@ -4258,7 +4530,7 @@ Game_Actor.prototype.refresh = function() {
 
 Game_Actor.prototype.isSpriteVisible = function() {
     if ($gameSystem.isSideView()) return true;
-    return Yanfly.Param.BECFrontSprite;
+    return eval(Yanfly.Param.BECFrontSprite);
 };
 
 Game_Actor.prototype.reflectAnimationId = function() {
@@ -4414,17 +4686,6 @@ Game_Actor.prototype.performEscapeSuccess = function() {
 // Game_Enemy
 //=============================================================================
 
-if (!Game_Enemy.prototype.skills) {
-Game_Enemy.prototype.skills = function() {
-  var skills = []
-  for (var i = 0; i < this.enemy().actions.length; ++i) {
-    var skill = $dataSkills[this.enemy().actions[i].skillId]
-    if (skill) skills.push(skill);
-  }
-  return skills;
-}
-}; // (!Game_Enemy.prototype.skills)
-
 Game_Enemy.prototype.performActionStart = function(action) {
     Game_Battler.prototype.performActionStart.call(this, action);
     if (!$gameSystem.isSideView() || !this.spriteCanMove()) {
@@ -4444,14 +4705,6 @@ Game_Enemy.prototype.performDamage = function() {
 
 Game_Enemy.prototype.attackAnimationId = function() {
     return this.enemy().attackAnimationId;
-};
-
-Game_Enemy.prototype.attackAnimationId1 = function() {
-    return this.attackAnimationId();
-};
-
-Game_Enemy.prototype.attackAnimationId2 = function() {
-    return this.attackAnimationId();
 };
 
 Game_Enemy.prototype.reflectAnimationId = function() {
@@ -4499,10 +4752,7 @@ Game_Unit.prototype.onTurnStart = function() {
     var max = this.members().length;
     for (var i = 0; i < max; ++i) {
       var member = this.members()[i];
-      if (member) {
-        member.onTurnStart();
-        member.refresh();
-      }
+      if (member) member.onTurnStart();
     }
 };
 
@@ -4511,15 +4761,6 @@ Game_Unit.prototype.updateTick = function() {
     for (var i = 0; i < max; ++i) {
       var member = this.members()[i];
       if (member) member.updateTick();
-    }
-};
-
-Game_Unit.prototype.refreshMembers = function() {
-    var group = this.allMembers();
-    var length = group.length;
-    for (var i = 0; i < length; ++i) {
-      var member = group[i];
-      if (member) member.refresh();
     }
 };
 
@@ -4532,14 +4773,6 @@ Game_Party.prototype.performEscapeSuccess = function() {
       var member = this.members()[i];
       if (member) member.performEscapeSuccess();
     }
-};
-
-//=============================================================================
-// Game_Troop
-//=============================================================================
-
-Game_Troop.prototype.allMembers = function() {
-  return this.members();
 };
 
 //=============================================================================
@@ -4562,7 +4795,7 @@ Yanfly.BEC.Scene_Battle_createSkillWindow =
     Scene_Battle.prototype.createSkillWindow;
 Scene_Battle.prototype.createSkillWindow = function() {
     Yanfly.BEC.Scene_Battle_createSkillWindow.call(this);
-    if (Yanfly.Param.BECLowerWindows) {
+    if (eval(Yanfly.Param.BECLowerWindows)) {
       this.adjustLowerWindow(this._skillWindow);
     }
 };
@@ -4571,7 +4804,7 @@ Yanfly.BEC.Scene_Battle_createItemWindow =
     Scene_Battle.prototype.createItemWindow;
 Scene_Battle.prototype.createItemWindow = function() {
     Yanfly.BEC.Scene_Battle_createItemWindow.call(this);
-    if (Yanfly.Param.BECLowerWindows) {
+    if (eval(Yanfly.Param.BECLowerWindows)) {
       this.adjustLowerWindow(this._itemWindow);
     }
 };
@@ -4581,7 +4814,7 @@ Yanfly.BEC.Scene_Battle_createActorWindow =
 Scene_Battle.prototype.createActorWindow = function() {
     Yanfly.BEC.Scene_Battle_createActorWindow.call(this);
     this._actorWindow.x = Graphics.boxWidth - this._actorWindow.width;
-    if (Yanfly.Param.BECSelectHelp) {
+    if (eval(Yanfly.Param.BECSelectHelp)) {
       this._actorWindow.setHelpWindow(this._helpWindow);
     }
 };
@@ -4590,13 +4823,13 @@ Yanfly.BEC.Scene_Battle_createEnemyWindow =
     Scene_Battle.prototype.createEnemyWindow;
 Scene_Battle.prototype.createEnemyWindow = function() {
     Yanfly.BEC.Scene_Battle_createEnemyWindow.call(this);
-    if (Yanfly.Param.BECSelectHelp) {
+    if (eval(Yanfly.Param.BECSelectHelp)) {
       this._enemyWindow.setHelpWindow(this._helpWindow);
     }
 };
 
 Scene_Battle.prototype.adjustLowerWindow = function(win) {
-    win.height = win.fittingHeight(Yanfly.Param.BECWindowRows);
+    win.height = win.fittingHeight(eval(Yanfly.Param.BECWindowRows));
     win.y = Graphics.boxHeight - win.height;
 };
 
@@ -4612,7 +4845,7 @@ Scene_Battle.prototype.startPartyCommandSelection = function() {
 
 Scene_Battle.prototype.isStartActorCommand = function() {
     if (this._isStartActorCommand === undefined) {
-      this._isStartActorCommand = Yanfly.Param.BECStartActCmd;
+      this._isStartActorCommand = eval(Yanfly.Param.BECStartActCmd)
     }
     return this._isStartActorCommand;
 };
@@ -4663,7 +4896,7 @@ Scene_Battle.prototype.startActorCommandSelection = function() {
 Yanfly.BEC.Scene_Battle_selectActorSelection =
     Scene_Battle.prototype.selectActorSelection;
 Scene_Battle.prototype.selectActorSelection = function() {
-    if (Yanfly.Param.BECSelectHelp) this._helpWindow.show();
+    if (eval(Yanfly.Param.BECSelectHelp)) this._helpWindow.show();
     this._helpWindow.clear();
     Yanfly.BEC.Scene_Battle_selectActorSelection.call(this);
     this._actorWindow.autoSelect();
@@ -4671,7 +4904,7 @@ Scene_Battle.prototype.selectActorSelection = function() {
 
 Yanfly.BEC.Scene_Battle_onActorCancel = Scene_Battle.prototype.onActorCancel;
 Scene_Battle.prototype.onActorCancel = function() {
-    if (Yanfly.Param.BECSelectHelp) this._helpWindow.hide();
+    if (eval(Yanfly.Param.BECSelectHelp)) this._helpWindow.hide();
     this._helpWindow.clear();
     Yanfly.BEC.Scene_Battle_onActorCancel.call(this);
     BattleManager.stopAllSelection();
@@ -4681,7 +4914,7 @@ Scene_Battle.prototype.onActorCancel = function() {
 Yanfly.BEC.Scene_Battle_selectEnemySelection =
     Scene_Battle.prototype.selectEnemySelection;
 Scene_Battle.prototype.selectEnemySelection = function() {
-    if (Yanfly.Param.BECSelectHelp) this._helpWindow.show();
+    if (eval(Yanfly.Param.BECSelectHelp)) this._helpWindow.show();
     this._helpWindow.clear();
     Yanfly.BEC.Scene_Battle_selectEnemySelection.call(this);
     this._enemyWindow.autoSelect();
@@ -4689,7 +4922,7 @@ Scene_Battle.prototype.selectEnemySelection = function() {
 
 Yanfly.BEC.Scene_Battle_onEnemyCancel = Scene_Battle.prototype.onEnemyCancel;
 Scene_Battle.prototype.onEnemyCancel = function() {
-    if (Yanfly.Param.BECSelectHelp) this._helpWindow.hide();
+    if (eval(Yanfly.Param.BECSelectHelp)) this._helpWindow.hide();
     this._helpWindow.clear();
     Yanfly.BEC.Scene_Battle_onEnemyCancel.call(this);
     BattleManager.stopAllSelection();
@@ -4698,10 +4931,10 @@ Scene_Battle.prototype.onEnemyCancel = function() {
 
 Yanfly.BEC.Scene_Battle_onSelectAction = Scene_Battle.prototype.onSelectAction;
 Scene_Battle.prototype.onSelectAction = function() {
-    if (Yanfly.Param.BECSelectHelp) BattleManager.forceSelection();
+    if (eval(Yanfly.Param.BECSelectHelp)) BattleManager.forceSelection();
     this._helpWindow.clear();
     Yanfly.BEC.Scene_Battle_onSelectAction.call(this);
-    if (Yanfly.Param.BECSelectHelp) BattleManager.resetSelection();
+    if (eval(Yanfly.Param.BECSelectHelp)) BattleManager.resetSelection();
 };
 
 Yanfly.BEC.Scene_Battle_onSkillOk =
@@ -4758,7 +4991,6 @@ Window_Help.prototype.clear = function() {
 Window_Help.prototype.setBattler = function(battler) {
     this.contents.clear();
     this.clear();
-    this.resetFontSettings();
     if (!$gameParty.inBattle()) return;
     if (!battler) return;
     var action = BattleManager.inputtingAction();
@@ -4828,16 +5060,6 @@ Window_BattleActor.prototype.autoSelect = function() {
       this._inputLock = true;
     } else if (action.isForDeadFriend()) {
       this._selectDead = true;
-      this.autoSelectFirstDeadActor();
-      if (action.isForAll()) this._inputLock = true;
-    }
-};
-
-Window_BattleActor.prototype.autoSelectFirstDeadActor = function() {
-    var length = $gameParty.members().length;
-    for (var i = 0; i < length; ++i) {
-      var member = $gameParty.members()[i];
-      if (member && member.isDead()) return this.select(i);
     }
 };
 
@@ -4854,7 +5076,7 @@ Window_BattleActor.prototype.updateHelp = function() {
 Yanfly.BEC.Window_BattleActor_processTouch =
     Window_BattleActor.prototype.processTouch;
 Window_BattleActor.prototype.processTouch = function() {
-    if (Yanfly.Param.BECActorSelect && this.isOpenAndActive()) {
+    if (eval(Yanfly.Param.BECActorSelect) && this.isOpenAndActive()) {
       if (TouchInput.isTriggered() && !this.isTouchedInsideFrame()) {
         if (this.getClickedActor() >= 0) {
           var index = this.getClickedActor();
@@ -4903,7 +5125,6 @@ Window_BattleActor.prototype.isClickedActor = function(actor) {
     if (!actor) return false;
     if (!actor.isSpriteVisible()) return false;
     if (!actor.isAppeared()) return false;
-    if ($gameTemp._disableMouseOverSelect) return false;
     var x = TouchInput.x;
     var y = TouchInput.y;
     var rect = new Rectangle();
@@ -4932,7 +5153,6 @@ Window_BattleActor.prototype.isMouseOverActor = function(actor) {
     if (!actor) return false;
     if (!actor.isSpriteVisible()) return false;
     if (!actor.isAppeared()) return false;
-    if ($gameTemp._disableMouseOverSelect) return false;
     var x = TouchInput._mouseOverX;
     var y = TouchInput._mouseOverY;
     var rect = new Rectangle();
@@ -4953,7 +5173,7 @@ Yanfly.DisableWebGLMask = false;
 Yanfly.BEC.Window_BattleEnemy_initialize =
     Window_BattleEnemy.prototype.initialize;
 Window_BattleEnemy.prototype.initialize = function(x, y) {
-    if (Yanfly.Param.BECEnemySelect) {
+    if (eval(Yanfly.Param.BECEnemySelect)) {
       x -= Graphics.boxWidth * 200;
       y -= Graphics.boxHeight * 200;
     };
@@ -4970,7 +5190,7 @@ WindowLayer.prototype._webglMaskWindow = function(renderSession, win) {
 Yanfly.BEC.Window_BattleEnemy_maxCols =
     Window_BattleEnemy.prototype.maxCols;
 Window_BattleEnemy.prototype.maxCols = function() {
-    if (Yanfly.Param.BECEnemySelect) return this._enemies.length;
+    if (eval(Yanfly.Param.BECEnemySelect)) return this._enemies.length;
     return Yanfly.BEC.Window_BattleEnemy_maxCols.call(this);
 };
 
@@ -5012,7 +5232,7 @@ Window_BattleEnemy.prototype.updateHelp = function() {
 Yanfly.BEC.Window_BattleEnemy_processTouch =
     Window_BattleEnemy.prototype.processTouch;
 Window_BattleEnemy.prototype.processTouch = function() {
-    if (Yanfly.Param.BECEnemySelect && this.isOpenAndActive()) {
+    if (eval(Yanfly.Param.BECEnemySelect) && this.isOpenAndActive()) {
       if (TouchInput.isTriggered() && !this.isTouchedInsideFrame()) {
         if (this.getClickedEnemy() >= 0) {
           var index = this.getClickedEnemy();
@@ -5061,7 +5281,6 @@ Window_BattleEnemy.prototype.getClickedEnemy = function() {
 Window_BattleEnemy.prototype.isClickedEnemy = function(enemy) {
     if (!enemy) return false;
     if (!enemy.isSpriteVisible()) return false;
-    if ($gameTemp._disableMouseOverSelect) return false;
     var x = TouchInput.x;
     var y = TouchInput.y;
     var rect = new Rectangle();
@@ -5090,7 +5309,6 @@ Window_BattleEnemy.prototype.getMouseOverEnemy = function() {
 Window_BattleEnemy.prototype.isMouseOverEnemy = function(enemy) {
     if (!enemy) return false;
     if (!enemy.isSpriteVisible()) return false;
-    if ($gameTemp._disableMouseOverSelect) return false;
     var x = TouchInput._mouseOverX;
     var y = TouchInput._mouseOverY;
     var rect = new Rectangle();
@@ -5118,8 +5336,8 @@ Window_EnemyVisualSelect.prototype.initialize = function() {
     this._battler = null;
     this._battlerName = '';
     this._requestRefresh = false;
-    this._showSelectCursor = Yanfly.Param.BECShowSelectBox;
-    this._showEnemyName = Yanfly.Param.BECShowEnemyName;
+    this._showSelectCursor = eval(Yanfly.Param.BECShowSelectBox);
+    this._showEnemyName = eval(Yanfly.Param.BECShowEnemyName);
     this.contentsOpacity = 0;
     this.opacity = 0;
 };
@@ -5149,22 +5367,15 @@ Window_EnemyVisualSelect.prototype.updateBattlerName = function() {
     if (this._battlerName !== this._battler.name())
     this._battlerName = this._battler.name();
     this._requestRefresh = true;
-    this._nameTextWidth = undefined;
 };
 
 Window_EnemyVisualSelect.prototype.updateWindowSize = function() {
     var spriteWidth = this._battler.spriteWidth();
     this.contents.fontSize = Yanfly.Param.BECEnemyFontSize;
-    if (this._nameTextWidth === undefined) {
-      this._nameTextWidth = this.textWidth(this._battler.name());
-    }
-    var textWidth = this._nameTextWidth;
+    var textWidth = this.textWidth(this._battler.name());
     textWidth += this.textPadding() * 2;
     var width = Math.max(spriteWidth, textWidth) + this.standardPadding() * 2;
-    width = Math.ceil(width);
     var height = this._battler.spriteHeight() + this.standardPadding() * 2;
-    height = Math.ceil(height);
-    height = Math.max(height, this.lineHeight() + this.standardPadding() * 2);
     if (width === this.width && height === this.height) return;
     this.width = width;
     this.height = height;
@@ -5256,7 +5467,7 @@ Window_PartyCommand.prototype.itemTextAlign = function() {
 };
 
 Window_PartyCommand.prototype.numVisibleRows = function() {
-    return Yanfly.Param.BECCommandRows;
+    return eval(Yanfly.Param.BECCommandRows);
 };
 
 //=============================================================================
@@ -5268,7 +5479,7 @@ Window_ActorCommand.prototype.itemTextAlign = function() {
 };
 
 Window_ActorCommand.prototype.numVisibleRows = function() {
-    return Yanfly.Param.BECCommandRows;
+    return eval(Yanfly.Param.BECCommandRows);
 };
 
 //=============================================================================
@@ -5276,7 +5487,7 @@ Window_ActorCommand.prototype.numVisibleRows = function() {
 //=============================================================================
 
 Window_BattleStatus.prototype.numVisibleRows = function() {
-    return Yanfly.Param.BECCommandRows;
+    return eval(Yanfly.Param.BECCommandRows);
 };
 
 Window_BattleStatus.prototype.updateStatusRequests = function() {
@@ -5295,10 +5506,6 @@ Window_BattleStatus.prototype.processStatusRefresh = function(index) {
     this.contents.clearRect(rect.x, rect.y, rect.width, rect.height);
     this.drawItem(index);
     actor.completetStatusRefreshRequest();
-};
-
-Window_BattleStatus.prototype.update = function() {
-    Window_Selectable.prototype.update.call(this);
 };
 
 if (!Yanfly.Param.BECCurMax) {
@@ -5322,7 +5529,7 @@ Window_BattleStatus.prototype.drawCurrentAndMax = function(current, max, x, y,
 Yanfly.BEC.Window_BattleLog_isFastForward =
     Window_BattleLog.prototype.isFastForward;
 Window_BattleLog.prototype.isFastForward = function() {
-    if (Yanfly.Param.BECOptSpeed) return true;
+    if (eval(Yanfly.Param.BECOptSpeed)) return true;
     return Yanfly.BEC.Window_BattleLog_isFastForward.call(this);
 };
 
@@ -5338,11 +5545,11 @@ Window_BattleLog.prototype.updateWaitCount = function() {
 };
 
 Window_BattleLog.prototype.animationBaseDelay = function() {
-    return Yanfly.Param.BECAniBaseDel;
+    return eval(Yanfly.Param.BECAniBaseDel);
 };
 
 Window_BattleLog.prototype.animationNextDelay = function() {
-    return Yanfly.Param.BECAniNextDel;
+    return eval(Yanfly.Param.BECAniNextDel);
 };
 
 Window_BattleLog.prototype.updateWaitMode = function() {
@@ -5388,7 +5595,7 @@ Window_BattleLog.prototype.waitForPopups = function() {
 Yanfly.BEC.Window_BattleLog_displayAction =
     Window_BattleLog.prototype.displayAction;
 Window_BattleLog.prototype.displayAction = function(subject, item) {
-    if (Yanfly.Param.BECFullActText) {
+    if (eval(Yanfly.Param.BECFullActText)) {
       Yanfly.BEC.Window_BattleLog_displayAction.call(this, subject, item);
     } else {
       this._actionIcon = this.displayIcon(item);
@@ -5401,19 +5608,17 @@ Window_BattleLog.prototype.displayAction = function(subject, item) {
 };
 
 Window_BattleLog.prototype.displayIcon = function(item) {
-    if (!item) return 0;
     return item.battleDisplayIcon;
 };
 
 Window_BattleLog.prototype.displayText = function(item) {
-    if (!item) return '';
     return item.battleDisplayText;
 };
 
 Yanfly.BEC.Window_BattleLog_displayActionResults =
     Window_BattleLog.prototype.displayActionResults;
 Window_BattleLog.prototype.displayActionResults = function(subject, target) {
-    if (Yanfly.Param.BECOptSpeed) {
+    if (eval(Yanfly.Param.BECOptSpeed)) {
       if (target.result().used) {
           this.displayCritical(target);
           this.displayDamage(target);
@@ -5440,7 +5645,7 @@ Window_BattleLog.prototype.drawLineText = function(index) {
 };
 
 Window_BattleLog.prototype.textWidthEx = function(text) {
-    return this.drawTextEx(text, 0, this.contents.height + this.lineHeight());
+    return this.drawTextEx(text, 0, this.contents.height);
 };
 
 Window_BattleLog.prototype.drawCenterLine = function(index) {
@@ -5449,7 +5654,6 @@ Window_BattleLog.prototype.drawCenterLine = function(index) {
     this.contents.clearRect(rect.x, rect.y, rect.width, rect.height);
     var tw = this.textWidthEx(text);
     var wx = rect.x + (rect.width - tw) / 2;
-    this.resetFontSettings();
     this.drawTextEx(text, wx, rect.y);
 };
 
@@ -5466,7 +5670,7 @@ Window_BattleLog.prototype.drawSimpleActionLine = function(index) {
 };
 
 Window_BattleLog.prototype.displayCounter = function(target) {
-    if (Yanfly.Param.BECShowCntText) {
+    if (eval(Yanfly.Param.BECShowCntText)) {
       this.addText(TextManager.counterAttack.format(target.name()));
     }
     target.performCounter();
@@ -5475,7 +5679,7 @@ Window_BattleLog.prototype.displayCounter = function(target) {
 };
 
 Window_BattleLog.prototype.displayReflection = function(target) {
-    if (Yanfly.Param.BECShowRflText) {
+    if (eval(Yanfly.Param.BECShowRflText)) {
       this.addText(TextManager.magicReflection.format(target.name()));
     }
     target.performReflection();
@@ -5485,7 +5689,7 @@ Window_BattleLog.prototype.displayReflection = function(target) {
 };
 
 Window_BattleLog.prototype.displaySubstitute = function(substitute, target) {
-    if (Yanfly.Param.BECShowSubText) {
+    if (eval(Yanfly.Param.BECShowSubText)) {
       var substName = substitute.name();
       this.addText(TextManager.substitute.format(substName, target.name()));
     }
@@ -5495,77 +5699,77 @@ Window_BattleLog.prototype.displaySubstitute = function(substitute, target) {
 Yanfly.BEC.Window_BattleLog_displayFailure =
     Window_BattleLog.prototype.displayFailure;
 Window_BattleLog.prototype.displayFailure = function(target) {
-    if (!Yanfly.Param.BECShowFailText) return;
+    if (!eval(Yanfly.Param.BECShowFailText)) return;
     Yanfly.BEC.Window_BattleLog_displayFailure.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayCritical =
     Window_BattleLog.prototype.displayCritical;
 Window_BattleLog.prototype.displayCritical = function(target) {
-    if (!Yanfly.Param.BECShowCritText) return;
+    if (!eval(Yanfly.Param.BECShowCritText)) return;
     Yanfly.BEC.Window_BattleLog_displayCritical.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayMiss =
     Window_BattleLog.prototype.displayMiss;
 Window_BattleLog.prototype.displayMiss = function(target) {
-    if (!Yanfly.Param.BECShowMissText) return;
+    if (!eval(Yanfly.Param.BECShowMissText)) return;
     Yanfly.BEC.Window_BattleLog_displayMiss.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayEvasion =
     Window_BattleLog.prototype.displayEvasion;
 Window_BattleLog.prototype.displayEvasion = function(target) {
-    if (!Yanfly.Param.BECShowEvaText) return;
+    if (!eval(Yanfly.Param.BECShowEvaText)) return;
     Yanfly.BEC.Window_BattleLog_displayEvasion.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayHpDamage =
     Window_BattleLog.prototype.displayHpDamage;
 Window_BattleLog.prototype.displayHpDamage = function(target) {
-    if (!Yanfly.Param.BECShowHpText) return;
+    if (!eval(Yanfly.Param.BECShowHpText)) return;
     Yanfly.BEC.Window_BattleLog_displayHpDamage.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayMpDamage =
     Window_BattleLog.prototype.displayMpDamage;
 Window_BattleLog.prototype.displayMpDamage = function(target) {
-    if (!Yanfly.Param.BECShowMpText) return;
+    if (!eval(Yanfly.Param.BECShowMpText)) return;
     Yanfly.BEC.Window_BattleLog_displayMpDamage.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayTpDamage =
     Window_BattleLog.prototype.displayTpDamage;
 Window_BattleLog.prototype.displayTpDamage = function(target) {
-    if (!Yanfly.Param.BECShowTpText) return;
+    if (!eval(Yanfly.Param.BECShowTpText)) return;
     Yanfly.BEC.Window_BattleLog_displayTpDamage.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayCurrentState =
     Window_BattleLog.prototype.displayCurrentState;
 Window_BattleLog.prototype.displayCurrentState = function(subject) {
-    if (!Yanfly.Param.BECShowStateText) return;
+    if (!eval(Yanfly.Param.BECShowStateText)) return;
     Yanfly.BEC.Window_BattleLog_displayCurrentState.call(this, subject);
 };
 
 Yanfly.BEC.Window_BattleLog_displayAddedStates =
     Window_BattleLog.prototype.displayAddedStates;
 Window_BattleLog.prototype.displayAddedStates = function(target) {
-    if (!Yanfly.Param.BECShowStateText) return;
+    if (!eval(Yanfly.Param.BECShowStateText)) return;
     Yanfly.BEC.Window_BattleLog_displayAddedStates.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayRemovedStates =
     Window_BattleLog.prototype.displayRemovedStates;
 Window_BattleLog.prototype.displayRemovedStates = function(target) {
-    if (!Yanfly.Param.BECShowStateText) return;
+    if (!eval(Yanfly.Param.BECShowStateText)) return;
     Yanfly.BEC.Window_BattleLog_displayRemovedStates.call(this, target);
 };
 
 Yanfly.BEC.Window_BattleLog_displayChangedBuffs =
     Window_BattleLog.prototype.displayChangedBuffs;
 Window_BattleLog.prototype.displayChangedBuffs = function(target) {
-    if (!Yanfly.Param.BECShowBuffText) return;
+    if (!eval(Yanfly.Param.BECShowBuffText)) return;
     Yanfly.BEC.Window_BattleLog_displayChangedBuffs.call(this, target);
 };
 
@@ -5586,12 +5790,8 @@ function(subject, targets) {
 };
 
 Window_BattleLog.prototype.showActorAtkAniMirror = function(subject, targets) {
-  if (subject.isActor()) {
     this.showNormalAnimation(targets, subject.attackAnimationId1(), true);
     this.showNormalAnimation(targets, subject.attackAnimationId2(), false);
-  } else {
-    this.showNormalAnimation(targets, subject.attackAnimationId1(), true)
-  }
 };
 
 //=============================================================================
@@ -5599,17 +5799,6 @@ Window_BattleLog.prototype.showActorAtkAniMirror = function(subject, targets) {
 //=============================================================================
 
 Yanfly.Util = Yanfly.Util || {};
-
-Yanfly.Util.displayError = function(e, code, message) {
-  console.log(message);
-  console.log(code || 'NON-EXISTENT');
-  console.error(e);
-  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
-    if (!require('nw.gui').Window.get().isDevToolsOpen()) {
-      require('nw.gui').Window.get().showDevTools();
-    }
-  }
-};
 
 if (!Yanfly.Util.toGroup) {
     Yanfly.Util.toGroup = function(inVal) {

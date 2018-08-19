@@ -8,11 +8,10 @@ Imported.YEP_X_ActSeqPack2 = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ASP2 = Yanfly.ASP2 || {};
-Yanfly.ASP2.version = 1.12;
 
 //=============================================================================
  /*:
- * @plugindesc v1.12 (Requires YEP_BattleEngineCore.js) Visual functions
+ * @plugindesc v1.00 (Requires YEP_BattleEngineCore.js) Visual functions
  * are added to the Battle Engine Core's action sequences.
  * @author Yanfly Engine Plugins
  *
@@ -114,7 +113,6 @@ Yanfly.ASP2.version = 1.12;
  *   dead actors: This will select only dead actors.
  *   actors not user; This will select all living actors except for the user.
  *   actor x; This will select the actor in slot x.
- *   character x; This will select the specific character with actor ID x.
  *   enemies, existing enemies; This will select all living enemies.
  *   all enemies; This will select all enemies, even dead.
  *   dead enemies: This will select only dead enemies.
@@ -242,7 +240,6 @@ Yanfly.ASP2.version = 1.12;
  * target's height. The frames determine how many frames it will take for the
  * target to reach that height. Using 0% for the height will bring the target
  * back to the ground.
- * Note: Floating only works with Sideview.
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Usage Example: float user: 200%
  *                float enemies: 500, 30
@@ -268,17 +265,16 @@ Yanfly.ASP2.version = 1.12;
  * than a percentage of the target's height. The frame count is how long the
  * target will be in the air. You can use this with the 'Move' action sequence
  * to make the target appear like it is jumping a distance.
- * Note: Jumping only works with Sideview.
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Usage Example: jump user: 150%
  *                jump target: 300, 60
  *=============================================================================
  *
  *=============================================================================
- * MOTION type: target, (no weapon)
+ * MOTION type: target
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * MOTION WALK: target
- * MOTION STANDBY: target
+ * MOTION WAIT: target
  * MOTION CHANT: target
  * MOTION GUARD: target
  * MOTION DAMAGE: target
@@ -302,12 +298,9 @@ Yanfly.ASP2.version = 1.12;
  * target will automatically determine based on the weapon it has equipped to
  * use either a thrust, swing, or missile motion. Attack, thrust, swing, and
  * missile will also display the target's weapon if the target has one.
- *
- * If 'no weapon' is used after the target, no weapons will be displayed. This
- * effect will only work with the Thrust, Swing, and Missile motions.
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Usage Example: motion walk: user
- *                motion thrust: user, no weapon
+ * Usage Example: enemy effect: targets, whiten
+ *                enemy effect: targets, blink
  *=============================================================================
  *
  *=============================================================================
@@ -318,47 +311,25 @@ Yanfly.ASP2.version = 1.12;
  * MOVE target1: FORWARD, (distance), (frames)
  * MOVE target1: BACKWARD, (distance), (frames)
  * MOVE target1: POINT, x coordinate, y coordinate, (frames)
- * MOVE target1: target2, BASE, (frames), (offset)
- * MOVE target1: target2, CENTER, (frames), (offset)
- * MOVE target1: target2, HEAD, (frames), (offset)
- * MOVE target1: target2, FRONT BASE, (frames), (offset)
- * MOVE target1: target2, FRONT CENTER, (frames), (offset)
- * MOVE target1: target2, FRONT HEAD, (frames), (offset)
- * MOVE target1: target2, BACK BASE, (frames), (offset)
- * MOVE target1: target2, BACK CENTER, (frames), (offset)
- * MOVE target1: target2, BACK HEAD, (frames), (offset)
+ * MOVE target1: target2, BASE, (frames)
+ * MOVE target1: target2, CENTER, (frames)
+ * MOVE target1: target2, HEAD, (frames)
+ * MOVE target1: target2, FRONT BASE, (frames)
+ * MOVE target1: target2, FRONT CENTER, (frames)
+ * MOVE target1: target2, FRONT HEAD, (frames)
+ * MOVE target1: target2, BACK BASE, (frames)
+ * MOVE target1: target2, BACK CENTER, (frames)
+ * MOVE target1: target2, BACK HEAD, (frames)
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * This is a move command. Arguments can be used in the above formats. This
  * action sequence command will move target1 to any of those locations listed
  * in the arguments. If it's towards target2, you must include what location
  * relative to target2 for target1 to travel to.
- * Note: Moving only works with Sideview.
- *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * You may be curious about the optional (offset) argument there for some of
- * the entries. You can insert any of the below arguments in place of (offset):
- *
- *   offset x +100
- *   offset x -200
- *   offset y +300
- *   offset y -400
- *
- * This will allow you to offset the distance to the destination by a flat
- * amount. Positive numbers would indicate forward while negative numbers will
- * indicate backward.
- *
- *   auto offset x +500
- *   auto offset x -600
- *
- * However, if you use either of the above, depending on if the user is an
- * actor or enemy and depending on the target (if there is one) is an actor or
- * an enemy, it will move them into position accordingly.
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Usage Example: move user: home, 20
  *                move target: forward, 48, 12
  *                move enemy 1: point, 400, 300
- *                move enemy 2: point, 500, 250, offset x -50, offset y -50
- *                move actor 3: target, front base, 20
- *                move user: target, front base, 20, auto offset x -100
+ *                move actor 2: front base, 20
  *=============================================================================
  *
  *=============================================================================
@@ -423,7 +394,6 @@ Yanfly.ASP2.version = 1.12;
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Waits for all battler float changes to finish before going on to the next
  * action in the action sequence.
- * Note: Floating only works with Sideview.
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Usage Example: wait for float
  *=============================================================================
@@ -433,7 +403,6 @@ Yanfly.ASP2.version = 1.12;
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Waits for all battler jumps to finish before going on to the next action
  * in the action sequence.
- * Note: Jumping only works with Sideview.
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Usage Example: wait for jump
  *=============================================================================
@@ -446,62 +415,398 @@ Yanfly.ASP2.version = 1.12;
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Usage Example: wait for opacity
  *=============================================================================
- *
- * ============================================================================
- * Changelog
- * ============================================================================
- *
- * Version 1.12:
- * - Updated for RPG Maker MV version 1.5.0.
- * - Added new Offset X, Offset Y, arguments for the Move action sequence.
- *   Check the helpfile for more information.
- *
- * Version 1.11:
- * - Fixed a bug that caused enemies to not mirror the attack animation.
- *
- * Version 1.10a:
- * - Fixed a bug that caused scaled enemies to have their state icons and
- * overlays appear in odd places.
- * - Documentation update for Move, Float, and Jump related action sequences as
- * they only work in Sideview.
- *
- * Version 1.09:
- * - Animations played on a floating or jumping battlers 'Feet' location will
- * now be played at the base of the battler regardless of how high the battler
- * is floating. This is to provide a more consistent animation image.
- *
- * Version 1.08a:
- * - State Icon and State Overlays will now synch together for floating and
- * jumping battlers.
- *
- * Version 1.07c:
- * - Synchronized battle animations to floating and jumping battlers.
- * 
- * Version 1.06:
- * - Updated weapon motions for YEP_X_AnimatedSVEnemies to work with sideview
- * enemies.
- *
- * Version 1.05:
- * - Creating compatibility for a future plugin.
- *
- * Version 1.04a:
- * - Rewrote and updated movement formulas.
- *
- * Version 1.03:
- * - Made a change to Motion action sequence. 'Wait' is now substituted for
- * 'Standby' as to not confuse it with the actual Motion Wait action sequence.
- * - Added a 'no weapon' option to Motion action sequences. This new tag will
- * only affect the 'Thrust', 'Swing', and 'Missile' motions.
- *
- * Version 1.02:
- * - Added a check for motion attack to differentiate between actor and enemy.
- *
- * Version 1.01:
- * - Updated help file to include Character X for target typing.
- *
- * Version 1.00:
- * - Finished plugin!
  */
+ /*:ja
+ * @plugindesc Battle Engine Coreのアクションシーケンスに視覚的な
+ * 機能を追加します。(YEP_BattleEngineCore.jsが必要です)
+ * @author Yanfly Engine Plugins
+ *
+ * @help
+ * ============================================================================
+ * Introduction
+ * ============================================================================
+ *
+ * この「Action Sequence Pack 2」は、Yanfly Engine Plugins' Battle Engine Core
+ * の拡張プラグインです。メインのプラグインが無ければ動きませんので、ご注意くだ
+ * さい。
+ *
+ * この拡張プラグインは、カスタムアクションシーケンスのための、よりベーシックで
+ * かつ視覚的に特化した機能を提供します。
+ *
+ * ============================================================================
+ * Action Sequences - ala Melody
+ * ============================================================================
+ *
+ * Battle Engine Coreには "Melody's Battle Engine"が含まれており、
+ * スキルとアイテムエフェクトの色々な側面を制御します。
+ * これらはアクションシーケンスと呼ばれ、ゲームに独特のアクションを提供します。
+ *
+ * 各スキルとアイテムは、5つの異なるアクションシーケンスから構成されます。
+ *
+ * 1. セットアップアクション
+ *   一連のアクションとエフェクトが実行される前に、アクティブバトラーは、
+ * 一歩前進したり、武器を抜くなどの準備アクションを行います。
+ * このステップは、バトラーがアイテムやスキルを使う前に起こります。
+ *
+ * 2. 全体アクション
+ *   これらのアクションは、ターゲット全体に対して同時に働きます。
+ * このセクションを必ず使う必要はありませんが、
+ * 敵の頭上にアニメーションを表示するために、大抵のアクションで
+ * 使われています。 このステップは、スキル/アイテム使用後に起こります。
+ *
+ * 3. ターゲットアクション
+ *   このセクションは、全ターゲットに対して個々に働きます。
+ * 主に、個別のダメージを与えるようなフィジカルアタックに対して使われます。 
+ * ここで起こるアクションは、そのような設定をしない限りは
+ * 他のターゲットに影響することはありません。
+ *
+ * 4. 追随アクション
+ *   このセクションは、個別ターゲットアクション後の
+ * クリーンアップとして用いられます。
+ * これは永続フラグの消去や、コモンイベントの開始などを行います。
+ *
+ * 5. 完了アクション
+ *   このセクションは、アクティブバトラーの一連のアクションの締めに用いられます。
+ * 例えば元の位置に戻ったりなどのアクションが挙げられます。
+ *
+ * 上記がアクションシーケンスにおける5ステップです。下記のタグは、スキルと
+ * アイテム内に挿入して使えるタグです。それぞれのタグ名に注意してください。
+ *
+ * 1. <setup action>                                5. <finish action>
+ *     action list                                      action list
+ *     action list                                      action list
+ *    </setup action>                                  </finish action>
+ *
+ * 2. <whole action>       3. <target action>       4. <follow action>
+ *     action list             action list              action list
+ *     action list             action list              action list
+ *    </whole action>         </target action>         </follow action>
+ *
+ * これらのタグは、それぞれのアクションを実行します。アクションリストを挿入する
+ * 方法については、ヘルプマニュアルの中に記載されています。
+ *
+ * 更に、アクションシーケンスごとにデータベース内の全てのアイテムのノート
+ * ボックスを呼び出すことのないように、前述の5ステップをコピーする
+ * ショートカットがあります。
+ * 
+ * <action copy: x:y>
+ *
+ *  x を"item"か"skill"と置き換えて、アクションリストのコードを直接コピーして
+ * ください。整数の y は各オブジェクトタイプごとにアサインされたIDとなります。
+ * 例えば、45番目のスキルアクションシーケンスをコピーしたい場合は、次のコード
+ * になります。 <action copy: skill:45>
+ * このNotetagを使う場合、Notebox内では最も優先されるものとなります。
+ *
+ * ============================================================================
+ * Target Typing
+ * ============================================================================
+ *
+ * 今後紹介するアクション内では、"ターゲットを参照"という表記が出てきます。
+ * 以下に、ターゲットの一覧を記載します。
+ *
+ *   user; アクティブバトラーを選択します
+ *   target, targets; アクティブターゲットを選択します
+ *   actors, existing actors; 生存している全てのアクターを選択します
+ *   all actors; 死亡アクターも含めて、全てのアクターを選択します
+ *   dead actors: 死亡アクターのみを選択します
+ *   actors not user; ユーザー以外の全ての生存アクターを選択します
+ *   actor x; スロット x のアクターを選択します
+ *   enemies, existing enemies; 生存している全ての敵を選択します
+ *   all enemies; 死亡した敵も含めて、全ての敵を選択します
+ *   dead enemies: 死亡した敵のみを選択します
+ *   enemies not user; ユーザー以外の全ての敵を選択します
+ *   enemy x; スロット x の敵を選択します
+ *   friends; 生存しているバトラーの仲間を全て選択します
+ *   all friends; 生死に関わらず、バトラーの仲間を全て選択します
+ *   dead friends; 死亡しているバトラーの仲間を全て選択します
+ *   friends not user; 本人を除き、バトラーの仲間を選択します
+ *   friend x: スロット x 内の、バトラーの仲間を選択します
+ *   opponents; 生存している、バトラーの相手を選択します
+ *   all opponents; バトラーの全ての相手を選択します
+ *   dead opponents; 死亡している、バトラーの相手を選択します
+ *   opponent x: スロット x 内のバトラーの相手を選択します
+ *   all alive; 全ての生存アクターと敵を選択します
+ *   all members; 全ての生存/死亡アクターと敵を選択します
+ *   all dead; 全ての死亡アクターと敵を選択します
+ *   all not user; ユーザーを除き、全ての生存バトラーを選択します
+ *   focus; アクティブバトラーおよびそのターゲットを選択します
+ *   not focus; アクティブバトラーおよびそのターゲット以外を全て選択します
+ *
+ * ============================================================================
+ * Action Sequences - Action List
+ * ============================================================================
+ *
+ * 下記のリストは、5段階のアクションシーケンス内で使えるアクション一覧です。
+ * 各アクションは独自の機能を持ち、正常に動作するために正しいフォーマットが
+ * 必須となっています。
+ *
+ *=============================================================================
+ * ATTACK ANIMATION: target, (mirror)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクティブなバトラーの攻撃アニメーションを、ターゲットに表示します。どのアニ
+ * メーションとなるかは、アクターの持つ武器によって決定されます。もしそれが敵
+ * だった場合は、敵のアタックアニメーションによって決定されます。'mirror' を
+ * 用いれば、そのアニメーションは反転されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: attack animation: target
+ *=============================================================================
+ *
+ *=============================================================================
+ * ENEMY EFFECT: target, effect-type
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * これは敵にのみ有効です。ターゲットを白く表示、もしくは点滅させます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: enemy effect: targets, whiten
+ *         enemy effect: targets, blink
+ *=============================================================================
+ *
+ *=============================================================================
+ * FACE target: args
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * FACE target1: FORWARD
+ * FACE target1: BACKWARD
+ * FACE target1: HOME
+ * FACE target1: AWAY FROM HOME
+ * FACE target1: POINT, x coordinate, y coordinate
+ * FACE target1: AWAY FROM POINT, x coordinate, y coordinate
+ * FACE target1: target2
+ * FACE target1: AWAY FROM target2
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * バトラーを任意の方向に向けます。上記のフォーマット内では引数を使うことも
+ * できます。このアクションシーケンスコマンドは、target1 を上記のどの方向に
+ * も向かせることができます。もし target2 を使えば、target1 を target2 に
+ * 基づいた方向に向かせることができます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: face user: forward (前向き)
+ *         face target: backward (後ろ向き)
+ *         face enemies: home (ホームポジション)
+ *         face allies: away from home (ホームポジションと逆向き)
+ *         face target: point, 20, 40
+ *         face target: away from point, 500, 600
+ *                face user: target
+ *                face target: away from user
+ *=============================================================================
+ *
+ *=============================================================================
+ * FADE OUT: (frames)
+ * FADE IN: (frames)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * スクリーンをフェードアウト/インすることができます。フェードの設定でフレーム
+ * 数を指定することもできます。空欄にすると、60フレームがデフォルトで適用され
+ * ます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: fade out
+ *         fade in: 10
+ *=============================================================================
+ *
+ *=============================================================================
+ * FLASH SCREEN: args
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * FLASH SCREEN: WHITE, (frames)
+ * FLASH SCREEN: RED, (frames)
+ * FLASH SCREEN: ORANGE, (frames)
+ * FLASH SCREEN: YELLOW, (frames)
+ * FLASH SCREEN: GREEN, (frames)
+ * FLASH SCREEN: BLUE, (frames)
+ * FLASH SCREEN: PURPLE, (frames)
+ * FLASH SCREEN: MAGENTA, (frames)
+ * FLASH SCREEN: BLACK, (frames)
+ * FLASH SCREEN: (red), (green), (blue), (intensity), (frames)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ゲームのスクリーンを任意の色に点滅させます。引数にカラー名を指定した場合、
+ * 既存のフラッシュ設定が適用されます。自身の設定を適用したい場合は、赤・緑・青
+ * や強度を指定して好みのフラッシュを作成してください。色や強度の設定は0～225
+ * の中で行います。framesの値を指定すると、持続時間を設定できます。空欄の場合は
+ * 60フレームのデフォルトで実行されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: flash screen: white
+ *         flash screen: red, 45
+ *         flash screen: 128, 170, 214, 170
+ *         flash screen: 68, 68, 68, 170, 45
+ *=============================================================================
+ *
+ *=============================================================================
+ * FLOAT target: (height), (frames)
+ * FLOAT target: (height%), (frames)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲットを、任意の高度で地面から浮かび上がらせます。高度(%)は浮かんでいる
+ * ターゲットの背に比例し、100% と指定すると、ターゲットの高さと同じだけ地面から
+ * 浮かび上がります。「%」を取れば、ターゲットをピクセル指定で浮かすことができ
+ * ます。(frames)の部分では、その高さに上昇するまでにかかるフレーム数を指定でき
+ * ます。「0%」を指定すると、ターゲットを地上に戻します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: float user: 200%
+ *         float enemies: 500, 30
+ *         float target: 0%, 30
+ *=============================================================================
+ *
+ *=============================================================================
+ * HIDE BATTLE HUD
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 戦闘のhudを隠し、アニメーション再生の妨げにならないようにできます。
+ * 'show battle hud'を使えば再びhudを表示させることができます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: hide battle hud
+ *=============================================================================
+ *
+ *=============================================================================
+ * JUMP target: (height), (frames)
+ * JUMP target: (height%), (frames)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲットを、任意の高度でジャンプさせます。(height%)に 200% を指定すると 
+ * ターゲットの背の2倍分の高さジャンプすることになります。「%」を取れば、
+ * ピクセル指定でジャンプさせることができます。(frames)の部分では、空中に留ま
+ * るフレーム数を指定できます。'Move' のアクションシーケンスと一緒に使用すると、
+ * 一定の距離をジャンプしているように見せることができます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: jump user: 150%
+ *         jump target: 300, 60
+ *=============================================================================
+ *
+ *=============================================================================
+ * MOTION type: target
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * MOTION WALK: target
+ * MOTION WAIT: target
+ * MOTION CHANT: target
+ * MOTION GUARD: target
+ * MOTION DAMAGE: target
+ * MOTION EVADE: target
+ * MOTION ATTACK: target
+ * MOTION THRUST: target
+ * MOTION SWING: target
+ * MOTION MISSILE: target
+ * MOTION SKILL: target
+ * MOTION SPELL: target
+ * MOTION ITEM: target
+ * MOTION ESCAPE: target
+ * MOTION VICTORY: target
+ * MOTION DYING: target
+ * MOTION ABNORMAL: target
+ * MOTION SLEEP: target
+ * MOTION DEAD: target
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * サイドビューでターゲットに特定のアクションを取らせます。ターゲットに '攻撃'
+ * の命令をすると、ターゲットは装備している武器によって、振ったり、押したり、
+ * 投げるといったモーションを自動的に行います。攻撃やこれらのモーション時には、
+ * ターゲットが所持している武器も表示されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: enemy effect: targets, whiten
+ *         enemy effect: targets, blink
+ *=============================================================================
+ *
+ *=============================================================================
+ * MOVE target: args
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * MOVE target1: HOME, (frames)
+ * MOVE target1: RETURN, (frames)
+ * MOVE target1: FORWARD, (distance), (frames)
+ * MOVE target1: BACKWARD, (distance), (frames)
+ * MOVE target1: POINT, x coordinate, y coordinate, (frames)
+ * MOVE target1: target2, BASE, (frames)
+ * MOVE target1: target2, CENTER, (frames)
+ * MOVE target1: target2, HEAD, (frames)
+ * MOVE target1: target2, FRONT BASE, (frames)
+ * MOVE target1: target2, FRONT CENTER, (frames)
+ * MOVE target1: target2, FRONT HEAD, (frames)
+ * MOVE target1: target2, BACK BASE, (frames)
+ * MOVE target1: target2, BACK CENTER, (frames)
+ * MOVE target1: target2, BACK HEAD, (frames)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * これは移動を指定するコマンド一覧となります。上記のフォーマットであれば、引数
+ * を使うこともできます。このアクションシーケンスコマンドは、 target1 を、
+ * 引数で指定した場所に移動させます。もしそれが target2 を含むものであれば、
+ * taget1 との位置関係を指定する必要があります。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: move user: home, 20
+ *         move target: forward, 48, 12
+ *         move enemy 1: point, 400, 300
+ *         move actor 2: front base, 20
+ *=============================================================================
+ *
+ *=============================================================================
+ * OPACITY target: x, (frames)
+ * OPACITY target: x%, (frames)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲットの不透明度を、 x (0～255の値) もしくは x% (0%～100%の値)で変更でき
+ * ます。 'frames'を使えば、変更の持続時間を指定することができます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: opacity user: 50%, 30
+ *         opacity not focus: 0
+ *=============================================================================
+ *
+ *=============================================================================
+ * SHOW BATTLE HUD
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 戦闘のhudが隠れている時に 'hide battle hud' を使うことで、プレイヤースクリー
+ * ンに再びhudを表示させます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: show battle hud
+ *=============================================================================
+ *
+ *=============================================================================
+ * SHAKE SCREEN: (power), (speed), (frames)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ゲームスクリーンを振動させます。0から9の間で強さとスピードを指定し、振動の
+ * 持続フレーム数を指定します。これらを空欄にすると、5の強さ/5のスピード/60フレ
+ * ームというデフォルト値が適用されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: shake screen
+ *         shake screen: 9
+ *         shake screen: 3, 9, 30
+ *=============================================================================
+ *
+ *=============================================================================
+ * TINT SCREEN: args
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * TINT SCREEN: NORMAL, (frames)
+ * TINT SCREEN: DARK, (frames)
+ * TINT SCREEN: SEPIA, (frames)
+ * TINT SCREEN: SUNSET, (frames)
+ * TINT SCREEN: NIGHT, (frames)
+ * TINT SCREEN: (red), (green), (blue), (gray), (frames)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * バトルスクリーンに色を付けることができます。引数、 'normal', 'dark', 'sepia',
+ * 'sunset', 'night' を用いると、スクリーンにその色のエフェクトがかかります。
+ * それ以外の場合は、赤・緑・青・グレイの値を指定して色を調整してください。
+ * 赤・青・緑については-255から255の間、グレイは0から255の間で調整できます。
+ * フレームを指定すると、色の変更の持続時間を指定することができます。空欄にする
+ * と、デフォルトである60フレームが適用されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: tint screen: normal
+ *         tint screen: sepia, 30
+ *         tint screen: 68, -34, -34, 0
+ *         tint screen: 68, -68, 0, 68, 45
+ *=============================================================================
+ *
+ *=============================================================================
+ * WAIT FOR FLOAT
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 次のアクションに進む前に、一旦全てのバトラーの 'float'(浮かび上がり)が終了
+ * するまで待機します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: wait for float
+ *=============================================================================
+ *
+ *=============================================================================
+ * WAIT FOR JUMP
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 次のアクションに進む前に、一旦全てのバトラーの 'jump'(ジャンプ)が終了
+ * するまで待機します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: wait for jump
+ *=============================================================================
+ *
+ *=============================================================================
+ * WAIT FOR OPACITY
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 次のアクションに進む前に、一旦全てのバトラーの 'opacity'(不透明度)変更が終了
+ * するまで待機します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: wait for opacity
+ *=============================================================================
+ */
+ 
 //=============================================================================
 
 if (Imported.YEP_BattleEngineCore) {
@@ -607,7 +912,7 @@ BattleManager.actionAttackAnimation = function(actionArgs) {
   var targets = this.makeActionTargets(actionArgs[0]);
   var mirror = false;
   if (actionArgs[1] && actionArgs[1].toUpperCase() === 'MIRROR') mirror = true;
-  if (mirror) {
+  if (mirror && this._subject.isActor()) {
     this._logWindow.showActorAtkAniMirror(this._subject,
       targets.filter(Yanfly.Util.onlyUnique));
   } else {
@@ -803,16 +1108,10 @@ BattleManager.actionJump = function(name, actionArgs) {
 
 BattleManager.actionMotionTarget = function(name, actionArgs) {
     if (name.toUpperCase() === 'WAIT') return this.actionMotionWait(actionArgs);
-    if (name.toUpperCase() === 'STANDBY') name = 'WAIT';
     var movers = this.makeActionTargets(actionArgs[0]);
     if (movers.length < 1) return true;
     var cmd = name.toLowerCase();
     var motion = 'wait';
-    if (actionArgs[1] && actionArgs[1].toUpperCase() === 'NO WEAPON') {
-      var showWeapon = false;
-    } else {
-      var showWeapon = true;
-    }
     if (['wait', 'chant', 'guard', 'evade', 'skill', 'spell', 'item', 'escape',
     'victory', 'dying', 'abnormal', 'sleep', 'dead'].contains(cmd)) {
       motion = cmd;
@@ -825,30 +1124,15 @@ BattleManager.actionMotionTarget = function(name, actionArgs) {
         mover.performAttack();
       });
       return false;
-    } else if (['randattack'].contains(cmd)) {
-      var motions = ['thrust', 'swing', 'missile'];
-      movers.forEach(function(mover) {
-        var motion = motions[Math.floor(Math.random() * motions.length)];
-        mover.forceMotion(motion);
-      });
-      return false;
     } else if (['thrust', 'swing', 'missile'].contains(cmd)) {
       motion = cmd;
       movers.forEach(function(mover) {
         mover.forceMotion(motion);
-        if (mover.isActor() && showWeapon) {
-          var weapons = mover.weapons();
-          var wtypeId = weapons[0] ? weapons[0].wtypeId : 0;
-          var attackMotion = $dataSystem.attackMotions[wtypeId];
-          if (attackMotion && [0, 1, 2].contains(attackMotion.type)) {
-            mover.startWeaponAnimation(attackMotion.weaponImageId);
-          }
-        }
-        if (Imported.YEP_X_AnimatedSVEnemies) {
-          if (mover.isEnemy() && mover.hasSVBattler() && showWeapon) {
-            var attackMotion = $dataSystem.attackMotions[wtypeId];
-            mover.startWeaponAnimation(mover.weaponImageId());
-          }
+        var weapons = mover.weapons();
+        var wtypeId = weapons[0] ? weapons[0].wtypeId : 0;
+        var attackMotion = $dataSystem.attackMotions[wtypeId];
+        if (attackMotion && [0, 1, 2].contains(attackMotion.type)) {
+          mover.startWeaponAnimation(attackMotion.weaponImageId);
         }
       });
       return false;
@@ -898,175 +1182,213 @@ BattleManager.actionMove = function(name, actionArgs) {
       var destY = eval(actionArgs[2]) || 0;
       var frames = actionArgs[3] || 12;
       movers.forEach(function(mover) {
-        var offsetX = BattleManager.actionMoveOffsetX(actionArgs, mover, mover);
-        var offsetY = BattleManager.actionMoveOffsetY(actionArgs, mover, mover);
-        mover.battler().moveToPoint(destX + offsetX, destY + offsetY, frames);
+        mover.battler().moveToPoint(destX, destY, frames);
         mover.requestMotion('walk');
         mover.spriteFacePoint(destX, destY);
       });
     } else {
       var targets = this.makeActionTargets(actionArgs[0]);
-      var frames = actionArgs[2] || 12;
-      var type = actionArgs[1].toUpperCase();
       if (targets.length < 1) return false;
-      for (var i = 0; i < movers.length; ++i) {
-      	var mover = movers[i];
-      	if (!mover) continue;
-      	if (['BASE', 'FOOT', 'FEET'].contains(type)) {
-	        var destX = this.actionMoveX(mover, targets, 'center');
-	        var destY = this.actionMoveY(mover, targets, 'foot');
-	      } else if (['CENTER', 'MIDDLE'].contains(type)) {
-	        var destX = this.actionMoveX(mover, targets, 'center');
-	        var destY = this.actionMoveY(mover, targets, 'center');
-	      } else if (['HEAD', 'TOP'].contains(type)) {
-	        var destX = this.actionMoveX(mover, targets, 'center');
-	        var destY = this.actionMoveY(mover, targets, 'head');
-	      } else if (['FRONT BASE', 'FRONT FOOT', 'FRONT FEET',
-	      'FRONT'].contains(type)) {
-	        var destX = this.actionMoveX(mover, targets, 'front');
-	        var destY = this.actionMoveY(mover, targets, 'foot');
-	      } else if (['BACK BASE', 'BACK FOOT', 'BACK FEET',
-	      'BACK'].contains(type)) {
-	      	var destX = this.actionMoveX(mover, targets, 'back');
-	        var destY = this.actionMoveY(mover, targets, 'foot');
-	      } else if (['FRONT CENTER', 'FRONT MIDDLE'].contains(type)) {
-	        var destX = this.actionMoveX(mover, targets, 'front');
-	        var destY = this.actionMoveY(mover, targets, 'center');
-	      } else if (['BACK CENTER', 'BACK MIDDLE',].contains(type)) {
-	        var destX = this.actionMoveX(mover, targets, 'back');
-	        var destY = this.actionMoveY(mover, targets, 'center');
-	      } else if (['FRONT HEAD', 'FRONT TOP'].contains(type)) {
-	        var destX = this.actionMoveX(mover, targets, 'front');
-	        var destY = this.actionMoveY(mover, targets, 'head');
-	      } else if (['BACK HEAD', 'BACK TOP'].contains(type)) {
-	        var destX = this.actionMoveX(mover, targets, 'back');
-	        var destY = this.actionMoveY(mover, targets, 'head');
-	      }
-        var offsetX = this.actionMoveOffsetX(actionArgs, mover, targets[0]);
-        var offsetY = this.actionMoveOffsetY(actionArgs, mover, targets[0]);
-	      mover.battler().moveToPoint(destX + offsetX, destY + offsetY, frames);
-        mover.spriteFacePoint(destX, destY);
+      var destX = 0;
+      var destY = 0;
+      var type = actionArgs[1].toUpperCase();
+      var frames = actionArgs[2] || 12;
+      if (['BASE', 'FOOT', 'FEET'].contains(type)) {
+        targets.forEach(function(target) {
+          destX += target.spritePosX();
+          destY = Math.max(target.spritePosY(), destY);
+        }, this);
+        destY *= targets.length;
+      } else if (['CENTER', 'MIDDLE'].contains(type)) {
+        targets.forEach(function(target) {
+          destX += target.spritePosX();
+          destY += target.spritePosY() - target.spriteHeight() / 2;
+        }, this);
+      } else if (['HEAD', 'TOP'].contains(type)) {
+        destY = Graphics.boxHeight;
+        targets.forEach(function(target) {
+          destX += target.spritePosX();
+          destY = Math.min(target.spritePosY() - target.spriteHeight(), destY);
+        }, this);
+        destY *= targets.length;
+      } else if (['FRONT BASE', 'FRONT FOOT', 'FRONT FEET',
+      'FRONT'].contains(type)) {
+        targets.forEach(function(target) {
+          if (target.isActor()) {
+            var offset = -1 * target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset += mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset -= mover.spriteWidth() / 2;
+              }
+            }
+          }
+          if (target.isEnemy()) {
+            var offset = target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset += mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset -= mover.spriteWidth() / 2;
+              }
+            }
+          }
+          destX = Math.max(target.spritePosX() + offset, destX);
+          destY = Math.max(target.spritePosY(), destY);
+        }, this);
+        destX *= targets.length;
+        destY *= targets.length;
+      } else if (['BACK BASE', 'BACK FOOT', 'BACK FEET',
+      'BACK'].contains(type)) {
+        destX = Graphics.boxWidth;
+        targets.forEach(function(target) {
+          if (target.isActor()) {
+            var offset = target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset -= mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset += mover.spriteWidth() / 2;
+              }
+            }
+          }
+          if (target.isEnemy()) {
+            var offset = -1 * target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset -= mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset += mover.spriteWidth() / 2;
+              }
+            }
+          }
+          destX = Math.min(target.spritePosX() + offset, destX);
+          destY = Math.max(target.spritePosY(), destY);
+        }, this);
+        destX *= targets.length;
+        destY *= targets.length;
+      } else if (['FRONT CENTER', 'FRONT MIDDLE'].contains(type)) {
+        targets.forEach(function(target) {
+          if (target.isActor()) {
+            var offset = -1 * target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset += mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset -= mover.spriteWidth() / 2;
+              }
+            }
+          }
+          if (target.isEnemy()) {
+            var offset = target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset += mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset -= mover.spriteWidth() / 2;
+              }
+            }
+          }
+          destX = Math.max(target.spritePosX() + offset, destX);
+          destY += target.spritePosY() - target.spriteHeight() / 2;
+        }, this);
+        destX *= targets.length;
+      } else if (['BACK CENTER', 'BACK MIDDLE',].contains(type)) {
+        destX = Graphics.boxWidth;
+        targets.forEach(function(target) {
+          if (target.isActor()) {
+            var offset = target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset -= mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset += mover.spriteWidth() / 2;
+              }
+            }
+          }
+          if (target.isEnemy()) {
+            var offset = -1 * target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset -= mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset += mover.spriteWidth() / 2;
+              }
+            }
+          }
+          destX = Math.min(target.spritePosX() + offset, destX);
+          destY += target.spritePosY() - target.spriteHeight() / 2;
+        }, this);
+        destX *= targets.length;
+      } else if (['FRONT HEAD', 'FRONT TOP'].contains(type)) {
+        destY = Graphics.boxHeight;
+        targets.forEach(function(target) {
+          if (target.isActor()) {
+            var offset = -1 * target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset += mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset -= mover.spriteWidth() / 2;
+              }
+            }
+          }
+          if (target.isEnemy()) {
+            var offset = target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset += mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset -= mover.spriteWidth() / 2;
+              }
+            }
+          }
+          destX = Math.max(target.spritePosX() + offset, destX);
+          destY = Math.min(target.spritePosY() - target.spriteHeight(), destY);
+        }, this);
+        destX *= targets.length;
+        destY *= targets.length;
+      } else if (['BACK HEAD', 'BACK TOP'].contains(type)) {
+        destX = Graphics.boxWidth;
+        destY = Graphics.boxHeight;
+        targets.forEach(function(target) {
+          if (target.isActor()) {
+            var offset = target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset -= mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset += mover.spriteWidth() / 2;
+              }
+            }
+          }
+          if (target.isEnemy()) {
+            var offset = -1 * target.spriteWidth() / 2;
+            for (var i = 0; i < movers.length; ++i) {
+              var mover = movers[i];
+              if (mover && mover.spriteCanMove()) {
+                if (mover.isActor()) offset -= mover.spriteWidth() / 2;
+                if (mover.isEnemy()) offset += mover.spriteWidth() / 2;
+              }
+            }
+          }
+          destX = Math.min(target.spritePosX() + offset, destX);
+          destY = Math.min(target.spritePosY() - target.spriteHeight(), destY);
+        }, this);
+        destX *= targets.length;
+        destY *= targets.length;
+      } else {
+        return false;
       }
+      destX /= targets.length;
+      destY /= targets.length;
+      movers.forEach(function(mover) {
+        mover.battler().moveToPoint(destX, destY, frames);
+        mover.spriteFacePoint(destX, destY);
+      }, this);
     }
     return true;
-};
-
-BattleManager.actionMoveX = function(mover, targets, value) {
-		value = this.actionMoveXLocation(mover, targets, value);
-		var max = targets.length;
-		var moverWidth = mover.spriteWidth();
-		if (value === 'center') {
-			var destX = null;
-		} else {
-			var destX = (value === 'left') ? Graphics.boxWidth : 0;
-		}
-		for (var i = 0; i < max; ++i) {
-			var target = targets[i];
-			if (!target) continue;
-			var targetWidth = target.spriteWidth();
-			var point = target.spritePosX();
-			if (value === 'center') {
-				destX = (destX === null) ? 0 : destX;
-				destX += point;
-			} else if (value === 'left') {
-				point -= targetWidth / 2;
-				point -= (mover.isActor() ? 1 : 1) * moverWidth / 2;
-				destX = Math.min(point, destX);
-			} else {
-				point += targetWidth / 2;
-				point += (mover.isActor() ? 1 : 1) * moverWidth / 2;
-				destX = Math.max(point, destX);
-			}
-		}
-		if (value === 'center') destX /= max;
-		return destX;
-};
-
-BattleManager.actionMoveXLocation = function(mover, targets, value) {
-		if (value === 'center') return 'center';
-		var actors = 0;
-		var enemies = 0;
-		var max = targets.length;
-		for (var i = 0; i < max; ++i) {
-			var target = targets[i];
-			if (!target) continue;
-			if (target.isActor()) actors += 1;
-			if (target.isEnemy()) enemies += 1;
-		}
-		if (actors > 0 && enemies === 0) {
-			return (value === 'front') ? 'left' : 'right';
-		} else if (actors === 0 && enemies > 0) {
-			return (value === 'front') ? 'right' : 'left';
-		} else {
-			if (mover.isActor()) {
-				return (value === 'front') ? 'right' : 'left';
-			} else { // enemy
-				return (value === 'front') ? 'left' : 'right';
-			}
-		}
-		return 'center';
-};
-
-BattleManager.actionMoveY = function(mover, targets, value) {
-		var max = targets.length;
-		var destY = 0;
-		var point = (value === 'head') ? Graphics.boxHeight : 0;
-		for (var i = 0; i < max; ++i) {
-			var target = targets[i];
-			if (!target) continue;
-			if (value === 'head') {
-				point = Math.min(target.spritePosY() - target.spriteHeight(), point);
-			} else if (value === 'center') {
-				point += target.spritePosY() - target.spriteHeight() / 2;
-			} else { // foot
-				point = Math.max(target.spritePosY(), point);
-			}
-		}
-		destY = (value === 'center') ? point / max : point;
-		return destY;
-};
-
-BattleManager.actionMoveOffsetX = function(actionArgs, user, target) {
-  if (actionArgs && actionArgs.length > 0) {
-    var length = actionArgs.length;
-    for (var i = 0; i < length; ++i) {
-      var line = actionArgs[i];
-      if (line.match(/AUTO OFFSET X[ ]([\+\-]\d+)/i)) {
-        var value = parseInt(RegExp.$1);
-        if (user.isActor() && !target) {
-          return value * -1;
-        } else if (user.isEnemy() && !target) {
-          return value;
-        } else if (user.isActor() && target.isActor()) {
-          return value;
-        } else if (user.isActor() && target.isEnemy()) {
-          return value * -1;
-        } else if (user.isEnemy() && target.isEnemy()) {
-          return value * -1;
-        } else if (user.isEnemy() && target.isActor()) {
-          return value;
-        }
-      } else if (line.match(/OFFSET X[ ]([\+\-]\d+)/i)) {
-        return parseInt(RegExp.$1);
-      }
-    }
-  }
-  return 0;
-};
-
-BattleManager.actionMoveOffsetY = function(actionArgs, user, target) {
-  if (actionArgs && actionArgs.length > 0) {
-    var length = actionArgs.length;
-    for (var i = 0; i < length; ++i) {
-      var line = actionArgs[i];
-      if (line.match(/AUTO OFFSET Y[ ]([\+\-]\d+)/i)) {
-        return parseInt(RegExp.$1);
-      } else if (line.match(/OFFSET Y[ ]([\+\-]\d+)/i)) {
-        return parseInt(RegExp.$1);
-      }
-    }
-  }
-  return 0;
 };
 
 BattleManager.actionOpacity = function(name, actionArgs) {
@@ -1197,7 +1519,6 @@ Sprite_Battler.prototype.update = function() {
     Yanfly.ASP2.Sprite_Battler_update.call(this);
     if (this._battler) {
       this.updateFloat();
-      this.updateStateSprites();
       this.updateWeapon();
       this.updateOpacity();
     }
@@ -1211,40 +1532,11 @@ Sprite_Battler.prototype.updateFloat = function() {
     var floatHeight = this.getFloatHeight();
     var jumpHeight = this.getJumpHeight();
     var height = floatHeight + jumpHeight;
-    if (this._mainSprite && this._mainSprite.bitmap) {
-      var rate = this._battler.spriteHeight() / this._mainSprite.height;
-      this._mainSprite.anchor.y = (baseY + height * rate);
+    if (this._battler.isActor()) {
+      this._mainSprite.anchor.y = (baseY + height);
       this._weaponSprite.anchor.y = this._mainSprite.anchor.y;
     } else {
       this.anchor.y = (baseY + height);
-    }
-};
-
-Sprite_Battler.prototype.updateStateSprites = function() {
-    if (this._stateIconSprite) {
-      var height = this._battler.spriteHeight() * -1;
-      height -= Sprite_StateIcon._iconHeight;
-      height /= this.scale.y;
-      this._stateIconSprite.y = height;
-    }
-    if (this._stateSprite) {
-      var height = (this._battler.spriteHeight() - 64 * this.scale.y) * -1;
-      this._stateSprite.y = height;
-    }
-    var heightRate = 0;
-    heightRate += this.getFloatHeight();
-    heightRate += this.getJumpHeight();
-    if (Imported.YEP_X_AnimatedSVEnemies) {
-      if (this._enemy && this._enemy.isFloating()) {
-        heightRate += this.addFloatingHeight();
-      };
-    }
-    var height = this._battler.spriteHeight();
-    if (this._stateIconSprite) {
-      this._stateIconSprite.y += Math.ceil(heightRate * -height);
-    }
-    if (this._stateSprite) {
-      this._stateSprite.y += Math.ceil(heightRate * -height);
     }
 };
 
@@ -1316,40 +1608,6 @@ Sprite_Battler.prototype.isJumping = function() {
 
 Sprite_Battler.prototype.isChangingOpacity = function() {
     return this._opacityDur > 0;
-};
-
-//=============================================================================
-// Sprite_Animation
-//=============================================================================
-
-Yanfly.ASP2.Sprite_Animation_updatePosition =
-    Sprite_Animation.prototype.updatePosition;
-Sprite_Animation.prototype.updatePosition = function() {
-    Yanfly.ASP2.Sprite_Animation_updatePosition.call(this);
-    if ([0, 1].contains(this._animation.position)) {
-      if (this.isBattlerRelated()) this.updateBattlerPosition();
-    }
-};
-
-Sprite_Animation.prototype.isBattlerRelated = function() {
-    if (this._target instanceof Sprite_Battler) return true;
-    if (this._target.parent instanceof Sprite_Battler) return true;
-    return false;
-};
-
-Sprite_Animation.prototype.updateBattlerPosition = function() {
-    if (this._target instanceof Sprite_Battler) {
-      var target = this._target;
-    } else if (this._target.parent instanceof Sprite_Battler) {
-      var target = this._target.parent;
-    } else {
-      return;
-    }
-    if (!target.bitmap) return;
-    if (target.bitmap.height <= 0) return;
-    var heightRate = target.getFloatHeight() + target.getJumpHeight();
-    var height = heightRate * target.bitmap.height;
-    this.y -= height;
 };
 
 //=============================================================================

@@ -8,32 +8,22 @@ Imported.YEP_X_ActSeqPack1 = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.ASP1 = Yanfly.ASP1 || {};
-Yanfly.ASP1.version = 1.12;
 
 //=============================================================================
  /*:
- * @plugindesc v1.12 (Requires YEP_BattleEngineCore.js) Basic functions are
+ * @plugindesc v1.03 (Requires YEP_BattleEngineCore.js) Basic functions are
  * added to the Battle Engine Core's action sequences.
  * @author Yanfly Engine Plugins
  *
  * @param Default Volume
  * @desc This will be the volume of the BGM played.
- * @type number
- * @min 0
- * @max 100
  * @default 90
  *
  * @param Default Pitch
- * @type number
- * @min 0
- * @max 100
  * @desc This will be the pitch of the BGM played.
  * @default 100
  *
  * @param Default Pan
- * @type number
- * @min 0
- * @max 100
  * @desc This will be the pan of the BGM played.
  * @default 0
  *
@@ -135,7 +125,6 @@ Yanfly.ASP1.version = 1.12;
  *   dead actors: This will select only dead actors.
  *   actors not user; This will select all living actors except for the user.
  *   actor x; This will select the actor in slot x.
- *   character x; This will select the specific character with actor ID x.
  *   enemies, existing enemies; This will select all living enemies.
  *   all enemies; This will select all enemies, even dead.
  *   dead enemies: This will select only dead enemies.
@@ -184,8 +173,7 @@ Yanfly.ASP1.version = 1.12;
  * Plays the common event found within the skill's/item's traits list. This
  * will only play the last common event on the list, following the game
  * engine's original process. Nothing else will continue on the action list
- * until the common event is finished (unless it is a forced action, in which
- * case, it will wait until the action is complete first).
+ * until the common event is finished.
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Usage Example: action common event
  *=============================================================================
@@ -300,15 +288,6 @@ Yanfly.ASP1.version = 1.12;
  *=============================================================================
  *
  *=============================================================================
- * BREAK ACTION
- *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * This will force the remainder of the action sequences for the part of the
- * skill/item to shut down and be skipped.
- *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Usage Example: break action
- *=============================================================================
- *
- *=============================================================================
  * CAST ANIMATION
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Plays an animation on the skill's user. Will not occur if the action is
@@ -374,8 +353,7 @@ Yanfly.ASP1.version = 1.12;
  * COMMON EVENT: X
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Plays common event X at that point in the action sequence. Nothing else
- * will continue until the common event is finished (unless it is a forced
- * action, in which case, it will wait until the action is complete first).
+ * will continue until the common event is finished.
  *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Usage Example: common event: 1
  *=============================================================================
@@ -718,37 +696,685 @@ Yanfly.ASP1.version = 1.12;
  * Changelog
  * ============================================================================
  *
- * Version 1.12:
- * - Updated for RPG Maker MV version 1.5.0.
+ * Version 1.03:
+ * - Fixed a bug that didn't make the sounds played work properly (again).
  *
- * Version 1.11:
- * - Lunatic Mode fail safes added.
+ * Version 1.02:
+ * - Fixed a bug that didn't make the sounds played work properly.
  *
- * Version 1.10a:
- * - Changed the 'Change Variable' action sequence to read more effectively.
- * - Documentation update for 'Action Common Event' and 'Common Event' to
- * indicate that they will not work immediately if used as a forced action
- * since another event is already running.
+ * Version 1.01:
+ * - Fixed a small bug that didn't allow Change Variable to work properly with
+ * evaluated strings.
  *
- * Version 1.09:
- * - Fixed a bug that didn't allow for HP and MP buff/debuff removal.
+ * Version 1.00:
+ * - Finished plugin!
+ */
+/*:ja
+ * @plugindesc Battle Engine Coreに対する拡張プラグインです
+ * @author Yanfly Engine Plugins
  *
- * Version 1.08:
- * - Added 'Break Action' action sequence effect to completely cancel out all
- * of the remaining action effects.
+ * @param Default Volume
+ * @desc BGMのボリュームを設定します
+ * @default 90
  *
- * Version 1.07:
- * - Fixed a bug with the forcing a Collapse action sequence.
+ * @param Default Pitch
+ * @desc BGMのピッチを設定します
+ * @default 100
  *
- * Version 1.06:
- * - If using the Add State action sequence to add the Death state, it will
- * remove immortality settings.
+ * @param Default Pan
+ * @desc BGMのパンを設定します
+ * @default 0
  *
- * Version 1.05:
- * - Optimized status window to refresh at a minimum.
+ * @help
+ * ============================================================================
+ * Introduction
+ * ============================================================================
  *
- * Version 1.04:
- * - Updated help file to include Character X for target typing.
+ * このプラグインはBattle Engine Coreの拡張プラグインです。
+ * 元となるプラグインが無いと動作しませんのでご注意ください。
+ *
+ * この拡張プラグインには、アクションの視覚的なカスタマイズのための
+ * 多くの基本機能を含んでいます。
+ * スイッチの変更、変数調整、状態付与、
+ * ダメージレートの変更などを行なうことができます。
+ *
+ * ============================================================================
+ * Action Sequences - ala Melody
+ * ============================================================================
+ *
+ * Battle Engine Coreには "Melody's Battle Engine"が含まれており、
+ * スキルとアイテムエフェクトの色々な側面を制御します。
+ * これらはアクションシーケンスと呼ばれ、ゲームに独特のアクションを提供します。
+ *
+ * 各スキルとアイテムは、5つの異なるアクションシーケンスから構成されます。
+ *
+ * 1. セットアップアクション
+ *   一連のアクションとエフェクトが実行される前に、アクティブバトラーは、
+ * 一歩前進したり、武器を抜くなどの準備アクションを行います。
+ * このステップは、バトラーがアイテムやスキルを使う前に起こります。
+ *
+ * 2. 全体アクション
+ *   これらのアクションは、ターゲット全体に対して同時に働きます。
+ * このセクションを必ず使う必要はありませんが、
+ * 敵の頭上にアニメーションを表示するために、大抵のアクションで
+ * 使われています。 このステップは、スキル/アイテム使用後に起こります。
+ *
+ * 3. ターゲットアクション
+ *   このセクションは、全ターゲットに対して個々に働きます。
+ * 主に、個別のダメージを与えるようなフィジカルアタックに対して使われます。 
+ * ここで起こるアクションは、そのような設定をしない限りは
+ * 他のターゲットに影響することはありません。
+ *
+ * 4. 追随アクション
+ *   このセクションは、個別ターゲットアクション後の
+ * クリーンアップとして用いられます。
+ * これは永続フラグの消去や、コモンイベントの開始などを行います。
+ *
+ * 5. 完了アクション
+ *   このセクションは、アクティブバトラーの一連のアクションの締めに用いられます。
+ * 例えば元の位置に戻ったりなどのアクションが挙げられます。
+ *
+ * 上記がアクションシーケンスにおける5ステップです。下記のタグは、スキルと
+ * アイテム内に挿入して使えるタグです。それぞれのタグ名に注意してください。
+ *
+ * 1. <setup action>                                5. <finish action>
+ *     action list                                      action list
+ *     action list                                      action list
+ *    </setup action>                                  </finish action>
+ *
+ * 2. <whole action>       3. <target action>       4. <follow action>
+ *     action list             action list              action list
+ *     action list             action list              action list
+ *    </whole action>         </target action>         </follow action>
+ *
+ * これらのタグは、それぞれのアクションを実行します。アクションリストを挿入する
+ * 方法については、ヘルプマニュアルの中に記載されています。
+ *
+ * 更に、アクションシーケンスごとにデータベース内の全てのアイテムのノート
+ * ボックスを呼び出すことのないように、前述の5ステップをコピーする
+ * ショートカットがあります。
+ * 
+ * <action copy: x:y>
+ *
+ *  x を"item"か"skill"と置き換えて、アクションリストのコードを直接コピーして
+ * ください。整数の y は各オブジェクトタイプごとにアサインされたIDとなります。
+ * 例えば、45番目のスキルアクションシーケンスをコピーしたい場合は、次のコード
+ * になります。 <action copy: skill:45>
+ * このNotetagを使う場合、Notebox内では最も優先されるものとなります。
+ *
+ * ============================================================================
+ * Target Typing
+ * ============================================================================
+ *
+ * 今後紹介するアクション内では、"ターゲットを参照"という表記が出てきます。
+ * 以下に、ターゲットの一覧を記載します。
+ *
+ *   user; アクティブバトラーを選択します
+ *   target, targets; アクティブターゲットを選択します
+ *   actors, existing actors; 生存している全てのアクターを選択します
+ *   all actors; 死亡アクターも含めて、全てのアクターを選択します
+ *   dead actors: 死亡アクターのみを選択します
+ *   actors not user; ユーザー以外の全ての生存アクターを選択します
+ *   actor x; スロット x のアクターを選択します
+ *   enemies, existing enemies; 生存している全ての敵を選択します
+ *   all enemies; 死亡した敵も含めて、全ての敵を選択します
+ *   dead enemies: 死亡した敵のみを選択します
+ *   enemies not user; ユーザー以外の全ての敵を選択します
+ *   enemy x; スロット x の敵を選択します
+ *   friends; 生存しているバトラーの仲間を全て選択します
+ *   all friends; 生死に関わらず、バトラーの仲間を全て選択します
+ *   dead friends; 死亡しているバトラーの仲間を全て選択します
+ *   friends not user; 本人を除き、バトラーの仲間を選択します
+ *   friend x: スロット x 内の、バトラーの仲間を選択します
+ *   opponents; 生存している、バトラーの相手を選択します
+ *   all opponents; バトラーの全ての相手を選択します
+ *   dead opponents; 死亡している、バトラーの相手を選択します
+ *   opponent x: スロット x 内のバトラーの相手を選択します
+ *   all alive; 全ての生存アクターと敵を選択します
+ *   all members; 全ての生存/死亡アクターと敵を選択します
+ *   all dead; 全ての死亡アクターと敵を選択します
+ *   all not user; ユーザーを除き、全ての生存バトラーを選択します
+ *   focus; アクティブバトラーおよびそのターゲットを選択します
+ *   not focus; アクティブバトラーおよびそのターゲット以外を全て選択します
+ *
+ * ============================================================================
+ * Action Sequences - Action List
+ * ============================================================================
+ *
+ * 下記のリストは、5段階のアクションシーケンス内で使えるアクション一覧です。
+ * 各アクションは独自の機能を持ち、正常に動作するために正しいフォーマットが
+ * 必須となっています。
+ *
+ *=============================================================================
+ * ACTION ANIMATION: (target), (mirror)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * スキル/アイテムにアサインされているアニメーションを再生します。アニメーション
+ * は自動的にスキル/アイテムのターゲットを選択します。 'target' を使用すれば、
+ * アニメーションを再生するターゲットを指定することができます。 
+ *  'mirror' を使用した場合は、そのアニメーションを反転します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: action animation
+ *      　 action animation: target
+ *         action animation: user, mirror
+ *=============================================================================
+ *
+ *=============================================================================
+ * ACTION COMMON EVENT
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * スキル/アイテムの特性リストから、コモンイベントを再生します。これはゲーム
+ * エンジンのプロセスに従い、リスト内で最後のコモンイベントのみを再生します。
+ * コモンイベントが終わるまでは、アクションリスト上のその他のアクション/イベント
+ * はストップされます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: action common event
+ *=============================================================================
+ *
+ *=============================================================================
+ * ACTION EFFECT: target
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲットが、スキル/アイテムによるダメージやヒールを受けます。またバフや
+ * ステートのような状態変化を負うようになります。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: action effect
+ *=============================================================================
+ *
+ *=============================================================================
+ * ADD stat BUFF: target, (turns), (show)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲットにバフを与えます。'stat' の部分を 'hp', 'mp', 'atk', 'def', 'mat',
+ * 'mdf', 'agi', 'luk'に変えて使うこともできます。ターゲットの後に数字を入れると
+ * そのターン分のバフが続きます。'show'を含めると、バトルログ内でバフ効果を受け
+ * ているターゲットを表示します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: add atk buff: user, 3, show
+ *         add def buff: target, 8
+ *=============================================================================
+ *
+ *=============================================================================
+ * ADD stat DEBUFF: target, (turns), (show)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲットにデバフを与えます。'stat'の部分を 'hp', 'mp', 'atk', 'def', 'mat',
+ * 'mdf', 'agi', 'luk'に変えて使うこともできます。ターゲットの後に数字を入れると
+ * そのターン分のバフが続きます。'show'を含めると、バトルログ内でデバフ効果を受
+ * けているターゲットを表示します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: add atk debuff: user, 3, show
+ *      　 add def debuff: target, 8
+ *=============================================================================
+ *
+ *=============================================================================
+ * ADD STATE X: target, (show)
+ * ADD STATE X, Y, Z: target (show)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * X のステートをターゲットに与えます。(必要に応じてYとZを用いてください)
+ * 'show' を含めると、ステートに関連するメッセージを全て表示します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: add state 5: target
+ *         add state 6, 7, 8: user, show
+ *=============================================================================
+ *
+ *=============================================================================
+ * ANIMATION X: target, (mirror)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲット上で X のアニメーションを再生します。'Mirror'で、反転して再生
+ * させることができます。アクター上で再生されるアニメーションは、自動的に反転
+ * され、ミラーオプションを設定すると非反転状態で表れます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: animation 5: user
+ *         animation 6: target, mirror
+ *=============================================================================
+ *
+ *=============================================================================
+ * ANIMATION WAIT: X
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アニメーションフレーム x 分待機させます。待機の持続時間は数フレームで指定
+ * することができます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: animation 5: user
+ *         animation 6: target, mirror
+ *=============================================================================
+ *
+ *=============================================================================
+ * BGM: STOP
+ * BGM: MEMORIZE
+ * BGM: MEMORY
+ * BGM: filename, (volume), (pitch), (pan)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 手動で現在のBGMを変更することができます。'Stop'で全てのBGMを停止します。
+ * 'Memorize'では、現在のBGMを記憶させます。'Memory'で、記憶したBGMがある場合は
+ * それを再生します。ファイル名を指定した場合は(ファイル名拡張無しで)、
+ * 代わりにそのBGMを再生します。このオプションを使うと、ボリューム/ピッチ/パン
+ * などを調節する窓が開きます。
+ * ボリューム/ピッチ/パンに何の数字も入れなければ、プラグインパラメータの値が
+ * 適用されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: bgm: stop
+ *         bgm: memorize
+ *         bgm: memory
+ *         bgm: Battle7
+ *         bgm: Theme2, 80, 100, 0
+ *=============================================================================
+ *
+ *=============================================================================
+ * BGS: STOP
+ * BGS: MEMORIZE
+ * BGS: MEMORY
+ * BGS: filename, (volume), (pitch), (pan)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 手動で現在のBGSを変更することができます。'Stop'で全てのBGSを停止します。
+ * 'Memorize'では、現在のBGSを記憶させます。'Memory'で、記憶したBGSがある場合は
+ * それを再生します。ファイル名を指定した場合は(ファイル名拡張無しで)、
+ * 代わりにそのBGSを再生します。このオプションを使うと、ボリューム/ピッチ/パン
+ * など、を調節する窓が開きます。
+ * ボリューム/ピッチ/パンに何の数字も入れなければ、プラグインパラメータの値が
+ * 適用されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: bgs: stop
+ *         bgs: memorize
+ *         bgs: memory
+ *         bgs: City
+ *         bgs: Darkness, 80, 100, 0
+ *=============================================================================
+ *
+ *=============================================================================
+ * CAST ANIMATION
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * スキル使用者のアニメーションを再生します。アイテム使用だったり、通常攻撃の
+ * 場合はこれが発動しません。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: cast animation
+ *=============================================================================
+ *
+ *=============================================================================
+ * CLEAR BATTLE LOG
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * スクリーン上部の全てのメッセージを消去します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: clear battle log
+ *=============================================================================
+ *
+ *=============================================================================
+ * CHANGE SWITCH X: on/off/toggle/switch z
+ * CHANGE SWITCH X..Y: on/off/toggle/switch z
+ * CHANGE SWITCH X TO Y: on/off/toggle/switch z
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ゲームスイッチ X をオン/オフ/トグル(オンオフ切り替え)、もしくはスイッチ Y の
+ * 状態に変更することができます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: change switch 1: on
+ *         change switch 2..4: off
+ *         change switch 5 to 8: toggle
+ *         change switch 9: switch 5
+ *=============================================================================
+ *
+ *=============================================================================
+ * CHANGE VARIABLE X = Y
+ * CHANGE VARIABLE X += Y
+ * CHANGE VARIABLE X -= Y
+ * CHANGE VARIABLE X *= Y
+ * CHANGE VARIABLE X /= Y
+ * CHANGE VARIABLE X %= Y
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクションシーケンスの中の X の値を Y の値に調整します。Y の値には、整数
+ * もしくはコードを用いることができます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: change variable 1 = 2
+ *         change variable 3 += 4
+ *         change variable 5 -= 6
+ *         change variable 7 *= 8
+ *         change variable 9 /= 10
+ *         change variable 11 %= 12
+ *=============================================================================
+ *
+ *=============================================================================
+ * COLLAPSE: target, (force)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲットがあるポイントで死亡した場合、アクションシーケンスが途中でもその
+ * ポイントでターゲットを倒すことができます。ターゲットを強制的に死亡させたい
+ * 場合は、 'force' のコマンドをターゲットの後に挿入してください。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: collapse: user
+ *  　     collapse: target, force
+ *=============================================================================
+ *
+ *=============================================================================
+ * COMMON EVENT: X
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクションシーケンスのこのポイントで、コモンイベントを再生します。このコモン
+ * イベントが終わるまでは、他のイベントは再生されません。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: common event: 1
+ *=============================================================================
+ *
+ *=============================================================================
+ * DEATH BREAK
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * スキルの途中でユーザーが死亡した場合(カウンター攻撃や攻撃反射を含む)、
+ * スキル/アイテムの残りのアクションシーケンスを終了させ、スキップさせます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: death break
+ *=============================================================================
+ *
+ *=============================================================================
+ * DISPLAY ACTION
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * バトルログの上部に、アクション名を表示させます。これはバトルログが消去される
+ * まで残ります。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: display action
+ *=============================================================================
+ *
+ *=============================================================================
+ * EVAL: code
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 既存のバトルエンジンがサポートしていない機能を使用したい方は、コードを実行
+ * させるeval機能を用いることができます。Javascriptに慣れていない方には
+ * あまりおすすめしない機能ですのでご注意ください。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: eval: $gameParty.loseItem($dataItems[3], 10)
+ *=============================================================================
+ *
+ *=============================================================================
+ * GAIN ITEM X: Y           LOSE ITEM X: Y
+ * GAIN WEAPON X: Y         LOSE WEAPON X: Y
+ * GAIN ARMOR X: Y          LOSE ARMOR X: Y
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * あなたのパーティは x というアイテムもしくは防具を、y だけ取得/喪失します。
+ * y の入力を省くと、デフォルトで 1 に設定されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: gain item 1: 20
+ *         lose weapon 2
+ *         gain armor 3: 50
+ *=============================================================================
+ *
+ *=============================================================================
+ * GOLD +x
+ * GOLD -x
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * あなたのパーティは戦闘中に x のゴールドを獲得/喪失します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: gold +2000
+ *         gold -500
+ *=============================================================================
+ *
+ *=============================================================================
+ * IF ... ELSE STATEMENTS
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * プログラミングに慣れ親しんだ方であれば「if...else statements」を用いて、状態
+ * に応じたアクションを実行させることができます。'if'を用いて、対象が特定の状態
+ * である場合にコードを実行します。もしその状態でない場合には 'else'で
+ * コードを実行します。 'else if' を用いると、最初の状態がfalseだった場合に
+ * 新しい状態を試します。 'end' を用いて、状態の終了を指定します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例:
+ *     if $gameSwitches.value(1)
+ *         action effect
+ *     else if $gameSwitches.value(2)
+ *         action effect
+ *         action effect
+ *     else
+ *         action effect
+ *         action effect
+ *         action effect
+ *     end
+ *
+ * *注: 実際にはコード部分の字下げは必要ありません。上記は一例となります。
+ *=============================================================================
+ *
+ *=============================================================================
+ * IMMORTAL: targets, true/false
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲットに不死身のステートを付与し、ターゲットは攻撃の最中に死ぬことがなく
+ * なります。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: immortal: targets true
+ *=============================================================================
+ *
+ *=============================================================================
+ * HP +X: target, (show)
+ * HP -X: target, (show)
+ * HP +X%: target, (show)
+ * HP -X%: target, (show)
+ * HP +VARIABLE X: target, (show)
+ * HP -VARIABLE X: target, (show)
+ * HP +VARIABLE X%: target, (show)
+ * HP -VARIABLE X%: target, (show)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲットは X の値のHPを得ます。ポップアップを表示するにはアクション
+ * シーケンスライン内のターゲットの後に 'show' を挿入してください。
+ * 'show' の挿入はオプションになりますので、ない場合はポップアップは表示され
+ * ません。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: hp +500: user
+ *         hp -variable 5: target
+ *         hp +25%: target
+ *         hp -variable 7: user
+ *=============================================================================
+ *
+ *=============================================================================
+ * ME: STOP
+ * ME: filename, (volume), (pitch), (pan)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 戦闘時にファンファーレを鳴らします。'Stop' で全てのMEを停止します。
+ * ファイルネームを指定すると、ゲームはそのMEを代わりに再生します。このオプ
+ * ションを使用すると、ボリュームやピッチ、パンのコントロールなども可能になり
+ * ます。これらに何の値も入れない場合は、プラグインのパラメータが使用されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: me: stop
+ *         me: Victory1
+ *         me: Darkness, 80, 100, 0
+ *=============================================================================
+ *
+ *=============================================================================
+ * MOTION WAIT: target
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクションを行っているターゲットがアクターだった場合、そのターゲットを12
+ * フレーム待機させます。アクターでない場合は待機は起こりません。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: motion wait: user
+ *=============================================================================
+ *
+ *=============================================================================
+ * MP +X: target, (show)
+ * MP -X: target, (show)
+ * MP +X%: target, (show)
+ * MP -X%: target, (show)
+ * MP +VARIABLE X: target, (show)
+ * MP -VARIABLE X: target, (show)
+ * MP +VARIABLE X%: target, (show)
+ * MP -VARIABLE X%: target, (show)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲットは X の値のMPを得ます。ポップアップを表示するにはアクション
+ * シーケンスライン内のターゲットの後に 'show' を挿入してください。
+ * 'show' の挿入はオプションになりますので、ない場合はポップアップは表示され
+ * ません。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: mp +500: user
+ *         mp -variable 5: target
+ *         mp +25%: target
+ *         mp -variable 7: user
+ *=============================================================================
+ *
+ *=============================================================================
+ * PERFORM ACTION
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクターに一歩前進させ、武器を振る/押し出すモーションを行わせます。
+ * どのモーションが行われるかはゲームにより自動的に決定されます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: perform action
+ *=============================================================================
+ *
+ *=============================================================================
+ * PERFORM FINISH
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクターを元の位置まで後退させます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: perform finish
+ *=============================================================================
+ *
+ *=============================================================================
+ * PERFORM START
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクターを元の位置まで前進させます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: perform start
+ *=============================================================================
+ *
+ *=============================================================================
+ * REFRESH STATUS
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクションシーケンスの途中で、ステータスウィンドウをリフレッシュします。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: refresh status
+ *=============================================================================
+ *
+ *=============================================================================
+ * REMOVE stat BUFF: target, (show)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 'stat' のバフをターゲットから外します。'stat' を 'hp', 'mp', 'atk', 'def'
+ * 'mat', 'mdf', 'agi', 'luk'などと置き換えることもできます。'show' を含めば
+ * バトルログ内でターゲットからのバフ除去を表示させることができます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: remove atk buff: user, show
+ *         remove def buff: target
+ *=============================================================================
+ *
+ *=============================================================================
+ * REMOVE stat DEBUFF: target, (show)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 'stat' のデバフをターゲットから外します。'stat' を 'hp', 'mp', 'atk', 'def'
+ * 'mat', 'mdf', 'agi', 'luk'などと置き換えることもできます。'show' を含めば
+ * バトルログ内でターゲットからのデバフ除去を表示させることができます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: remove atk debuff: user, show
+ *         remove def debuff: target
+ *=============================================================================
+ *
+ *=============================================================================
+ * REMOVE STATE X: target (show)
+ * REMOVE STATE X, Y, Z: target (show)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * X のステート (指定した場合はYとZも)をターゲットから除去します。'show' を含
+ * めれば、ステート関連のメッセージにも表示させることができます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: remove state 5: target
+ *         remove state 6, 7, 8: user, show
+ *=============================================================================
+ *
+ *=============================================================================
+ * SE: filename, (volume), (pitch), (pan)
+ * SE: PLAY OK
+ * SE: PLAY CURSOR
+ * SE: PLAY CANCEL
+ * SE: PLAY BUZZER
+ * SE: PLAY EQUIP
+ * SE: PLAY SAVE
+ * SE: PLAY LOAD
+ * SE: PLAY BATTLE START
+ * SE: PLAY ESCAPE
+ * SE: PLAY ENEMY ATTACK
+ * SE: PLAY ENEMY DAMAGE
+ * SE: PLAY ENEMY COLLAPSE
+ * SE: PLAY BOSS COLLAPSE 1
+ * SE: PLAY BOSS COLLAPSE 2
+ * SE: PLAY ACTOR DAMAGE
+ * SE: PLAY ACTOR COLLAPSE
+ * SE: PLAY RECOVERY
+ * SE: PLAY MISS
+ * SE: PLAY EVASION
+ * SE: PLAY MAGIC EVASION
+ * SE: PLAY REFLECTION
+ * SE: PLAY SHOP
+ * SE: PLAY USE ITEM
+ * SE: PLAY USE SKILL
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 戦闘にサウンドエフェクトを追加できます。ファイル名を指定すれば、そのSEが再生
+ * されます。このオプションを使用すると、ボリュームやピッチ、パンのコントロール
+ * なども可能になります。これらに何の値も入れない場合は、プラグインのパラメータ
+ * が使用されます。'play x' を入れてアクションシーケンスを使うと、RPGツクールの
+ * データベース内からシステムサウンドを再生します。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: se: play enemy attack
+ *         se: Ice1
+ *         se: Laser2, 80, 100, 0
+ *=============================================================================
+ *
+ *=============================================================================
+ * TP +X: target, (show)
+ * TP -X: target, (show)
+ * TP +X%: target, (show)
+ * TP -X%: target, (show)
+ * TP +VARIABLE X: target, (show)
+ * TP -VARIABLE X: target, (show)
+ * TP +VARIABLE X%: target, (show)
+ * TP -VARIABLE X%: target, (show)
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ターゲットは X の値のTPを得ます。ポップアップを表示するにはアクション
+ * シーケンスライン内のターゲットの後に 'show' を挿入してください。
+ * 'show' の挿入はオプションになりますので、ない場合はポップアップは表示され
+ * ません。実際にTPのポップアップを表示させるには別のプラグインが必要になります。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: tp +500: user
+ *                tp -variable 5: target
+ *                tp +25%: target
+ *                tp -variable 7: user
+ *=============================================================================
+ *
+ *=============================================================================
+ * WAIT: frames
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクションシーケンス内で次のアクションに移る前に、任意のフレーム数、
+ * ゲームを待機させることができます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: wait: 60
+ *=============================================================================
+ *
+ *=============================================================================
+ * WAIT FOR ANIMATION
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクションシーケンス内で次のアクションに移る前に、一旦すべてのアニメーション
+ * が終わるのを待ちます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: wait for animation
+ *=============================================================================
+ *
+ *=============================================================================
+ * WAIT FOR EFFECT
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 続行する前に、一旦すべてのエフェクトが再生し終わるのを待ちます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: wait for effect
+ *=============================================================================
+ *
+ *=============================================================================
+ * WAIT FOR MOVEMENT
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクションシーケンス内で次のアクションに移る前に、一旦すべてのバトラーの
+ * アクションが終わるのを待ちます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: wait for movement
+ *=============================================================================
+ *
+ *=============================================================================
+ * WAIT FOR NEW LINE
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * アクションシーケンス内で次のアクションに移る前に、ログウィンドウ内に新しい
+ * 一文が出てくるのを待ちます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: wait for new line
+ *=============================================================================
+ *
+ *=============================================================================
+ * WAIT FOR POPUPS
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 次のアクションに移る前に、全てのポップアップが再生し終わるのを待ちます。
+ *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * 使用例: wait for popups
+ *=============================================================================
+ *
+ * ============================================================================
+ * Changelog
+ * ============================================================================
  *
  * Version 1.03:
  * - Fixed a bug that didn't make the sounds played work properly (again).
@@ -763,6 +1389,7 @@ Yanfly.ASP1.version = 1.12;
  * Version 1.00:
  * - Finished plugin!
  */
+
 //=============================================================================
 
 if (Imported.YEP_BattleEngineCore) {
@@ -809,10 +1436,6 @@ BattleManager.processActionSequence = function(actionName, actionArgs) {
   if (['BGS', 'AMBIENCE'].contains(actionName)) {
     return this.actionBgsPlay(actionArgs);
   }
-  // BREAK ACTION
-  if (actionName === 'BREAK ACTION') {
-    return this.actionBreakAction();
-  }
   // COLLAPSE: target, (force)
   if (actionName === 'COLLAPSE') {
     return this.actionCollapse(actionArgs);
@@ -842,9 +1465,17 @@ BattleManager.processActionSequence = function(actionName, actionArgs) {
   if (actionName.match(/GOLD[ ]([\+\-]\d+)/i)) {
     return this.actionGoldModify(parseInt(RegExp.$1));
   }
+  // HP +/- VALUE
+  if (actionName.match(/HP[ ](.*)/i)) {
+    return this.actionHpModify(actionName, actionArgs);
+  }
   // ME, FANFARE
   if (['ME', 'FANFARE'].contains(actionName)) {
     return this.actionMePlay(actionArgs);
+  }
+  // MP +/- VALUE
+  if (actionName.match(/MP[ ](.*)/i)) {
+    return this.actionMpModify(actionName, actionArgs);
   }
   // REFRESH STATUS, REFRESH WINDOW
   if (['REFRESH STATUS', 'REFRESH WINDOW'].contains(actionName)) {
@@ -866,14 +1497,6 @@ BattleManager.processActionSequence = function(actionName, actionArgs) {
   // SE, SOUND, SFX
   if (['SE', 'SOUND', 'SFX'].contains(actionName)) {
     return this.actionSePlay(actionArgs);
-  }
-  // HP +/- VALUE
-  if (actionName.match(/HP[ ](.*)/i)) {
-    return this.actionHpModify(actionName, actionArgs);
-  }
-  // MP +/- VALUE
-  if (actionName.match(/MP[ ](.*)/i)) {
-    return this.actionMpModify(actionName, actionArgs);
   }
   // TP +/- VALUE
   if (actionName.match(/TP[ ](.*)/i)) {
@@ -943,10 +1566,13 @@ BattleManager.actionAddBuff = function(actionName, actionArgs) {
     var turns = 5;
   }
   if (paramId < 0) return true;
+  var refresh = false;
   targets.forEach(function(target) {
     target.addBuff(paramId, turns);
     if (show) this._logWindow.displayActionResults(this._subject, target);
+    if (target.isActor()) refresh = true;
   }, this);
+  if (refresh) BattleManager.refreshStatus();
   return true;
 };
 
@@ -969,10 +1595,13 @@ BattleManager.actionAddDebuff = function(actionName, actionArgs) {
     var turns = 5;
   }
   if (paramId < 0) return true;
+  var refresh = false;
   targets.forEach(function(target) {
     target.addDebuff(paramId, turns);
     if (show) this._logWindow.displayActionResults(this._subject, target);
+    if (target.isActor()) refresh = true;
   }, this);
+  if (refresh) BattleManager.refreshStatus();
   return true;
 };
 
@@ -989,16 +1618,16 @@ BattleManager.actionAddState = function(actionName, actionArgs) {
   } else {
     return true;
   }
+  var refresh = false;
   targets.forEach(function(target) {
     for (var i = 0; i < states.length; ++i) {
       stateId = states[i];
-      if (stateId === target.deathStateId()) {
-        if (target._prevImmortalState === false) target.forceRemoveImmortal();
-      }
       target.addState(stateId);
       if (show) this._logWindow.displayActionResults(this._subject, target);
+      if (target.isActor()) refresh = true;
     }
   }, this);
+  if (refresh) BattleManager.refreshStatus();
   return true;
 };
 
@@ -1068,18 +1697,9 @@ BattleManager.actionBgsPlay = function(actionArgs) {
   return true;
 };
 
-BattleManager.actionBreakAction = function() {
-    this._targets = [];
-    this._actionList = [];
-    this._individualTargets = [];
-    this._phase = 'phaseChange';
-    return false;
-};
-
 BattleManager.actionCollapse = function(actionArgs) {
   var targets = this.makeActionTargets(actionArgs[0]);
-  var force = false;
-  if (actionArgs[1]) var force = (actionArgs[1].toUpperCase() === 'FORCE');
+  var force = (actionArgs[1].toUpperCase() === 'FORCE');
   targets.forEach(function(target) {
     if (force) {
       target.removeImmortal();
@@ -1092,15 +1712,7 @@ BattleManager.actionCollapse = function(actionArgs) {
 };
 
 BattleManager.actionCommonEvent = function(id) {
-  if ($gameTroop.isEventRunning()) {
-    var ev = $dataCommonEvents[id];
-    if (!ev) return;
-    var list = ev.list;
-    var interpreter = $gameTroop._interpreter;
-    interpreter.setupChild(list, 0);
-  } else {
-    $gameTemp.reserveCommonEvent(id);
-  }
+  $gameTemp.reserveCommonEvent(id);
   return false;
 };
 
@@ -1145,7 +1757,7 @@ BattleManager.actionChangeSwitch = function(actionName, actionArgs) {
 BattleManager.actionChangeVariable = function(actionName) {
   var cV1 =
   /CHANGE[ ](?:VARIABLE|VAR)[ ](\d+)[ ](.*)[ ](?:VARIABLE|VAR)[ ](\d+)/i;
-  var cV2 = /CHANGE[ ](?:VARIABLE|VAR)[ ](\d+)[ ](.*?)[ ](.*)/i;
+  var cV2 = /CHANGE[ ](?:VARIABLE|VAR)[ ](\d+)[ ](.*)[ ](.*)/i;
   var subject = this._subject;
   var user = this._subject;
   var target = this._targets[0];
@@ -1192,11 +1804,7 @@ BattleManager.actionEval = function(actionArgs) {
     for (var i = 1; i < actionArgs.length; ++i) {
         text = text + ', ' + String(actionArgs[i]);
     }
-    try {
-      eval(text);
-    } catch (e) {
-      Yanfly.Util.displayError(e, text, 'ACTION SEQUENCE EVAL ERROR');
-    }
+    eval(text);
     return false;
 };
 
@@ -1266,6 +1874,7 @@ BattleManager.actionHpModify = function(actionName, actionArgs) {
       if (actionArg.toUpperCase() === 'SHOW') show = true;
     }
     var value;
+    var refresh = false;
     targets.forEach(function(target) {
       target.clearResult();
       value = percent ? (target.mhp * change * 0.01) : change;
@@ -1273,8 +1882,10 @@ BattleManager.actionHpModify = function(actionName, actionArgs) {
       if (show) {
         target.startDamagePopup();
         this._logWindow.displayActionResults(this._subject, target);
+        if (target.isActor()) refresh = true;
       }
     }, this);
+    if (refresh) BattleManager.refreshStatus();
     return true;
 };
 
@@ -1328,6 +1939,7 @@ BattleManager.actionMpModify = function(actionName, actionArgs) {
       if (actionArg.toUpperCase() === 'SHOW') show = true;
     }
     var value;
+    var refresh = false;
     targets.forEach(function(target) {
       target.clearResult();
       value = percent ? (target.mmp * change * 0.01) : change;
@@ -1335,8 +1947,10 @@ BattleManager.actionMpModify = function(actionName, actionArgs) {
       if (show) {
         target.startDamagePopup();
         this._logWindow.displayActionResults(this._subject, target);
+        if (target.isActor()) refresh = true;
       }
     }, this);
+    if (refresh) BattleManager.refreshStatus();
     return true;
 };
 
@@ -1359,12 +1973,15 @@ BattleManager.actionRemoveBuff = function(actionName, actionArgs) {
     return true;
   }
   if (paramId < 0) return true;
+  var refresh = false;
   targets.forEach(function(target) {
     if (target.isBuffAffected(paramId)) {
       target.removeBuff(paramId);
       if (show) this._logWindow.displayActionResults(this._subject, target);
+      if (target.isActor()) refresh = true;
     }
   }, this);
+  if (refresh) BattleManager.refreshStatus();
   return true;
 };
 
@@ -1382,12 +1999,15 @@ BattleManager.actionRemoveDebuff = function(actionName, actionArgs) {
     return true;
   }
   if (paramId < 0) return true;
+  var refresh = false;
   targets.forEach(function(target) {
     if (target.isDebuffAffected(paramId)) {
       target.removeBuff(paramId);
       if (show) this._logWindow.displayActionResults(this._subject, target);
+      if (target.isActor()) refresh = true;
     }
   }, this);
+  if (refresh) BattleManager.refreshStatus();
   return true;
 };
 
@@ -1405,15 +2025,18 @@ BattleManager.actionRemoveState = function(actionName, actionArgs) {
   } else {
     return true;
   }
+  var refresh = false;
   targets.forEach(function(target) {
     for (var i = 0; i < states.length; ++i) {
       stateId = states[i];
       if (target.isStateAffected(stateId)) {
         target.removeState(stateId);
         if (show) this._logWindow.displayActionResults(this._subject, target);
+        if (target.isActor()) refresh = true;
       }
     }
   }, this);
+  if (refresh) BattleManager.refreshStatus();
   return true;
 };
 
@@ -1513,6 +2136,7 @@ BattleManager.actionTpModify = function(actionName, actionArgs) {
       if (actionArg.toUpperCase() === 'SHOW') show = true;
     }
     var value;
+    var refresh = false;
     targets.forEach(function(target) {
       target.clearResult();
       value = percent ? (target.maxTp() * change * 0.01) : change;
@@ -1520,26 +2144,11 @@ BattleManager.actionTpModify = function(actionName, actionArgs) {
       if (show) {
         target.startDamagePopup();
         this._logWindow.displayActionResults(this._subject, target);
+        if (target.isActor()) refresh = true;
       }
     }, this);
+    if (refresh) BattleManager.refreshStatus();
     return true;
-};
-
-//=============================================================================
-// Utilities
-//=============================================================================
-
-Yanfly.Util = Yanfly.Util || {};
-
-Yanfly.Util.displayError = function(e, code, message) {
-  console.log(message);
-  console.log(code || 'NON-EXISTENT');
-  console.error(e);
-  if (Utils.isNwjs() && Utils.isOptionValid('test')) {
-    if (!require('nw.gui').Window.get().isDevToolsOpen()) {
-      require('nw.gui').Window.get().showDevTools();
-    }
-  }
 };
 
 //=============================================================================

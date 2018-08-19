@@ -8,11 +8,10 @@ Imported.YEP_ExternalLinks = true;
 
 var Yanfly = Yanfly || {};
 Yanfly.LINK = Yanfly.LINK || {};
-Yanfly.LINK.version = 1.00
 
 //=============================================================================
  /*:
- * @plugindesc v1.01 Link back to your home page through the title screen
+ * @plugindesc v1.00 Link back to your home page through the title screen
  * and also be able to link your players from within the game.
  * @author Yanfly Engine Plugins
  *
@@ -50,17 +49,50 @@ Yanfly.LINK.version = 1.00
  *   OpenNewWindow http://www.google.com/  Opens link in a new window.
  *
  * Some web browsers may not differentiate these commands too much.
- *
- * ============================================================================
- * Changelog
- * ============================================================================
- *
- * Version 1.01:
- * - Updated for RPG Maker MV version 1.5.0.
- *
- * Version 1.00:
- * - Finished Plugin!
  */
+ /*:ja
+ * @plugindesc タイトル画面やゲーム内から、
+ * プレイヤーにWebページを開かせることができます
+ * @author Yanfly Engine Plugins
+ *
+ * @param Home Page URL
+ * @desc タイトル画面に設置したいWebサイトのリンクを挿入してください。
+ * 不要な場合はブランクにしておいてください。
+ * @default https://www.google.com/
+ *
+ * @param Home Page Text
+ * @desc タイトル画面に設置するWebサイトの表示名を指定します
+ * @default Home Page
+ *
+ * @param Popup Blocker Notice
+ * @desc ポップアップブロックによってブロックされた際に、
+ * プレイヤーにそれを知らせる文章を指定します
+ * @default ポップアップブロックによってブロックされました
+ *
+ * @help
+ * ============================================================================
+ * Introduction                                                     .
+ * ============================================================================
+ * 
+ * このプラグインでは、タイトル画面のコマンドウィンドウ下部に
+ * Webページへのリンクを設置することができます。
+ * プラグインのパラメーター内でURLを変更することで、
+ * リンク先を変更することができます。
+ *
+ * ============================================================================
+ * Plugin Commands
+ * ============================================================================
+ *
+ * プレイヤーに任意のリンクを開かせたいときは、下記のコマンドを用いてください。
+ *
+ * <プラグインコマンド>
+ *   OpenNewTab http://www.google.com/     新規タブでリンクを開きます
+ *   OpenNewWindow http://www.google.com/  新規ウィンドウでリンクを開きます
+ *
+ * ブラウザによっては上記2種類のコマンドがうまく識別されない場合があります。
+ */
+
+
 //=============================================================================
 
 //=============================================================================
@@ -182,7 +214,6 @@ Scene_Base.prototype.createWindowLayer = function() {
 };
 
 Scene_Base.prototype.createPopupBlockerMessage = function() {
-    if (this._popupBlockerWindow) return;
 		this._popupBlockerWindow = new Window_PopupBlocker();
 		this.addWindow(this._popupBlockerWindow);
 		this._popupCounter = 0;
