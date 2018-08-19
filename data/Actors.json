@@ -1,0 +1,5 @@
+[
+null,
+{"id":1,"battlerName":"Actor1_1","characterIndex":0,"characterName":"Actor1","classId":1,"equips":[1,1,2,3,0],"faceIndex":0,"faceName":"Actor1","traits":[],"initialLevel":1,"maxLevel":99,"name":"Harold","nickname":"","note":"","profile":""},
+{"id":2,"battlerName":"fantabattler","characterIndex":0,"characterName":"fanta","classId":5,"equips":[3,0,0,0,0],"faceIndex":0,"faceName":"fanta","traits":[{"code":31,"dataId":1,"value":1}],"initialLevel":1,"maxLevel":99,"name":"Fanta","nickname":"","note":"","profile":"Cute, lively and adventurous"}
+]
